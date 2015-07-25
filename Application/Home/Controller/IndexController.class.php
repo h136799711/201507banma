@@ -3,8 +3,9 @@ namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
     public function index(){
-        redirect(U('Shop/Index/index'));
+        $this->show("首页");
     }
+
     public function qrcode(){
 
         vendor("phpqrcode.phpqrcode");

@@ -9,6 +9,7 @@
 namespace Shop\Controller;
 use Admin\Api\ConfigApi;
 use Common\Api\WeixinApi;
+use Common\Util\EnvCheck;
 use Think\Controller;
 use Weixin\Api\WxaccountApi;
 use Weixin\Api\WxuserApi;
@@ -34,30 +35,37 @@ class ShopController extends  Controller {
 				define("APP_VERSION", C('APP_VERSION'));
 			}
 		}
+
 		C('SHOW_PAGE_TRACE', false);//设置不显示trace
-		$this -> refreshWxaccount();
-		$debug = true;
-		//$debug = false;
-		
-		if($debug){
-			$this->getDebugUser();
-		}else{
-			$url = getCurrentURL();
-			$this->getWxuser($url);
-		}
+        $debug = true;
+        //$debug = false;
+        $envCheck = new EnvCheck();
+        if($envCheck->isMobileVisit()){
+            $this->themeType = "mobile_default";
+        }else{
+            $this->themeType = "desktop_default";
+        }
 
-//		dump($this->userinfo);
-		if(empty($this->userinfo)){
-		//if(empty($this->userinfo) || $this->userinfo['subscribed'] == 0){
-			$this->display("Error:please_subscribe");
-//			$this->error("请先关注公众号，无法获取到用户信息！");
-			exit();
-		}
-        $this->assign("userinfo",$this->userinfo);
-        $this->assign("wxaccount",$this->wxaccount);
+//        if($envCheck->isWeixinBrowse()){
+//
+//            $this -> refreshWxaccount();
+//
+//            if($debug){
+//                $this->getDebugUser();
+//            }else{
+//                $url = getCurrentURL();
+//                $this->getWxuser($url);
+//            }
+//
+//            if(empty($this->userinfo) || $this->userinfo['subscribed'] == 0){
+//                $this->display("Error:please_subscribe");
+//                exit();
+//            }
+//
+//            $this->assign("userinfo",$this->userinfo);
+//            $this->assign("wxaccount",$this->wxaccount);
+//        }
 
-        //TODO: 商城模板切换
-        $this->themeType = "style1";
 	}
 	
 	//获取测试用户信息，用于PC端测试使用
@@ -74,114 +82,113 @@ class ShopController extends  Controller {
 			'exp'=>100,
             'groupid'=>11,
 		);
-		
-//		$this->wxapi = new \Common\Api\WeixinApi('wx5f9ed360f5da5370','4a0e3e50c8e9137c4873689b8ee99124');
+
 		$this->openid = "on1gxt-HCbKcX4r56QwXVrBvpFoA";
 	}
 	
 	
 
-	public function getWxuser($url) {
-
-		$this -> userinfo = null;
-		if (session("?global_user")) {
-			$this -> userinfo = session("global_user");
-			$this -> openid = $this->userinfo['openid'];
-		}
-		
-		if (!is_array($this -> userinfo)) {
-
-			$code = I('get.code', '');
-			$state = I('get.state', '');
-			if (empty($code) && empty($state)) {
-
-				$redirect = $this -> wxapi -> getOAuth2BaseURL($url, 'HomeIndexOpenid');
-
-				redirect($redirect);
-			}
-
-			if ($state == 'HomeIndexOpenid') {
-				$accessToken = $this -> wxapi -> getOAuth2AccessToken($code);
-
-				$this -> openid = $accessToken['openid'];
-				$result = $this -> wxapi -> getBaseUserInfo($accessToken['openid']);
-
-				if ($result['status']) {
-					$this -> refreshWxuser($result['info']);
-				} else {
-                    $this->error($result['info']);
-                }
-			}
-		}
-	}
-
-	/**
-	 * 刷新粉丝信息
-	 */
-	private function refreshWxuser($userinfo) {
-
-		$wxuser = array();
-		$uid = $this -> wxaccount['uid'];
-//		$wxuser['wxaccount_id'] = intval($this -> wxaccount['id']);
-		$wxuser['nickname'] = $userinfo['nickname'];
-		$wxuser['province'] = $userinfo['province'];
-		$wxuser['country'] = $userinfo['country'];
-		$wxuser['city'] = $userinfo['city'];
-		$wxuser['sex'] = $userinfo['sex'];
-		$wxuser['avatar'] = $userinfo['headimgurl'];
-		$wxuser['subscribe_time'] = $userinfo['subscribe_time'];
-		
-		if (!empty($this -> openid) && is_array($this -> wxaccount)) {
-			
-			$map = array('openid' => $this -> openid, 'wxaccount_id' => $this -> wxaccount['id']);
-
-			$result = apiCall(WxuserApi::SAVE, array($map, $wxuser));
-
-			if (!$result['status']) {
-				LogRecord($result['info'], "商城控制器基类_刷新wxuser信息" . __LINE__);
-			}else{
-				$result = apiCall(WxuserApi::GET_INFO , array($map));
-				if($result['status']){
-					//
-                   // dump($result);
-					$this -> userinfo = $result['info'];
-					session("global_user", $result['info']);
-				}else{
-                    $this->error("个人用户信息获取失败！");
-                }
-			}
-
-		}else{
-            $this->error("系统参数错误！");
-        }
-
-	}
+//	public function getWxuser($url) {
+//
+//		$this -> userinfo = null;
+//		if (session("?global_user")) {
+//			$this -> userinfo = session("global_user");
+//			$this -> openid = $this->userinfo['openid'];
+//		}
+//
+//		if (!is_array($this -> userinfo)) {
+//
+//			$code = I('get.code', '');
+//			$state = I('get.state', '');
+//			if (empty($code) && empty($state)) {
+//
+//				$redirect = $this -> wxapi -> getOAuth2BaseURL($url, 'HomeIndexOpenid');
+//
+//				redirect($redirect);
+//			}
+//
+//			if ($state == 'HomeIndexOpenid') {
+//				$accessToken = $this -> wxapi -> getOAuth2AccessToken($code);
+//
+//				$this -> openid = $accessToken['openid'];
+//				$result = $this -> wxapi -> getBaseUserInfo($accessToken['openid']);
+//
+//				if ($result['status']) {
+//					$this -> refreshWxuser($result['info']);
+//				} else {
+//                    $this->error($result['info']);
+//                }
+//			}
+//		}
+//	}
+//
+//	/**
+//	 * 刷新粉丝信息
+//	 */
+//	private function refreshWxuser($userinfo) {
+//
+//		$wxuser = array();
+//		$uid = $this -> wxaccount['uid'];
+////		$wxuser['wxaccount_id'] = intval($this -> wxaccount['id']);
+//		$wxuser['nickname'] = $userinfo['nickname'];
+//		$wxuser['province'] = $userinfo['province'];
+//		$wxuser['country'] = $userinfo['country'];
+//		$wxuser['city'] = $userinfo['city'];
+//		$wxuser['sex'] = $userinfo['sex'];
+//		$wxuser['avatar'] = $userinfo['headimgurl'];
+//		$wxuser['subscribe_time'] = $userinfo['subscribe_time'];
+//
+//		if (!empty($this -> openid) && is_array($this -> wxaccount)) {
+//
+//			$map = array('openid' => $this -> openid, 'wxaccount_id' => $this -> wxaccount['id']);
+//
+//			$result = apiCall(WxuserApi::SAVE, array($map, $wxuser));
+//
+//			if (!$result['status']) {
+//				LogRecord($result['info'], "商城控制器基类_刷新wxuser信息" . __LINE__);
+//			}else{
+//				$result = apiCall(WxuserApi::GET_INFO , array($map));
+//				if($result['status']){
+//					//
+//                   // dump($result);
+//					$this -> userinfo = $result['info'];
+//					session("global_user", $result['info']);
+//				}else{
+//                    $this->error("个人用户信息获取失败！");
+//                }
+//			}
+//
+//		}else{
+//            $this->error("系统参数错误！");
+//        }
+//
+//	}
 
 	/**
 	 * 刷新
 	 */
-	private function refreshWxaccount() {
-		$id = I('get.storeid', '');
-		if (!empty($token)) {
-			session("storeid", $id);
-		} elseif (session("?storeid")) {
-            $id = session("storeid");
-		}else{
-            $id = I('post.storeid', '');
-		}
-        
-		if(empty($id)){
-            $id = C('STORE_ID');
-		}
-
-		$result = apiCall(WxaccountApi::GET_INFO, array( array('id' => $id)));
-		if ($result['status'] && is_array($result['info'])) {
-			$this -> wxaccount = $result['info'];
-			$this -> wxapi = new WeixinApi($this -> wxaccount['appid'], $this -> wxaccount['appsecret']);
-		} else {
-			exit("公众号信息获取失败，请重试！");
-		}
-	}
+//	private function refreshWxaccount() {
+//		$id = I('get.storeid', '');
+//		if (!empty($token)) {
+//			session("storeid", $id);
+//		} elseif (session("?storeid")) {
+//            $id = session("storeid");
+//		}else{
+//            $id = I('post.storeid', '');
+//		}
+//
+//		if(empty($id)){
+//            $id = C('STORE_ID');
+//		}
+//
+//		$result = apiCall(WxaccountApi::GET_INFO, array( array('id' => $id)));
+//		if ($result['status'] && is_array($result['info'])) {
+//			$this -> wxaccount = $result['info'];
+//			$this -> wxapi = new WeixinApi($this -> wxaccount['appid'], $this -> wxaccount['appsecret']);
+//		} else {
+//			exit("公众号信息获取失败，请重试！");
+//		}
+//	}
 
 	/**
 	 * 从数据库中取得配置信息

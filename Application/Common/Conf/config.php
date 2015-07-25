@@ -42,7 +42,7 @@ return array(
     // 数据库配置
     'DB_TYPE'                   =>  'mysql',
     'DB_HOST'                   =>  '192.168.0.100',//rdsrrbifmrrbifm.mysql.rds.aliyuncs.com
-    'DB_NAME'                   =>  'itboye_20150606', //boye_ceping
+    'DB_NAME'                   =>  'banma', //boye_ceping
     'DB_USER'                   =>  'root',//boye
     'DB_PWD'                    =>  '1',//bo-ye2015BO-YE
     'DB_PORT'                   =>  '3306',
@@ -55,7 +55,7 @@ return array(
     'LOG_TYPE'              =>  'Db',
 	'LOG_LEVEL'  =>'EMERG,ALERT,CRIT,ERR', // 只记录EMERG ALERT CRIT ERR 错误
     'LOG_DB_CONFIG'=>array(
-		'dsn'=>'mysql://itboye_20150606:1@127.0.0.1:3306/itboye_20150606' //本地日志数据库
+		'dsn'=>'mysql://root:1@127.0.0.1:3306/banma' //本地日志数据库
 	),
 	
     // Session 配置
