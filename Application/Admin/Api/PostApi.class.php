@@ -8,8 +8,8 @@
 
 namespace Admin\Api;
 
+use Cms\Model\PostModel;
 use Common\Api\Api;
-use Common\Model\PostModel;
 
 class PostApi extends Api{
 	

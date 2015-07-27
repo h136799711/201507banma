@@ -6,7 +6,7 @@
 // | Copyright (c) 2013-2016, http://www.itboye.com. All Rights Reserved.
 // |-----------------------------------------------------------------------------------
 
-namespace Common\Model;
+namespace Cms\Model;
 use Think\Model;
 
 /**
