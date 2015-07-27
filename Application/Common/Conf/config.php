@@ -55,7 +55,7 @@ return array(
     'LOG_TYPE'              =>  'Db',
 	'LOG_LEVEL'  =>'EMERG,ALERT,CRIT,ERR', // 只记录EMERG ALERT CRIT ERR 错误
     'LOG_DB_CONFIG'=>array(
-		'dsn'=>'mysql://root:1@127.0.0.1:3306/banma' //本地日志数据库
+		'dsn'=>'mysql://root:1@192.168.0.100:3306/banma' //本地日志数据库
 	),
 	
     // Session 配置
