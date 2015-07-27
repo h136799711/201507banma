@@ -17,7 +17,7 @@ return array(
 	
 	//唯一管理员用户配置	
    'USER_ADMINISTRATOR' => 1, //管理员用户ID
-   'MODULE_DENY_LIST'      =>  array('Common','Runtime','Ucenter','Uclient'),
+   'MODULE_DENY_LIST'      =>  array('Common','Ucenter','Uclient','Adaptor'),
    'URL_CASE_INSENSITIVE' =>false,
 	// 程序版本
 	// DONE:移到数据库中
