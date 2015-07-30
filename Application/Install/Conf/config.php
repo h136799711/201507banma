@@ -14,7 +14,12 @@
 define('INSTALL_APP_PATH', realpath('./') . '/');
 
 return array(
-    
+
+    //自动载入,不然没法加载插件类
+    'AUTOLOAD_NAMESPACE'=>array('Addons' => ADDON_PATH),
+    //开启数据库session
+    'SESSION_TYPE'=>'',
+    'SESSION_AUTO_START'=>true,
 	'URL_HTML_SUFFIX'=>'shtml'	,
     'ORIGINAL_TABLE_PREFIX' => 'boye_', //默认表前缀
 

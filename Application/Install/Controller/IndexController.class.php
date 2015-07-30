@@ -18,11 +18,12 @@ class IndexController extends Controller{
 		if(Storage::has(MODULE_PATH . 'Data/install.lock')){
 			$this->error('已经成功安装了系统，请不要重复安装!',U('Index/error'));
 		}
-		
-		session_destroy();
-		session_start();
+
+
+        session(null);
 		session('step', 0);
 		session('error', false);
+
 		$this->display();
 	}
 

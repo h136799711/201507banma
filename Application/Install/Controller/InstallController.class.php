@@ -15,8 +15,9 @@ use Think\Storage;
 class InstallController extends Controller{
 
 	protected function _initialize(){
+
 		if(session('step') === null){
-			$this->redirect('Index/index');
+            session('step',0);
 		}
 		
 		if(Storage::has(MODULE_PATH . 'Data/install.lock')){

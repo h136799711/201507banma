@@ -6,6 +6,8 @@
 // | Copyright (c) 2013-2015, http://www.gooraye.net. All Rights Reserved.
 // |-----------------------------------------------------------------------------------
 
+define('BOYE_SYS_NAME',true);
+define("PROJECT_NAME","banma");
 
 // 必须定义
 define('UC_AUTH_KEY', '[AUTH_KEY]'); //加密KEY

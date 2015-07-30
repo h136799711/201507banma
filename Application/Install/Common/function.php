@@ -215,7 +215,7 @@ function create_tables($db, $prefix = ''){
 function register_administrator($db, $prefix, $admin, $auth){
 	show_msg('开始注册创始人帐号...');
     $sql = "UPDATE `[PREFIX]ucenter_member` " .
-        "set `username`='[NAME]', `password`='[PASS]', `email`='[EMAIL]', `last_login_time`= '[TIME]', `last_login_ip`='[IP]', `update_time`='[TIME]'";
+        "set `username`='[NAME]', `password`='[PASS]', `email`='[EMAIL]', `last_login_time`= '[TIME]', `last_login_ip`='[IP]', `update_time`='[TIME]' where `id` = 1";
 
     $password = user_md5($admin['password'], $auth);
     $sql = str_replace(
