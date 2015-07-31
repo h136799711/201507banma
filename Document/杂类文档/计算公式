@@ -1,0 +1,38 @@
+1.公式
+
+前提条件
+
+用户ID = uid
+商品ID = pid
+
+公式1:
+反佣金比例 = brokerage(uid,pid)
+
+2. 购买商品情况
+
+商品ID = pid
+购买者ID = buyer_uid
+优惠码ID = coupon_id
+优惠码提供人ID = service_uid
+优惠码提供人可得佣金比例  = service_bid
+商品价格 = pid_price
+
+
+公式2:
+
+商品返佣金额
+brokerage_price =  pid_price * brokerage(buyer_uid,pid);
+
+优惠码提供人可得优惠
+coupon_price = brokerage_price * service_bid;
+
+购买者购买的价格
+buy_price = pid_price - coupon_price
+
+
+
+
+
+
+
+
