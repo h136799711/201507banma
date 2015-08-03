@@ -38,8 +38,8 @@ return array(
     'URL_MODEL'                 =>  1, // 如果你的环境不支持PATHINFO 请设置为3
     // 数据库配置
     'DB_TYPE'                   =>  'mysql',
-    'DB_HOST'                   =>  '127.0.0.1',//rdsrrbifmrrbifm.mysql.rds.aliyuncs.com
-    'DB_NAME'                   =>  'itboye_banma', //boye_ceping
+    'DB_HOST'                   =>  '192.168.0.100',//rdsrrbifmrrbifm.mysql.rds.aliyuncs.com
+    'DB_NAME'                   =>  'boye_banma', //boye_ceping
     'DB_USER'                   =>  'root',//boye
     'DB_PWD'                    =>  '1',//bo-ye2015BO-YE
     'DB_PORT'                   =>  '3306',
@@ -52,7 +52,7 @@ return array(
     'LOG_TYPE'              =>  'Db',
 	'LOG_LEVEL'  =>'EMERG,ALERT,CRIT,ERR', // 只记录EMERG ALERT CRIT ERR 错误
     'LOG_DB_CONFIG'=>array(
-		'dsn'=>'mysql://itboye_banma:1@127.0.0.1:3306/itboye_banma' //本地日志数据库
+		'dsn'=>'mysql://root:1@192.168.0.100:3306/boye_banma' //本地日志数据库
 	),
 	
     // Session 配置
