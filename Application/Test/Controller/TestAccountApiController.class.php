@@ -22,6 +22,12 @@ use Uclient\Model\OAuth2TypeModel;
  */
 class TestAccountApiController extends Controller {
 
+    public function testMd5(){
+        $str = "1";
+
+        dump(md5(sha1($str) . UC_AUTH_KEY));
+    }
+
     /**
      *
      */
