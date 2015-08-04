@@ -99,7 +99,7 @@ class UcenterMemberModel extends Model{
 	 * @param  integer $type     用户名类型 （1-用户名，2-邮箱，3-手机，4-UID）
 	 * @return integer           登录成功-用户ID，登录失败-错误编号
 	 */
-	public function login($username, $password, $type = 1){
+	public function login($username, $password, $type = 1,$from){
 		$map = array();
 		switch ($type) {
 			case 1:
@@ -117,7 +117,7 @@ class UcenterMemberModel extends Model{
 			default:
 				return 0; //参数错误
 		}
-
+		$map['from']=$from;
 //		dump($map);
 		/* 获取用户数据 */
 		$user = $this->where($map)->find();

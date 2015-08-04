@@ -17,7 +17,7 @@ interface IAccount
 {
 
 
-    function login($username, $password, $email, $phone, $from);
+    function login($username, $password,$type,$from);
 
     function register($entity);
 
@@ -63,7 +63,7 @@ class AccountApi implements IAccount
 
         $member_info = $result['info'];
 
-        $result = apiCall(WxuserApi::GET_INFO, array(array('id'=>$id)));
+       // $result = apiCall(WxuserApi::GET_INFO, array(array('id'=>$id)));
 
         if(!$result['status']){
             return array('status' => false, 'info' => $result['info']);
@@ -72,20 +72,20 @@ class AccountApi implements IAccount
         $wxuser_info = $result['info'];
 
         $info = array_merge($user_info,$member_info);
-        $info['_wxuser'] = $wxuser_info;
         return array('status'=>true,'info'=>$info);
     }
 
 
-    public function login($username, $password, $email, $phone, $from)
+    public function login($username, $password,$type, $from)
     {
         // TODO: Implement login() method.
-        return true;
+        $result=apiCall(UserApi::LOGIN,array($username, $password,$type, $from));
+        return $result;
     }
 
     /**
      *
-     * @param $entity | key＝》username,password ,from . email,mobile非必须
+     * @param $entity | key＝》username,password ,from,     .realname,email,mobile非必须
      * @return array
      */
     public function register($entity)
@@ -96,33 +96,12 @@ class AccountApi implements IAccount
             return array('status' => false, 'info' => "账户信息缺失!");
         }
 
-        if (!isset($entity['_wxuser'])) {
-            return array('status' => false, 'info' => "账户信息缺失!");
-        }
-
-        $wxuser = $entity['_wxuser'];
-        if (!isset($wxuser['wxaccount_id']) || !isset($wxuser['openid'])) {
-            return array('status' => false, 'info' => "账户信息缺失!");
-        }
-
-        $empty_check = array('nickname','avatar','province','country','city');
-        foreach($empty_check as $vo){
-            if(!isset($wxuser[$vo])){
-                $wxuser[$vo] = '';
-            }
-        }
-        addWeixinLog($wxuser,"[测试wxuser 推荐人]设置之前");
-        if(!isset($wxuser['referrer'])) $wxuser['referrer'] = 0;
-        addWeixinLog($wxuser,"[测试wxuser 推荐人]设置之后");
-        if(!isset($wxuser['sex'])) $wxuser['sex'] = 0;
-        if(!isset($wxuser['subscribed'])) $wxuser['subscribed'] = 0;
-        if(!isset($wxuser['subscribe_time'])) $wxuser['subscribe_time'] = time();
-
         $username = $entity['username'];
         $password = $entity['password'];
         $email = $entity['email'];
         $mobile = $entity['mobile'];
         $from = $entity['from'];
+        $realname=$entity['realname'];
 
         $trans = M();
         $trans->startTrans();
@@ -135,10 +114,10 @@ class AccountApi implements IAccount
 
             $member = array(
                 'uid' => $uid,
-                'realname' =>  $wxuser['nickname'],
-                'nickname' => $wxuser['nickname'],
+                'realname' => $realname,
+              //  'nickname' => $wxuser['nickname'],
                 'idnumber' => '',
-                'sex' =>  $wxuser['sex'],
+             //   'sex' =>  $wxuser['sex'],
                 'birthday' => time(),
                 'qq' => '',
                 'score' => 0,
@@ -149,19 +128,6 @@ class AccountApi implements IAccount
             if (!$result['status']) {
                 $flag = true;
                 $error = $result['info'];
-            }
-
-
-            if(!$flag){
-                $wxuser['uid'] = $uid;
-                $wxuser['groupid'] = WxuserGroupModel::DEFAULT_GROUP ;//
-                //继续注册wxuser表
-                $result = apiCall(WxuserApi::REGISTER,array($wxuser));
-//                dump($result);
-                if (!$result['status']) {
-                    $flag = true;
-                    $error = $result['info'];
-                }
             }
         } else {
             $flag = true;

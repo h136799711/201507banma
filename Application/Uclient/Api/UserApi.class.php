@@ -164,10 +164,10 @@ class UserApi extends Api
      * @return integer           登录成功-用户ID，登录失败-错误编号
      */
     public
-    function login($username, $password, $type = 1)
+    function login($username, $password, $type = 1,$from)
     {
 
-        $result = $this->model->login($username, $password, $type);
+        $result = $this->model->login($username, $password, $type,$from);
         if ($result > 0) {
             return array('status' => true, 'info' => $result);
         } else {
@@ -176,7 +176,7 @@ class UserApi extends Api
                     $result = "参数错误";
                     break;
                 case -1:
-                    $result = "用户不存在或被禁用";
+                    $result = "用户不存在或被禁用或来源错误";
                     break;
                 case -2:
                     $result = "密码错误";
