@@ -17,20 +17,20 @@ return array(
     
 	'SHOW_PAGE_TRACE'=>false,
 
-    'WXPAY_CONFIG'=>array(
-
-        'APPID'=>'wxb17e88453be034d6',
-        'APPSECRET'=>'97c88bd38fa282cc0ac3aa7dd76fbdf2',
-        'MCHID'=>'1228859402',
-        'KEY'=>'E48D86C64D6B8EA672BEBF6ACC75AD94',//在微信发送的邮件中查看,patenerkey
+//    'WXPAY_CONFIG'=>array(
 //
-        'NOTIFYURL'=>'http://renren.itboye.com/index.php/Shop/WxpayNotify/index',
-        'JSAPICALLURL'=>'http://renren.itboye.com/index.php/Shop/Orders/pay?showwxpaytitle=1',
-        'SSLCERTPATH'=>'/alidata/8rawcert/10027619/apiclient_cert.pem',
-        'SSLKEYPATH'=>'/alidata/8rawcert/10027619/apiclient_cert.pem',
-        'CURL_PROXY_HOST' => "0.0.0.0",
-        'CURL_PROXY_PORT' => '0',
-        'REPORT_LEVENL' => 1,
-		'PROCESS_URL'=>'http://renren.itboye.com/index.php/Shop/WxpayNotify/aysncNotify?key=hebidu',//异步处理地址
-    ),
+//        'APPID'=>'wxb17e88453be034d6',
+//        'APPSECRET'=>'97c88bd38fa282cc0ac3aa7dd76fbdf2',
+//        'MCHID'=>'1228859402',
+//        'KEY'=>'E48D86C64D6B8EA672BEBF6ACC75AD94',//在微信发送的邮件中查看,patenerkey
+////
+//        'NOTIFYURL'=>'http://renren.itboye.com/index.php/Shop/WxpayNotify/index',
+//        'JSAPICALLURL'=>'http://renren.itboye.com/index.php/Shop/Orders/pay?showwxpaytitle=1',
+//        'SSLCERTPATH'=>'/alidata/8rawcert/10027619/apiclient_cert.pem',
+//        'SSLKEYPATH'=>'/alidata/8rawcert/10027619/apiclient_cert.pem',
+//        'CURL_PROXY_HOST' => "0.0.0.0",
+//        'CURL_PROXY_PORT' => '0',
+//        'REPORT_LEVENL' => 1,
+//		'PROCESS_URL'=>'http://renren.itboye.com/index.php/Shop/WxpayNotify/aysncNotify?key=hebidu',//异步处理地址
+//    ),
 );
