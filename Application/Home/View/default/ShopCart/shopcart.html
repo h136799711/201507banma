@@ -1,0 +1,50 @@
+<extend name="template/base_index" />
+
+<block name="area_header">
+	<link  href="__PUBLIC__/Home/ShopCart/css/shopCart.min.css" type="text/css">
+    <link rel="stylesheet" href="__PUBLIC__/Home/Index/css/base.css">
+	
+</block>
+
+<block name="area_body">
+	<div class="site-topbar">
+		<div class="container">
+			<div class="topbar-nav">
+				<a href="" >小米网</a><span class="sep">|</span>
+				<a href="" >小米网</a><span class="sep">|</span>
+				<a href="" >小米网</a><span class="sep">|</span>
+				<a href="" >小米网</a><span class="sep">|</span>
+				<a href="" >小米网</a><span class="sep">|</span>
+			</div>
+			<div class="topbar-info J_userInfo">
+				<a target="_blank" href="{:U('Home/Index/login')}">登录</a><span class="sep">|</span>
+				<a target="_blank" href="{:U('Home/Index/register')}">注册</a>
+			</div>
+		</div>
+	</div>
+	<!-- .site-topbar END -->
+
+	<div class="site-header container">
+		<div class="site-logo">
+			<a ><img height="70px" width="100px" style="margin-top: -18px; margin-left: 50px;" src="__PUBLIC__/Home/Index/img/banma.png"></a>
+		</div>
+		<div class="header-info">
+			<div class="search-section">
+				<form id="J_searchForm" class="search-form clearfix" action="" method="post">
+					<input class="search-text" type="search" name="keyword" placeholder="搜索您需要的商品">
+					<input type="submit" class="search-btn iconfont" value="">
+					<!--[if IE 6]><div class="ie6-fix"></div><![endif]-->
+					
+				</form>
+			</div>
+			
+		</div>
+		<div style="border: 1px solid #000000; margin-top: 100px; ">
+			<h2 style="padding-left: 100px; padding-top: 30px;">购物车</h2>
+		</div>
+	</div>
+</block>
+
+<block name="area_footer">
+
+</block>
