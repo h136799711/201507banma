@@ -21,8 +21,8 @@ use Think\Controller\RestController;
  */
 abstract class ApiController extends RestController{
 
-    private $encrypt_key = "";
-    private $client_id = "";
+    protected $encrypt_key = "";
+    protected $client_id = "";
     /**
      * 构造函数
      */
