@@ -8,6 +8,7 @@
 namespace Shop\Controller;
 
 use Admin\Api\DatatreeApi;
+use Shop\Api\CategoryApi;
 use Shop\Api\BannersApi;
 use Shop\Api\ProductApi;
 use Shop\Model\ProductModel;
@@ -19,7 +20,53 @@ use Distributor\Api\DistributorInfoApi;
 
 class IndexController extends ShopController{
 
-    public function distributor(){
+    
+	
+	/*
+	 * 首页
+	 * */
+    public function index(){
+    	$map=array('parent'=>0);
+    	$result=apiCall(CategoryApi::QUERY_NO_PAGING,array($map));
+		$result1=apiCall(CategoryApi::QUERY_NO_PAGING,array($map1));
+		$orders = " createtime desc ";
+		$page = array('curpage'=>I('post.p',0),'size'=>4);
+		$result_new=apiCall(ProductApi::QUERY,array($ss,$page,$orders));
+		$this->assign('biggroup',$result['info']);
+		$this->assign('group',$result1['info']);
+		$this->assign('new',$result_new['info']['list']);
+//		dump($result_new);
+        $this->display();
+    }
+	/*
+	 * 商品分类
+	 * */
+	public function group(){
+		$id=array('cate_id'=>I('id',''));
+		$page = array('curpage'=>I('post.p',0),'size'=>8);
+		$result=apiCall(ProductApi::QUERY,array($id,$page));
+		dump($result);
+	}
+	/*
+	 * 注册
+	 * TODO:短信注册
+	 * */
+	public function register(){
+		if(IS_GET){
+			$this->display();
+		}
+	}
+	/*
+	 * 登录
+	 * TODO：第三方登录
+	 * */
+	public function login(){
+		if(IS_GET){
+			$this->display();
+		}
+	}
+	
+	public function distributor(){
 		
     	if(IS_GET){
     		//phpinfo();
@@ -72,234 +119,6 @@ class IndexController extends ShopController{
 		
 		$this->assign("showstartpage",$showStartPage);
 		
-	}
-	
-	/**
-	 * 首页
-	 */
-	public function index(){
-		//dump($this->);
-		
-		$map= array(
-			'uid'=>$this->wxaccount['uid'],
-			'storeid'=>-1,
-			'position'=>getDatatree("SHOP_INDEX_BANNERS")
-		);
-		
-		$page = array(
-			'curpage'=>0,
-			'size'=>8
-		);
-		$order = "createtime desc";
-		$params = false;
-		
-		$result = apiCall(BannersApi::QUERY,array($map,$page,$order,$params));
-//		dump($result);
-		if(!$result['status']){
-			$this->error($result['info']);
-		}
-		
-		$this->assign("banners",$result['info']['list']);
-		
-		$map= array('parentid'=>C("DATATREE.STORE_TYPE"));
-		$result = apiCall(DatatreeApi::QUERY,array($map,$page,$order,$params));
-		
-		if(!$result['status']){
-			$this->error($result['info']);
-		}
-
-		$this->assign("store_types",$result['info']['list']);
-		
-		// 获取推荐商品
-		$result = $this->getProducts();
-		if($result['status'] && is_array($result['info'])){
-			$this->assign("recommend_products",$result['info']['list']);
-		}
-		
-		$ads  = $this->getAds();
-		
-		$this->assign("ads",$ads['info']['list']);
-		
-		//获取推荐店铺
-		$result = $this->getRecommendStore();
-		
-		$this->assign("rec_stores",$result['info']['list']);
-		
-		//获取首页4格活动
-		$result = $this->getFourGrid();
-        $this->assign("meta_title",$this->getStoreName());
-
-		$this->assign("fourgrid",$result['info']['list']);
-        $this->assign("isDistributor",$this->isDistributor());
-		$this->theme($this->themeType)->display();
-	}
-
-
-
-	/**
-	 * 我的小店
-	 */
-	public function myStore(){
-		//dump($this->);
-		
-		$map= array(
-			'uid'=>$this->wxaccount['uid'],
-			'storeid'=>-1,
-			'position'=>getDatatree("SHOP_INDEX_BANNERS")
-		);
-		
-		$page = array(
-			'curpage'=>0,
-			'size'=>8
-		);
-		$order = "createtime desc";
-		$params = false;
-		
-		$result = apiCall(BannersApi::QUERY,array($map,$page,$order,$params));
-//		dump($result);
-		if(!$result['status']){
-			$this->error($result['info']);
-		}
-		
-		$this->assign("banners",$result['info']['list']);
-		
-		$map= array('parentid'=>C("DATATREE.STORE_TYPE"));
-		$result = apiCall(DatatreeApi::QUERY,array($map,$page,$order,$params));
-		
-		if(!$result['status']){
-			$this->error($result['info']);
-		}
-
-		$this->assign("store_types",$result['info']['list']);
-		
-		// 获取推荐商品
-		$result = $this->getProducts();
-		if($result['status'] && is_array($result['info'])){
-			$this->assign("recommend_products",$result['info']['list']);
-		}
-		
-		$ads  = $this->getAds();
-		
-		$this->assign("ads",$ads['info']['list']);
-		
-		//获取推荐店铺
-		$result = $this->getRecommendStore();
-		
-		$this->assign("rec_stores",$result['info']['list']);
-		
-		//获取首页4格活动
-		$result = $this->getFourGrid();
-        $this->assign("meta_title",$this->getStoreName());
-
-		$this->assign("fourgrid",$result['info']['list']);
-        $this->assign("isDistributor",$this->isDistributor());
-		
-		//获取当前商品总数
-		$map=array(
-			'onshelf'=>1
-		);
-		$count=apiCall(ProductApi::COUNT,array($map));
-		
-		$this->assign('count',$count['info']);
-		
-		$this->theme($this->themeType)->display();
-	}
-
-
-
-
-
-
-
-
-
-    private function getStoreName(){
-        //默认当前公众号名
-        $name = $this->wxaccount['wxname'];
-
-        // 如果是分销商，显示分销商名称
-        if($this->isDistributor()){
-            $name = $this->userinfo['nickname'].'的店铺';
-        }
-
-        return $name;
-    }
-
-    /**
-     * 判断是否为分销商
-     * @return bool
-     */
-    private function isDistributor(){
-        //TODO: 当前仅判断大于1 时都为分销商
-        if($this->userinfo['groupid'] > 1){
-            return true;
-        }
-
-        return false;
-    }
-
-
-	/**
-	 * 获取首页4格活动
-	 * 
-	 */
-	 private function getFourGrid(){
-		$page = array('curpage'=>0,'size'=>4);
-	 	$map = array('position'=>getDatatree("INDEX_4_ACTIVTIY"));
-		$order = " id desc";
-		$result = apiCall(BannersApi::QUERY, array($map,$page,$order));
-
-		if(!$result['status']){
-			$this->error($result['info']);
-		}
-
-		return $result;
-	 }
-	
-	/**
-	 * 广告
-	 */
-	private function getAds(){
-		
-		$page = array('curpage'=>0,'size'=>2);
-		$map = array('position'=>getDatatree("SHOP_INDEX_ADVERT"));
-		$result = apiCall(BannersApi::QUERY, array($map,$page));
-		if(!$result['status']){
-			$this->error($result['info']);
-		}
-		return $result;
-	}
-	/**
-	 * 推荐店铺
-	 */
-	private function getRecommendStore(){
-		
-		$page = array('curpage'=>0,'size'=>4);
-		$map = array('position'=>getDatatree("SHOP_INDEX_RECOMMEND_STORE"));
-		$result = apiCall(DatatreeApi::QUERY, array($map));
-		if(!$result['status']){
-			$this->error($result['info']);
-		}
-		
-		return $result;
-	}
-	
-	/** 
-	 *  
-	 */ 
-	public function getProducts(){
-		
-		$page = array('curpage'=>0,'size'=>10);
-		$order = "updatetime desc";
-		$map = array('onshelf'=>ProductModel::STATUS_ONSHELF);
-		$group_id = getDatatree("WXPRODUCTGROUP_RECOMMEND");
-		
-		$result = apiCall(ProductApi::QUERY_BY_GROUP, array($group_id,$map));
-		if(!$result['status']){
-			LogRecord($result['info'], __FILE__.__LINE__);	
-		}
-		
-		return $result;
 	}
 	
 }

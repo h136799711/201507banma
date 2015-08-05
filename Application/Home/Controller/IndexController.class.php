@@ -9,7 +9,11 @@
 namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
+	/*
+	 * 首页
+	 * */
     public function index(){
+    	
         $this->display();
     }
 	
@@ -24,7 +28,7 @@ class IndexController extends Controller {
 	}
 	/*
 	 * 登录
-	 * 
+	 * TODO：第三方登录
 	 * */
 	public function login(){
 		if(IS_GET){
