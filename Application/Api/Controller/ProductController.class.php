@@ -52,6 +52,11 @@ class ProductController extends ApiController{
     }
 
 
+    public function detail(){
+
+    }
+
+
     function getSupportMethod()
     {
         return array(

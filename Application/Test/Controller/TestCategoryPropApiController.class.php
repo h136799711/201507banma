@@ -12,7 +12,7 @@ use Shop\Api\CategoryPropApi;
 class TestCategoryPropApiController extends Controller{
 
     /**
-     *
+     *  ≤‚ ‘ Ù–‘≤È—Ø
      */
     public function queryPropTable(){
 
