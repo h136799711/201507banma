@@ -2,7 +2,7 @@
 // .-----------------------------------------------------------------------------------
 // | WE TRY THE BEST WAY 杭州博也网络科技有限公司
 // |-----------------------------------------------------------------------------------
-// | Author: 贝贝 <hebiduhebi@163.com>
+// | Author: 青 <99701759@qq.com>
 // | Copyright (c) 2013-2016, http://www.itboye.com. All Rights Reserved.
 // |-----------------------------------------------------------------------------------
 namespace Shop\Controller;
@@ -41,12 +41,27 @@ class IndexController extends ShopController{
 	/*
 	 * 商品分类
 	 * */
-	public function group(){
+	public function lists(){
 		$id=array('cate_id'=>I('id',''));
 		$page = array('curpage'=>I('post.p',0),'size'=>8);
 		$result=apiCall(ProductApi::QUERY,array($id,$page));
-		dump($result);
+//		dump($result);
+		$this->assign('lists',$result['info']['list']);
+		$this->display();
 	}
+	/*
+	 * 搜索
+	 * */
+	public function sousuo(){
+		$name=I('name','');
+		$map['name'] = array('like','%'. $name . '%');
+		$page = array('curpage'=>I('post.p',0),'size'=>8);
+		$result=apiCall(ProductApi::QUERY,array($map,$page));
+//		dump($result);
+		$this->assign('lists',$result['info']['list']);
+		$this->display('lists');
+	}
+	
 	/*
 	 * 注册
 	 * TODO:短信注册
