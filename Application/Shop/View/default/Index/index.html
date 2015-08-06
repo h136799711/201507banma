@@ -17,43 +17,9 @@
 
 <block name="area_body">
 	
-	<div class="site-topbar">
-		<div class="container">
-			<div class="topbar-nav">
-				<a href="" >小米网</a><span class="sep">|</span>
-				<a href="" >小米网</a><span class="sep">|</span>
-				<a href="" >小米网</a><span class="sep">|</span>
-				<a href="" >小米网</a><span class="sep">|</span>
-				<a href="" >小米网</a><span class="sep">|</span>
-			</div>
-			<div class="topbar-info J_userInfo">
-				<a target="_blank" href="{:U('Shop/Index/login')}">登录</a><span class="sep">|</span>
-				<a target="_blank" href="{:U('Shop/Index/register')}">注册</a>
-			</div>
-		</div>
-	</div>
-	<!-- .site-topbar END -->
-
+	<include file="width/top"/>
 	<div class="site-header container">
-		<div class="site-logo">
-			<a ><img height="70px" width="100px" style="margin-top: -18px; margin-left: 50px;" src="__PUBLIC__/Home/Index/img/banma.png"></a>
-		</div>
-		<div class="header-info">
-			<div class="search-section">
-				<form id="J_searchForm" class="search-form clearfix" action="" method="post">
-					<input class="search-text" type="search" name="keyword" placeholder="搜索您需要的商品">
-					<input type="submit" class="search-btn iconfont" value="">
-					<!--[if IE 6]><div class="ie6-fix"></div><![endif]-->
-					
-				</form>
-			</div>
-			<div class="cart-section">
-				<a  class="mini-cart" href="{:U('Home/ShopCart/shopcart')}" ><i class="iconfont"></i>购物车<span class="mini-cart-num J_cartNum">(1)</span></a>
-				<div id="J_miniCartList" class="mini-cart-list">
-					<p class="loading">数据加载中，请稍后...</p>
-				</div>
-			</div>
-		</div>
+		<include file="width/search"/>
 		<div class="header-nav clearfix">
 			<div id="J_categoryContainer" class="nav-category nav-category-toggled">
 				<a class="btn-category-list" >全部商品分类</a>
@@ -66,7 +32,7 @@
 								<div class="links">
 									<volist name="group" id="v">
 										<if condition="$vo['id'] eq $v['parent']">
-											<a href="{:U('Shop/Index/group',array('id'=>$v['id']))}">{$v.name}</a>
+											<a href="{:U('Shop/Index/lists',array('id'=>$v['id']))}">{$v.name}</a>
 										</if>
 									</volist>
 									

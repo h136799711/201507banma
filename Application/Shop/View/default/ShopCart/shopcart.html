@@ -39,8 +39,8 @@
 		</div>
 		<div class="header-info">
 			<div class="search-section">
-				<form id="J_searchForm" class="search-form clearfix" action="" method="post">
-					<input class="search-text" type="search" name="keyword" placeholder="搜索您需要的商品">
+				<form id="J_searchForm" class="search-form clearfix" action="{:U('Shop/Index/sousuo')}" method="post">
+					<input class="search-text" type="search" name="name" placeholder="搜索您需要的商品">
 					<input type="submit" class="search-btn iconfont" value="">
 					<!--[if IE 6]><div class="ie6-fix"></div><![endif]-->
 					
@@ -53,6 +53,7 @@
 		</div>
 	</div>
 	<div >
+		
 		<div class="carttitle">
 			<table width="1200">
 				<tr style="background-color: #FAFAFA;">
@@ -85,14 +86,18 @@
 				
 			</table>
 			<div style="width: 300px;  margin-left: 70%; padding: 10px;">
-				<h2>商品总价：<font color="orangered" style="margin-left: 60px;">49.5元</font></h2>
-				<input type="text"  style="height: 40px; width: 280px;" placeholder="请输入邀请人用户ID码"/>
-				<h2>商品总计：<font color="orangered" style="margin-left: 60px;" size="6">49.5元</font></h2>
+				<h2>商品总价：<font color="orangered" style="margin-left: 60px;">49.5</font>元</h2>
+				<!--<input type="text"  style="height: 40px; width: 280px;" placeholder="请输入邀请人用户ID码"/>-->
+				<h2>商品总计：<font color="orangered" style="margin-left: 60px;" size="6">49.5</font>元</h2>
 				<font style="float: right;">
 				<button type="button" class="am-btn am-btn-default am-round">继续购物</button>
 				<button type="button" class="am-btn am-btn-warning am-round">去结账</button></font>
 			</div>
 		</div>
+		<!--<empty name='lists'>
+			<img src="__PUBLIC__/Shop/img/gouwuche.png">
+		<else/>-->
+		<!--</empty>-->
 	</div>
 </block>
 
