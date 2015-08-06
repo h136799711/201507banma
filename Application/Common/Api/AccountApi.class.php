@@ -23,6 +23,8 @@ interface IAccount
 
     function getInfo($id);
 
+    function update($uid,$password,$entity);
+
 }
 
 /**
@@ -45,6 +47,22 @@ class AccountApi implements IAccount
      */
     const GET_INFO = "Common/Account/getInfo";
 
+    const UPDATE="Common/Account/update";
+
+
+
+    /**
+     * 用户更新
+     */
+    public function update($uid,$password,$data){
+        return apiCall(UserApi::UPDATE,array($uid, $password, $data));
+    }
+
+    /**
+     * 获得用户信息
+     * @param $id
+     * @return array
+     */
     public function getInfo($id){
 
         $result = apiCall(UserApi::GET_INFO, array($id));
@@ -102,6 +120,7 @@ class AccountApi implements IAccount
         $mobile = $entity['mobile'];
         $from = $entity['from'];
         $realname=$entity['realname'];
+        $birthday=$entity['birthday'];
 
         $trans = M();
         $trans->startTrans();
@@ -118,7 +137,7 @@ class AccountApi implements IAccount
               //  'nickname' => $wxuser['nickname'],
                 'idnumber' => '',
              //   'sex' =>  $wxuser['sex'],
-                'birthday' => time(),
+                'birthday' => $birthday,
                 'qq' => '',
                 'score' => 0,
                 'login' => 0,

@@ -117,7 +117,7 @@ class UcenterMemberModel extends Model{
 			default:
 				return 0; //参数错误
 		}
-		$map['from']=$from;
+		$map['regfrom']=$from;
 //		dump($map);
 		/* 获取用户数据 */
 		$user = $this->where($map)->find();

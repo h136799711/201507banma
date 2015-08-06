@@ -60,6 +60,12 @@ class UserApi extends Api
      */
     const INFO = "Uclient/User/info";
 
+
+    /**
+     * 更新数据
+     */
+    const UPDATE="Uclient/User/updateInfo";
+
     /**
      * 构造方法，实例化操作模型
      */

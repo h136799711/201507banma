@@ -44,11 +44,15 @@ class UserController extends ApiController{
 
         $password = $this->_post("password");
 
+        $type = $this->_post("type");
+
+        $from = $this->_post("from");
+
         $notes = "应用".$this->client_id.":[用户".$username."],调用登录接口,密码：".$password;
 
         addLog("User/login",$_GET,$_POST,$notes);
 
-        $result = apiCall(AccountApi::LOGIN,array($username,$password));
+        $result = apiCall(AccountApi::LOGIN,array($username,$password,$type,$from));
 
         if($result['status']){
             $uid = $result['info'];
@@ -77,10 +81,23 @@ class UserController extends ApiController{
             $password = $this->_post("password");
             $from = OAuth2TypeModel::SELF;
 
+            $mobile=$this->_post("mobile");
+            $realname=$this->_post("realname");
+            $email=$this->_post("email");
+            $idnumber=$this->_post("idnumber");
+            $birthday=$this->_post("birthday",0);
+            if($birthday!=0){
+                $birthday=strtotime($birthday);
+            }
             $entity = array(
                 'username'=>$username,
                 'password'=>$password,
                 'from'=>$from,
+                'mobile'=>$mobile,
+                'realname'=>$realname,
+                'email'=>$email,
+                'idnumber'=>$idnumber,
+                'birthday'=>$birthday,
             );
 
             $result = apiCall(AccountApi::REGISTER,array($entity));
