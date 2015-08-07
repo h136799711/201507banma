@@ -11,12 +11,12 @@
  * @return integer 0-未登录，大于0-当前登录用户ID
  */
 function is_login() {
-	$user = session('global_user');
-	if (empty($user)) {
-		return 0;
-	} else {
-		return session('global_user_sign') == data_auth_sign($user) ? session('uid') : 0;
-	}
+    $user = session('global_user');
+    if (empty($user)) {
+        return 0;
+    } else {
+        return session('global_user_sign') == data_auth_sign($user) ? session('uid') : 0;
+    }
 }
 
 /**
@@ -25,10 +25,9 @@ function is_login() {
  * @author 麦当苗儿 <zuojiazi@vip.qq.com>
  */
 function is_administrator($uid = null) {
-	$uid = is_null($uid) ? is_login() : $uid;
-	return $uid && (intval($uid) === C('USER_ADMINISTRATOR'));
+    $uid = is_null($uid) ? is_login() : $uid;
+    return $uid && (intval($uid) === C('USER_ADMINISTRATOR'));
 }
-
 
 /**
  * apiCall
@@ -38,16 +37,13 @@ function is_administrator($uid = null) {
  * @return mixed
  */
 function apiCall($url, $vars=array(), $layer = 'Api') {
-	//TODO:考虑使用func_get_args 获取参数数组
+    //TODO:考虑使用func_get_args 获取参数数组
     $ret = R($url, $vars, $layer);
     if(!$ret){
         return array('status'=>false,'info'=>'无法调用'.$url);
     }
-	return $ret;
-	//return R($url, $vars, $layer);
+    return $ret;
 }
-
-
 
 /**
  * 记录日志，系统运行过程中可能产生的日志
@@ -63,7 +59,7 @@ function apiCall($url, $vars=array(), $layer = 'Api') {
  * SQL SQL语句，该级别只在调试模式开启时有效
  */
 function LogRecord($msg, $location, $level = 'ERR') {
-	Think\Log::write($location . $msg, $level);
+    Think\Log::write($location . $msg, $level);
 }
 
 /**
@@ -72,9 +68,9 @@ function LogRecord($msg, $location, $level = 'ERR') {
  * @author hebiduhebi@163.com
  */
 function ifFailedLogRecord($result, $location) {
-	if ($result['status'] === false) {
-		Think\Log::write($location . $result['info'], 'ERR');
-	}
+    if ($result['status'] === false) {
+        Think\Log::write($location . $result['info'], 'ERR');
+    }
 }
 
 /**
@@ -83,17 +79,17 @@ function ifFailedLogRecord($result, $location) {
  * @return string       签名
  */
 function data_auth_sign($data) {
-	//数据类型检测
-	if (!is_array($data)) {
-		$data = (array)$data;
-	}
-	ksort($data);
-	//排序
-	$code = http_build_query($data);
-	//url编码并生成query字符串
-	$sign = sha1($code);
-	//生成签名
-	return $sign;
+    //数据类型检测
+    if (!is_array($data)) {
+        $data = (array)$data;
+    }
+    ksort($data);
+    //排序
+    $code = http_build_query($data);
+    //url编码并生成query字符串
+    $sign = sha1($code);
+    //生成签名
+    return $sign;
 }
 
 /**
@@ -103,33 +99,33 @@ function data_auth_sign($data) {
  * @return array("0"=>开始日期,"1"=>结束日期)
  */
 function getDataRange($type) {
-	$result = array();
-	switch($type) {
-		case 0 :
-			//今天之内
-			$result['0'] = I('startdatetime', (date('Y-m-d 00:00:00', time())), 'urldecode');
-			break;
-		case 1 :
-			//昨天
-			$result['0'] = I('startdatetime', (date('Y-m-d 00:00:00', time() - 24 * 3600)), 'urldecode');
-			$result['1'] = I('enddatetime', (date('Y-m-d 00:00:00', time())), 'urldecode');
-			break;
-		case 2 :
-			//最近7天
-			$result['0'] = I('startdatetime', (date('Y-m-d H:i:s', time() - 24 * 3600 * 7)), 'urldecode');
-			break;
-		case 3 :
-			//最近30天
-			$result['0'] = I('startdatetime', (date('Y-m-d H:i:s', time() - 24 * 3600 * 30)), 'urldecode');
-			break;
-		default :
-			$result['0'] = I('startdatetime', (date('Y-m-d 00:00:00', time() - 24 * 3600)), 'urldecode');
-			break;
-	}
-	if (!isset($result['1'])) {
-		$result['1'] = I('enddatetime', (date('Y-m-d H:i:s', time() + 10)), 'urldecode');
-	}
-	return $result;
+    $result = array();
+    switch($type) {
+        case 0 :
+            //今天之内
+            $result['0'] = I('startdatetime', (date('Y-m-d 00:00:00', time())), 'urldecode');
+            break;
+        case 1 :
+            //昨天
+            $result['0'] = I('startdatetime', (date('Y-m-d 00:00:00', time() - 24 * 3600)), 'urldecode');
+            $result['1'] = I('enddatetime', (date('Y-m-d 00:00:00', time())), 'urldecode');
+            break;
+        case 2 :
+            //最近7天
+            $result['0'] = I('startdatetime', (date('Y-m-d H:i:s', time() - 24 * 3600 * 7)), 'urldecode');
+            break;
+        case 3 :
+            //最近30天
+            $result['0'] = I('startdatetime', (date('Y-m-d H:i:s', time() - 24 * 3600 * 30)), 'urldecode');
+            break;
+        default :
+            $result['0'] = I('startdatetime', (date('Y-m-d 00:00:00', time() - 24 * 3600)), 'urldecode');
+            break;
+    }
+    if (!isset($result['1'])) {
+        $result['1'] = I('enddatetime', (date('Y-m-d H:i:s', time() + 10)), 'urldecode');
+    }
+    return $result;
 }
 
 /**
@@ -138,11 +134,11 @@ function getDataRange($type) {
  * @return 空|false|0 时返回否，否则返回是
  */
 function yesorno($param) {
-	if (is_null($param) || $param === false || $param == 0 || $param == "0") {
-		return L("NO");
-	} else {
-		return L('YES');
-	}
+    if (is_null($param) || $param === false || $param == 0 || $param == "0") {
+        return L("NO");
+    } else {
+        return L('YES');
+    }
 }
 
 /**
@@ -151,30 +147,30 @@ function yesorno($param) {
  * @return 描述字符串
  */
 function getStatus($status) {
-	$desc = '未知状态';
-	switch($status) {
-		case -1 :
-			$desc = "已删除";
-			break;
-		case 0 :
-			$desc = "禁用";
-			break;
-		case 1 :
-			$desc = "正常";
-			break;
-		case 2 :
-			$desc = "待审核";
-			break;
-		case 3 :
-			$desc = "通过";
-			break;
-		case 4 :
-			$desc = "不通过";
-			break;
-		default :
-			break;
-	}
-	return $desc;
+    $desc = '未知状态';
+    switch($status) {
+        case -1 :
+            $desc = "已删除";
+            break;
+        case 0 :
+            $desc = "禁用";
+            break;
+        case 1 :
+            $desc = "正常";
+            break;
+        case 2 :
+            $desc = "待审核";
+            break;
+        case 3 :
+            $desc = "通过";
+            break;
+        case 4 :
+            $desc = "不通过";
+            break;
+        default :
+            break;
+    }
+    return $desc;
 }
 
 /**
@@ -242,28 +238,28 @@ function getSkin($skin) {
  * @internal param string $level level标记字段
  */
 function list_to_tree($list, $pk = 'id', $pid = 'pid', $child = '_child', $root = 0) {
-	// 创建Tree
-	$tree = array();
-	if (is_array($list)) {
-		// 创建基于主键的数组引用
-		$refer = array();
-		foreach ($list as $key => $data) {
-			$refer[$data[$pk]] = &$list[$key];
-		}
-		foreach ($list as $key => $data) {
-			// 判断是否存在parent
-			$parentId = $data[$pid];
-			if ($root == $parentId) {
-				$tree[] = &$list[$key];
-			} else {
-				if (isset($refer[$parentId])) {
-					$parent = &$refer[$parentId];
-					$parent[$child][] = &$list[$key];
-				}
-			}
-		}
-	}
-	return $tree;
+    // 创建Tree
+    $tree = array();
+    if (is_array($list)) {
+        // 创建基于主键的数组引用
+        $refer = array();
+        foreach ($list as $key => $data) {
+            $refer[$data[$pk]] = &$list[$key];
+        }
+        foreach ($list as $key => $data) {
+            // 判断是否存在parent
+            $parentId = $data[$pid];
+            if ($root == $parentId) {
+                $tree[] = &$list[$key];
+            } else {
+                if (isset($refer[$parentId])) {
+                    $parent = &$refer[$parentId];
+                    $parent[$child][] = &$list[$key];
+                }
+            }
+        }
+    }
+    return $tree;
 }
 
 /**
@@ -276,44 +272,44 @@ function list_to_tree($list, $pk = 'id', $pid = 'pid', $child = '_child', $root 
  * @author yangweijie <yangweijiester@gmail.com>
  */
 function tree_to_list($tree, $child = '_child', $order = 'id', &$list = array()) {
-	if (is_array($tree)) {
-		foreach ($tree as $key => $value) {
-			$reffer = $value;
-			if (isset($reffer[$child])) {
-				unset($reffer[$child]);
-				tree_to_list($value[$child], $child, $order, $list);
-			}
-			$list[] = $reffer;
-		}
-		$list = list_sort_by($list, $order, $sortby = 'asc');
-	}
-	return $list;
+    if (is_array($tree)) {
+        foreach ($tree as $key => $value) {
+            $reffer = $value;
+            if (isset($reffer[$child])) {
+                unset($reffer[$child]);
+                tree_to_list($value[$child], $child, $order, $list);
+            }
+            $list[] = $reffer;
+        }
+        $list = list_sort_by($list, $order, $sortby = 'asc');
+    }
+    return $list;
 }
 
 /**
  * 获取图片表的图片链接
  */
 function getPictureURL($localpath, $remoteurl) {
-	if (strpos($remoteurl, "http") === 0) {
-		return $remoteurl;
-	}
-	return __ROOT__ . $localpath;
+    if (strpos($remoteurl, "http") === 0) {
+        return $remoteurl;
+    }
+    return __ROOT__ . $localpath;
 }
 
 function GUID() {
-	if (function_exists('com_create_guid') === true) {
-		return trim(com_create_guid(), '{}');
-	}
+    if (function_exists('com_create_guid') === true) {
+        return trim(com_create_guid(), '{}');
+    }
 
-	return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+    return sprintf('%04X%04X-%04X-%04X-%04X-%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
 }
 
 function addWeixinLog($data, $operator = '') {
-	$log['ctime'] = time();
-	$log['loginfo'] = is_array($data) ? serialize($data) : $data;
-	$log['operator'] = $operator;
-	$weixinlog = new \Common\Model\WeixinLogModel();
-	$weixinlog -> add($log);
+    $log['ctime'] = time();
+    $log['loginfo'] = is_array($data) ? serialize($data) : $data;
+    $log['operator'] = $operator;
+    $weixinlog = new \Common\Model\WeixinLogModel();
+    $weixinlog -> add($log);
 }
 
 /**
@@ -321,45 +317,45 @@ function addWeixinLog($data, $operator = '') {
  */
 function getOrderStatus($status) {
 
-	switch($status) {
-		case \Shop\Model\OrdersModel::ORDER_COMPLETED :
-			return "已完成";
-		case \Shop\Model\OrdersModel::ORDER_RETURNED :
-			return "已退货";
-		case \Shop\Model\OrdersModel::ORDER_SHIPPED :
-			return "已发货";
-		case \Shop\Model\OrdersModel::ORDER_TOBE_CONFIRMED :
-			return "待确认";
-		case \Shop\Model\OrdersModel::ORDER_TOBE_SHIPPED :
-			return "待发货";
-		case \Shop\Model\OrdersModel::ORDER_CANCEL :
-			return "订单已关闭";
-		case \Shop\Model\OrdersModel::ORDER_RECEIPT_OF_GOODS :
-			return "已收货";
-		case \Shop\Model\OrdersModel::ORDER_BACK :
-			return "卖家退回";
-		default :
-			return "未知";
-	}
+    switch($status) {
+        case \Common\Model\OrdersModel::ORDER_COMPLETED :
+            return "已完成";
+        case \Common\Model\OrdersModel::ORDER_RETURNED :
+            return "已退货";
+        case \Common\Model\OrdersModel::ORDER_SHIPPED :
+            return "已发货";
+        case \Common\Model\OrdersModel::ORDER_TOBE_CONFIRMED :
+            return "待确认";
+        case \Common\Model\OrdersModel::ORDER_TOBE_SHIPPED :
+            return "待发货";
+        case \Common\Model\OrdersModel::ORDER_CANCEL :
+            return "订单已关闭";
+        case \Common\Model\OrdersModel::ORDER_RECEIPT_OF_GOODS :
+            return "已收货";
+        case \Common\Model\OrdersModel::ORDER_BACK :
+            return "卖家退回";
+        default :
+            return "未知";
+    }
 }
 
 /**
  * 获取支付状态的文字描述
  */
 function getPayStatus($status) {
-	switch($status) {
-		case \Shop\Model\OrdersModel::ORDER_PAID :
-			return "已支付";
-		case \Shop\Model\OrdersModel::ORDER_TOBE_PAID :
-			return "待支付";
-		case \Shop\Model\OrdersModel::ORDER_REFUND :
-			return "已退款";
-		case \Shop\Model\OrdersModel::ORDER_CASH_ON_DELIVERY :
-			return "货到付款";
-			
-		default :
-			return "未知";
-	}
+    switch($status) {
+        case \Common\Model\OrdersModel::ORDER_PAID :
+            return "已支付";
+        case \Common\Model\OrdersModel::ORDER_TOBE_PAID :
+            return "待支付";
+        case \Common\Model\OrdersModel::ORDER_REFUND :
+            return "已退款";
+        case \Common\Model\OrdersModel::ORDER_CASH_ON_DELIVERY :
+            return "货到付款";
+
+        default :
+            return "未知";
+    }
 }
 
 /**
@@ -367,7 +363,7 @@ function getPayStatus($status) {
  * TODO: 考虑从数据库中获取
  */
 function getDatatree($code) {
-	return C("DATATREE." . $code);
+    return C("DATATREE." . $code);
 }
 
 /**
@@ -379,97 +375,97 @@ function getDatatree($code) {
  * @return int
  */
 function fsockopenRequest($url,$post_data = array(),$method="POST", $cookie = array(), $repeat = 1) {
-	if($method == "POST"){
-		
-	}else{
-		$method = "GET";
-	}
-	//通过POST或者GET传递一些参数给要触发的脚本
-	$url_array = parse_url($url);
-	//获取URL信息
-	$port = isset($url_array['port']) ? $url_array['port'] : 80;
-	//5秒超时
-	$fp = @fsockopen($url_array['host'], $port, $errno, $errstr, 5);
-	if (!$fp) {
-		//连接失败
-		return 0;
-	}
-	//非阻塞设置
-	stream_set_blocking($fp, FALSE);
-	$getPath = $url_array['path'] . "?" . $url_array['query'];
-	
-	$header = $method . " " . $getPath;
-	$header .= " HTTP/1.1\r\n";
-	$header .= "Host: " . $url_array['host'] . "\r\n";
-	//HTTP 1.1 Host域不能省略
-	/*以下头信息域可以省略 */
+    if($method == "POST"){
 
-	$header .= "Referer:http://" . $url_array['host'] . " \r\n";
+    }else{
+        $method = "GET";
+    }
+    //通过POST或者GET传递一些参数给要触发的脚本
+    $url_array = parse_url($url);
+    //获取URL信息
+    $port = isset($url_array['port']) ? $url_array['port'] : 80;
+    //5秒超时
+    $fp = @fsockopen($url_array['host'], $port, $errno, $errstr, 5);
+    if (!$fp) {
+        //连接失败
+        return 0;
+    }
+    //非阻塞设置
+    stream_set_blocking($fp, FALSE);
+    $getPath = $url_array['path'] . "?" . $url_array['query'];
+
+    $header = $method . " " . $getPath;
+    $header .= " HTTP/1.1\r\n";
+    $header .= "Host: " . $url_array['host'] . "\r\n";
+    //HTTP 1.1 Host域不能省略
+    /*以下头信息域可以省略 */
+
+    $header .= "Referer:http://" . $url_array['host'] . " \r\n";
 //	$header .= "User-Agent:Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X; en-us) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53 \r\n";
 //	$header .= "Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8 \r\n";
 //	$header .= "Accept-Language:zh-CN,zh;q=0.8,en;q=0.6 \r\n";
 //	$header .= "Accept-Encoding:gzip, deflate, sdch \r\n";
 
-	$header .= "Connection:Close\r\n";
+    $header .= "Connection:Close\r\n";
 //			$header .= "Keep-Alive: 3\r\n";
 //			$header .= "Connection: keep-alive\r\n";
-			
-	//需要重复2次
-	if (!empty($cookie)) {
-		$_cookie = strval(NULL);
-		foreach ($cookie as $k => $v) {
-			$_cookie .= $k . "=" . $v . "; ";
-		}
-		$cookie_str = "Cookie: " . base64_encode($_cookie) . " \r\n";
-		//传递Cookie
-		$header .= $cookie_str;
-	}
-	if (!empty($post_data)) {
-		$_post = strval(NULL);
-		$i == 0;
-		foreach ($post_data as $k => $v) {
-			if ($i == 0) {
-				$_post .= $k . "=" . $v;
-			} else {
-				$_post .= '&'.$k . "=" . urlencode($v);
-			}
-			$i++;
-		}
 
-		//			$post_str = "Content-Type: multipart/form-data; charset=UTF-8	\r\n";
-		$post_str = "Content-Type: application/x-www-form-urlencoded; charset=UTF-8	\r\n";
-		//			$_post = "username=demo&password=hahaha";
-		$post_str .= "Content-Length: " . strlen($_post) . "\r\n";
-		$post_str .= "\r\n";
-		//POST数据的长度
-		$post_str .= $_post;
-		//传递POST数据
-		$header .= $post_str;
-	}else{
-		$header .= "\r\n";
-	}
+    //需要重复2次
+    if (!empty($cookie)) {
+        $_cookie = strval(NULL);
+        foreach ($cookie as $k => $v) {
+            $_cookie .= $k . "=" . $v . "; ";
+        }
+        $cookie_str = "Cookie: " . base64_encode($_cookie) . " \r\n";
+        //传递Cookie
+        $header .= $cookie_str;
+    }
+    if (!empty($post_data)) {
+        $_post = strval(NULL);
+        $i == 0;
+        foreach ($post_data as $k => $v) {
+            if ($i == 0) {
+                $_post .= $k . "=" . $v;
+            } else {
+                $_post .= '&'.$k . "=" . urlencode($v);
+            }
+            $i++;
+        }
+
+        //			$post_str = "Content-Type: multipart/form-data; charset=UTF-8	\r\n";
+        $post_str = "Content-Type: application/x-www-form-urlencoded; charset=UTF-8	\r\n";
+        //			$_post = "username=demo&password=hahaha";
+        $post_str .= "Content-Length: " . strlen($_post) . "\r\n";
+        $post_str .= "\r\n";
+        //POST数据的长度
+        $post_str .= $_post;
+        //传递POST数据
+        $header .= $post_str;
+    }else{
+        $header .= "\r\n";
+    }
 //	dump($header);
-	fwrite($fp, $header);
-	//TODO: 从返回结果来判断是否成功
-	//		$result = "";
-	//		while(!feof($fp)){//测试文件指针是否到了文件结束的位置
-	//		   $result.= fgets($fp,128);
-	//		}
+    fwrite($fp, $header);
+    //TODO: 从返回结果来判断是否成功
+    //		$result = "";
+    //		while(!feof($fp)){//测试文件指针是否到了文件结束的位置
+    //		   $result.= fgets($fp,128);
+    //		}
 
-	//		$result = split("\r\n", $result);
-	//		for($i=count($result)-1;$i>=0;$i--){
-	//			dump($result);
-	//		}
+    //		$result = split("\r\n", $result);
+    //		for($i=count($result)-1;$i>=0;$i--){
+    //			dump($result);
+    //		}
 
-	fclose($fp);
-	return 1;
+    fclose($fp);
+    return 1;
 }
 /**
  * 获取当前完整url
  */
 function getCurrentURL(){
-	$url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-	return $url;
+    $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+    return $url;
 }
 
 
@@ -491,18 +487,14 @@ function action_log($action = null, $model = null, $record_id = null, $user_id =
     if(empty($user_id)){
         $user_id = is_login();
     }
-	
-	
+
     //查询行为,判断是否执行
-    $action_info = apiCall("Admin/Action/getInfo", array(array("name"=>$action)));
-	
-	
-//	dump($action_info);
+    $action_info = apiCall(\Admin\Api\ActionApi::GET_INFO, array(array("name"=>$action)));
     if($action_info['status'] && is_array($action_info['info'])  && $action_info['info']['status'] != 1){
-    		
+
         return '该行为被禁用或删除';
     }
-	$action_info = $action_info['info'];
+    $action_info = $action_info['info'];
     //插入行为日志
     $data['action_id']      =   $action_info['id'];
     $data['user_id']        =   $user_id;
@@ -510,7 +502,7 @@ function action_log($action = null, $model = null, $record_id = null, $user_id =
     $data['model']          =   $model;
     $data['record_id']      =   $record_id;
     $data['create_time']    =   NOW_TIME;
-	
+
     //解析日志规则,生成日志备注
     if(!empty($action_info['log'])){
         if(preg_match_all('/\[(\S+?)\]/', $action_info['log'], $match)){//匹配[]，获取[]里的字符串
@@ -519,15 +511,16 @@ function action_log($action = null, $model = null, $record_id = null, $user_id =
             $log['model']   =   $model;
             $log['time']    =   NOW_TIME;
             $log['data']    =   array('user'=>$user_id,'model'=>$model,'record'=>$record_id,'time'=>NOW_TIME);
+            $replace = array();
             foreach ($match[1] as $value){
                 $param = explode('|', $value);//分割字符串通过|
+
                 if(isset($param[1])){
                     $replace[] = call_user_func($param[1],$log[$param[0]]);//调用函数
                 }else{
                     $replace[] = $log[$param[0]];
                 }
             }
-			
             $data['remark'] =   str_replace($match[0], $replace, $action_info['log']);
         }else{
             $data['remark'] =   $action_info['log'];
@@ -536,14 +529,14 @@ function action_log($action = null, $model = null, $record_id = null, $user_id =
         //未定义日志规则，记录操作url
         $data['remark']     =   '操作url：'.$_SERVER['REQUEST_URI'];
     }
-	
-	$result = apiCall("Admin/ActionLog/add", array($data));
-	
-	if(!$result['status']){
-		LogRecord("记录操作日志失败!", $result['info']);
-	}
-//  M('ActionLog')->add($data);
-		
+    $result = apiCall(\Admin\Api\ActionLogApi::ADD, array($data));
+
+    if(!$result['status']){
+        LogRecord("记录操作日志失败!", $result['info']);
+    }
+
+//    M('ActionLog','common_')->add($data);
+
     if(!empty($action_info['rule'])){
         //解析行为
         $rules = parse_action($action, $user_id);
@@ -572,7 +565,7 @@ function parse_action($action = null, $self){
     if(empty($action)){
         return false;
     }
-	
+
     //参数支持id或者name
     if(is_numeric($action)){
         $map = array('id'=>$action);
@@ -581,17 +574,17 @@ function parse_action($action = null, $self){
     }
 
     //查询行为信息
-  	$result = apiCall("Admin/Action/getInfo", array($map));
-	if(!$result['status']){
-		return false;
-	}
-	
-	$info = $result['info'];
+    $result = apiCall(\Admin\Api\ActionApi::GET_INFO, array($map));
+    if(!$result['status']){
+        return false;
+    }
+
+    $info = $result['info'];
     if(is_null($info) || $info['status'] != 1){
         return false;
     }
-	
-    //解析规则:table:$table|field:$field|condition:$condition|rule:$rule[|cycle:$cycle|max:$max][;......]
+
+    //解析规则:prefix:common_|table:$table|field:$field|condition:$condition|rule:$rule[|cycle:$cycle|max:$max][;......]
     $rules = $info['rule'];
     $rules = str_replace('{$self}', $self, $rules);
     $rules = explode(';', $rules);
@@ -609,7 +602,7 @@ function parse_action($action = null, $self){
             unset($return[$key]['cycle'],$return[$key]['max']);
         }
     }
-	
+
     return $return;
 }
 
@@ -622,30 +615,35 @@ function parse_action($action = null, $self){
  *
  */
 function execute_action($rules = false, $action_id = null, $user_id = null){
-	
+
     if(!$rules || empty($action_id) || empty($user_id)){
         return false;
     }
-
     $return = true;
+
     foreach ($rules as $rule){
-		
+
         //检查执行周期
         $map = array('action_id'=>$action_id, 'user_id'=>$user_id);
         $map['create_time'] = array('gt', NOW_TIME - intval($rule['cycle']) * 3600);
-		
-		//统计执行次数
-        $exec_count = D('ActionLog')->where($map)->count();
+
+        //统计执行次数
+        $exec_count = M('ActionLog','common_')->where($map)->count();
+
         if($exec_count > $rule['max']){
             continue;
         }
-		
+
+        $prefix = $rule['prefix'];
         //执行数据库操作
-        $Model = D(ucfirst($rule['table']));
+        if(empty($prefix)){
+            $Model = D(ucfirst($rule['table']));
+        }else{
+            $Model = M(ucfirst($rule['table']),$prefix);
+        }
         $field = $rule['field'];
         $res = $Model->where($rule['condition'])->setField($field, array('exp', $rule['rule']));
-		
-//		dump($Model);
+
         if(!$res){
             $return = false;
         }
@@ -653,11 +651,12 @@ function execute_action($rules = false, $action_id = null, $user_id = null){
     return $return;
 }
 
+
 /**
  * 时间戳格式化
  * @param int $time
+ * @param string $format
  * @return string 完整的时间显示
- * @author huajie <banhuajie@163.com>
  */
 function time_format($time = NULL,$format='Y-m-d H:i'){
     $time = $time === NULL ? NOW_TIME : intval($time);
@@ -685,14 +684,14 @@ function get_nickname($uid = 0){
     if(isset($list[$key])){ //已缓存，直接使用
         $name = $list[$key];
     } else { //调用接口获取用户信息
-    		$result = apiCall("Admin/Member/getInfo",array("uid"=>$uid));
-		
+        $result = apiCall("Admin/Member/getInfo",array("uid"=>$uid));
+
 //      $info = M('Member')->field('nickname')->find($uid);
 
         if($result['status'] !== false && $result['info']['nickname'] ){
             $nickname = $result['info']['nickname'];
             $name = $list[$key] = $nickname;
-			
+
             /* 缓存用户 */
             $count = count($list);
             $max   = 1000;
@@ -715,13 +714,13 @@ function get_nickname($uid = 0){
  * @return bool
  */
 function get_action($id = null, $field = null){
-	
+
     if(empty($id) && !is_numeric($id)){
         return false;
     }
-	
+
     $list = S('action_list');
-	
+
     if(empty($list[$id])){
         $map = array('status'=>array('gt', -1), 'id'=>$id);
         $result = apiCall("Admin/Action/getInfo",array($map));
@@ -729,9 +728,9 @@ function get_action($id = null, $field = null){
             $list[$id] = $result['info'];
         }
     }
-	S('action_list',$list);
+    S('action_list',$list);
     $ret = empty($field) ? $list[$id] : $list[$id][$field];
-	
+
     return $ret;
 }
 
