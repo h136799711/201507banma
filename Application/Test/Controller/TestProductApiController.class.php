@@ -29,7 +29,25 @@ class TestProductApiController extends RestController{
         $this->assign("error",$access_token);
     }
 
+
+    /**
+     * 测试分页查询
+     */
     public function testQuery(){
+        $this->display();
+    }
+
+    /**
+     * 测试不分页查询
+     */
+    public function testQueryNoPaging(){
+        $this->display();
+    }
+
+    /**
+     * 商品详情
+     */
+    public function testDetail(){
         $this->display();
     }
 

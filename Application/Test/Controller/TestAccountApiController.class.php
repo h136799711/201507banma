@@ -41,14 +41,25 @@ class TestAccountApiController extends RestController {
         $this->assign("error",$access_token);
     }
 
+
+    /**
+     * ²âÊÔµÇÂ¼
+     */
     public function testLogin(){
         $this->display();
     }
 
+    /**
+     * ²âÊÔ×¢²á
+     */
     public function testRegister(){
         $this->display();
     }
 
+
+    /**
+     * ²âÊÔ¸üĞÂ
+     */
     public function testUpdate(){
         $this->display();
     }

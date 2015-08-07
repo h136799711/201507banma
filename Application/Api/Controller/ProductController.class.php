@@ -12,14 +12,16 @@ class ProductController extends ApiController{
     protected  $allowType = array("json","rss","html");
 
     /**
-     * ²»·ÖÒ³²éÑ¯
+     * ä¸åˆ†é¡µæŸ¥è¯¢
+     * pname å•†å“åç§°
+     *
      */
     public function queryNoPaging(){
-        $notes = "Ó¦ÓÃ".$this->client_id."£¬µ÷ÓÃÉÌÆ·²éÑ¯½Ó¿Ú";
-
+        $notes = "åº”ç”¨".$this->client_id."ï¼Œè°ƒç”¨å•†å“æŸ¥è¯¢æŽ¥å£";
         addLog("Product/queryNoPaging",$_GET,$_POST,$notes);
         $map=array(
-            'name'=>array('like',I('pname','')),
+            'name'=>array('like','%'.I('pname','').'%'),
+            'onshelf'=>1   //å·²ä¸Šæž¶çš„äº§å“
         );
         $result=apiCall(ProductApi::QUERY_NO_PAGING,array($map));
         if($result['status']){
@@ -27,50 +29,68 @@ class ProductController extends ApiController{
         }else{
             $this->apiReturnErr($result['info']);
         }
-
     }
 
     /**
-     * ·ÖÒ³²éÑ¯
-     * pname:Ãû³Æ£¨Ä£ºý²éÑ¯£©
-     * curpage:µ±Ç°Ò³
-     * size:ÏÔÊ¾¸öÊý
+     * åˆ†é¡µæŸ¥è¯¢
+     * pname:åç§°ï¼ˆæ¨¡ç³ŠæŸ¥è¯¢ï¼‰
+     * pageNo:å½“å‰é¡µ
+     * pageSize:æ˜¾ç¤ºä¸ªæ•°
      */
     public function query(){
-        $notes = "Ó¦ÓÃ".$this->client_id."£¬µ÷ÓÃÉÌÆ··ÖÒ³²éÑ¯½Ó¿Ú";
+        $notes = "åº”ç”¨".$this->client_id."ï¼Œè°ƒç”¨å•†å“åˆ†é¡µæŸ¥è¯¢æŽ¥å£";
         addLog("Product/queryNoPaging",$_GET,$_POST,$notes);
         $map=array(
-            'name'=>array('like','%'.I('pname','').'%'),   //Ä£ºý²éÑ¯
-            'onshelf'=>1   //ÒÑÉÏ¼ÜµÄ²úÆ·
+            'name'=>array('like','%'.I('pname','').'%'),   //æ¨¡ç³ŠæŸ¥è¯¢
+            'onshelf'=>1   //å·²ä¸Šæž¶çš„äº§å“
         );
-        $page = array('curpage'=>I('curpage',0),'size'=>I('size',10)); //·ÖÒ³²úÆ·
+        $page = array('curpage'=>I('pageNo',0),'size'=>I('pageSize',10)); //åˆ†é¡µäº§å“
 
         $result=apiCall(ProductApi::QUERY,array($map,$page));
         if($result['status']){
             $this->apiReturnSuc($result['info']['list']);
         }else{
-            $this->apiReturnErr("ÔÝÎÞÉÌÆ·");
+            $this->apiReturnErr("æš‚æ— å•†å“");
         }
     }
 
 
+    /**
+     * å•†å“è¯¦æƒ…å±•ç¤º
+     * pid å•†å“ID
+     */
     public function detail(){
+        $notes = "åº”ç”¨".$this->client_id."ï¼Œè°ƒç”¨å•†å“è¯¦æƒ…æŽ¥å£";
+        addLog("Product/detail",$_GET,$_POST,$notes);
+        $pid=I('pid',0);
+        if($pid==0){
+            $this->apiReturnErr("è¯·é€šè¿‡æ­£å¸¸é€”å¾„è®¿é—®å•†å“è¯¦æƒ…ï¼");
+        }
+        $map=array(
+            'id'=>$pid,
+        );
+        $result=apiCall(ProductApi::QUERY_NO_PAGING,array($map));
+        if($result['status']){
+            $this->apiReturnSuc($result['info'][0]);
+        }else{
+            $this->apiReturnErr("ä¸å­˜åœ¨çš„å•†å“ID");
+        }
 
     }
 
 
     function getSupportMethod()
     {
-        return array(
+     /*   return array(
             'item'=>array(
                 'param'=>'access_token|username|password',
-                'return'=>'array(\"status\"=>·µ»Ø×´Ì¬,\"info\"=>\"ÐÅÏ¢\")',
+                'return'=>'array(\"status\"=>è¿”å›žçŠ¶æ€,\"info\"=>\"ä¿¡æ¯\")',
                 'author'=>'hebidu [hebiduhebi@163.com]',
                 'version'=>'1.0.0',
-                'description'=>'ÓÃ»§µÇÂ¼ÑéÖ¤',
+                'description'=>'ç”¨æˆ·ç™»å½•éªŒè¯',
                 'demo_url'=>'http://manual.itboye.com#',
             ),
-        );
+        );*/
 
     }
 }

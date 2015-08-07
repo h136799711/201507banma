@@ -102,7 +102,7 @@ class OrdersController extends AdminController {
 		}
 
 		$map = array();
-		$map['wxaccountid'] = getWxAccountID();
+		//$map['wxaccountid'] = getWxAccountID();
 		if (!empty($orderid)) {
 			$map['orderid'] = array('like', $orderid . '%');
 
@@ -121,7 +121,7 @@ class OrdersController extends AdminController {
 		$order = " createtime desc ";
 
 		if ($userid > 0) {
-			$map['wxuser_id'] = $userid;
+			$map['uid'] = $userid;
 		}
 
 		//
@@ -158,7 +158,7 @@ class OrdersController extends AdminController {
 			$map['pay_status'] = $payStatus;			
 		}
 		
-		$map['wxaccountid']=getWxAccountID();
+		//$map['wxaccountid']=getWxAccountID();
 		$page = array('curpage' => I('get.p', 0), 'size' => C('LIST_ROWS'));
 		$order = " createtime desc ";
 
@@ -167,7 +167,7 @@ class OrdersController extends AdminController {
 			$params['orderid'] = $orderid;
 		}
 		if ($userid > 0) {
-			$map['wxuser_id'] = $userid;
+			$map['uid'] = $userid;
 			$params['uid'] = $userid;
 		}
 
@@ -178,7 +178,7 @@ class OrdersController extends AdminController {
 		if ($result['status']) {
 			$this -> assign('orderid', $orderid);
 			$this -> assign('payStatus', $payStatus);
-			$this -> assign('orderStatus', $orderStatus);
+			//$this -> assign('orderStatus', $orderStatus);
 			$this -> assign('show', $result['info']['show']);
 			$this -> assign('list', $result['info']['list']);
 			$this -> display();
@@ -198,8 +198,8 @@ class OrdersController extends AdminController {
 		$params = array();
 
 		$map = array();
-		$map['wxaccountid']=getWxAccountID();
-		$params['wxaccountid'] = $map['wxaccountid'];
+		//$map['wxaccountid']=getWxAccountID();
+		//$params['uid'] = $map['uid'];
 		if (!empty($orderid)) {
 			$map['orderid'] = array('like', $orderid . '%');
 			$params['orderid'] = $orderid;
@@ -219,7 +219,7 @@ class OrdersController extends AdminController {
 		$order = " createtime desc ";
 
 		if ($userid > 0) {
-			$map['wxuser_id'] = $userid;
+			$map['u'] = $userid;
 		}
 
 		//
@@ -368,7 +368,7 @@ class OrdersController extends AdminController {
 				$map['orderid'] = array('like', $orderid . '%');
 				$params['orderid'] = $orderid;
 			}
-			$map['wxaccountid'] = getWxAccountID();
+			//$map['wxaccountid'] = getWxAccountID();
 			$map['order_status'] = $orderStatus;
 			$map['pay_status'] = OrdersModel::ORDER_PAID;
 			
@@ -377,7 +377,7 @@ class OrdersController extends AdminController {
 			$order = " createtime desc ";
 
 			if ($userid > 0) {
-				$map['wxuser_id'] = $userid;
+				$map['uid'] = $userid;
 			}
 
 			//

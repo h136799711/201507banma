@@ -67,6 +67,13 @@ class UserController extends ApiController{
 
     /**
      * POST: 注册
+     * username 用户名
+     * password 密码
+     * mobile 手机
+     * realname真实姓名
+     * email 电子邮箱
+     * idnumber身份证号
+     * birthday生日
      */
     public function register(){
 
