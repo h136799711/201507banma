@@ -9,6 +9,8 @@ use Shop\Api\ProductApi;
  */
 class ProductController extends ApiController{
 
+    protected  $allowType = array("json","rss","html");
+
     /**
      * ≤ª∑÷“≥≤È—Ø
      */

@@ -13,7 +13,7 @@ use \Common\Api\Api;
 use \Admin\Model\ActionModel;
 
 class ActionApi extends Api{
-
+    const GET_INFO="Admin/Action/getInfo";
 
 	protected function _init(){
 		$this->model = new ActionModel();

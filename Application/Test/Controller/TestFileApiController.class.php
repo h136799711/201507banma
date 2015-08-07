@@ -1,15 +1,36 @@
 <?php
-namespace Test\Controller;
-use Think\Controller\RestController;
-use Api\Service\OAuth2ClientService;
 /**
  * Created by PhpStorm.
- * User: an
- * Date: 2015/8/7
- * Time: 13:50
+ * User: hebidu
+ * Date: 15/7/3
+ * Time: 09:45
  */
 
-class TestProductApiController extends RestController{
+namespace Test\Controller;
+
+use Api\Service\OAuth2ClientService;
+use Common\Api\AccountApi;
+use Think\Controller\RestController;
+use Uclient\Model\OAuth2TypeModel;
+
+/**
+ *
+ *
+ * @Test AccountApi
+ * Class TestAccountApiController
+ * @package Test\Controller
+ *
+ */
+class TestFileApiController extends RestController {
+
+    public function test(){
+        $url = ".3432432./4534.dasffa...jpg.png";
+        $arr = parse_url($url);
+
+        $file = basename($arr['path']);
+        $ext = explode(".",$file);
+        dump($ext[count($ext)-1]);
+    }
 
     public function __construct(){
         parent::__construct();
@@ -29,9 +50,8 @@ class TestProductApiController extends RestController{
         $this->assign("error",$access_token);
     }
 
-    public function testQuery(){
+    public function testUpload(){
         $this->display();
     }
-
 
 }

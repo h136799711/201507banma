@@ -13,7 +13,7 @@ class OAuth2ClientService {
 
     private $client_id;
     private $client_secret;
-    private $site_url = "http://192.168.0.100/github/201507lanbao/index.php";
+    private $site_url = "http://localhost/github/201507banma/index.php";
     public function __construct($config){
 
         if(!isset($config['client_id']) || !isset($config['client_secret'])){

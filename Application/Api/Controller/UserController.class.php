@@ -36,7 +36,7 @@ class UserController extends ApiController{
      * @internal param post.username
      * @internal param post.password
      */
-    public  function login_post(){
+    public  function login(){
 
 
 
@@ -44,9 +44,9 @@ class UserController extends ApiController{
 
         $password = $this->_post("password");
 
-        $type = $this->_post("type");
+        $type = $this->_post("type",1);
 
-        $from = $this->_post("from");
+        $from = $this->_post("from",0);
 
         $notes = "应用".$this->client_id.":[用户".$username."],调用登录接口,密码：".$password;
 
@@ -123,23 +123,27 @@ class UserController extends ApiController{
         addLog("User/update",$_GET,$_POST,$notes);
 
         if(IS_POST){
+
             $sex = $this->_post('sex',0);
             $nickname= $this->_post('nickname','');
-            $signature = $this->_post("signature",'');
+            $realname = $this->_post("realname",'');
             $birthday = $this->_post('birthday',date("Y-m-d",time()));
-            $height = $this->_post('height',0);
-            $weight = $this->_post('weight',0);
-            $target_weight = $this->_post('target_weight',0);
+            $mobile = $this->_post('mobile','');
+            $email = $this->_post('email','');
+            $qq = $this->_post('qq','');
+            $idnumber = $this->_post('idnumber','');
+
 
             $uid = $this->_post('uid',0);
             $entity = array(
                 'nickname'=>$nickname,
-                'height'=>$height,
-                'weight'=>$weight,
                 'sex'=>$sex,
-                'target_weight'=>$target_weight,
+                'realname'=>$realname,
                 'birthday'=>$birthday,
-                'signature'=>$signature,
+                'mobile'=>$mobile,
+                'email'=>$email,
+                'qq'=>$qq,
+                'idnumber'=>$idnumber
             );
             $result = apiCall(AccountApi::UPDATE,array($uid,$entity));
 

@@ -1,19 +1,21 @@
 <?php
-namespace Test\Controller;
-use Think\Controller\RestController;
-use Api\Service\OAuth2ClientService;
 /**
  * Created by PhpStorm.
- * User: an
- * Date: 2015/8/7
- * Time: 13:50
+ * User: hebidu
+ * Date: 15/7/29
+ * Time: 20:14
  */
 
-class TestProductApiController extends RestController{
+namespace Test\Controller;
+
+
+use Api\Service\OAuth2ClientService;
+use Think\Controller;
+
+class TestBicyledataController extends Controller{
 
     public function __construct(){
         parent::__construct();
-
         $client_id = C('CLIENT_ID');
         $client_secret = C('CLIENT_SECRET');
         $config = array(
@@ -23,15 +25,23 @@ class TestProductApiController extends RestController{
         );
         $client = new OAuth2ClientService($config);
         $access_token = $client->getAccessToken();
+//        dump($access_token);
+//        exit();
         if($access_token['status']){
-            $this->assign("access_token",$access_token['info']);
+            $this->assign("access_token",$access_token['info']['access_token']);
         }
         $this->assign("error",$access_token);
     }
 
-    public function testQuery(){
+    public function testAdd(){
+        $this->display();
+    }
+    public function testDay(){
         $this->display();
     }
 
+    public function testMonth(){
+        $this->display();
+    }
 
 }

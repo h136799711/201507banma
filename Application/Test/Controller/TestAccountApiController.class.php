@@ -8,8 +8,9 @@
 
 namespace Test\Controller;
 
+use Api\Service\OAuth2ClientService;
 use Common\Api\AccountApi;
-use Think\Controller;
+use Think\Controller\RestController;
 use Uclient\Model\OAuth2TypeModel;
 
 /**
@@ -20,58 +21,60 @@ use Uclient\Model\OAuth2TypeModel;
  * @package Test\Controller
  *
  */
-class TestAccountApiController extends Controller {
+class TestAccountApiController extends RestController {
+
+    public function __construct(){
+        parent::__construct();
+
+        $client_id = C('CLIENT_ID');
+        $client_secret = C('CLIENT_SECRET');
+        $config = array(
+            'client_id'=>$client_id,
+            'client_secret'=>$client_secret,
+            'site_url'=>C("SITE_URL"),
+        );
+        $client = new OAuth2ClientService($config);
+        $access_token = $client->getAccessToken();
+        if($access_token['status']){
+            $this->assign("access_token",$access_token['info']);
+        }
+        $this->assign("error",$access_token);
+    }
+
+    public function testLogin(){
+        $this->display();
+    }
+
+    public function testRegister(){
+        $this->display();
+    }
+
+    public function testUpdate(){
+        $this->display();
+    }
+
 
     /**
-     * ²âÊÔ×¢²á
+     *
      */
-    public  function register(){
+    public  function index(){
         import("Org.String");
 
         $username = \String::randString(9,0);
 
-        //$password = \String::randString(6);
-
-        $password="123456";
+        $password = \String::randString(6);
 
         $entity = [
             'username'=>$username,
             'password'=>$password,
             'from'=>OAuth2TypeModel::OTHER_APP,
-            'realname'=>'lisi',
             'email'=>'',
             'phone'=>'',
         ];
 
-        $result =  AccountApi::REGISTER($entity);
+//        $result =  AccountApi::REGISTER($entity);
         
-        $this->ajaxReturn($result,"xml");
+//        $this->ajaxReturn($result,"xml");
     }
 
-    /**
-     * ²âÊÔµÇÂ¼
-     */
-    public function login(){
-       // AccountApi::LOGIN($entity);
-        $username="McpTodWRY";
-        $password="123456";
-        $type=1;
-        $from="99";
-        $result= apiCall(AccountApi::LOGIN,array($username, $password,$type, $from));
-        $this->ajaxReturn($result,"xml");
-
-    }
-
-
-    /**
-     * ¸ù¾Ýid»ñÈ¡
-     */
-    public function getInfo(){
-
-        $result = apiCall(AccountApi::GET_INFO,array(1));
-
-        $this->ajaxReturn($result,"xml");
-
-    }
-    
 }
