@@ -1,0 +1,111 @@
+<extend name="template/base_index" />
+
+<block name="area_header">
+	<style type="text/css">
+		.all {
+			background-color: #F5F5F5;
+			height: 1100px;
+		}
+		.top {
+			height: 100px;
+			background-color: #FFFFFF;
+			border-bottom: 2px solid orangered;
+		}
+		.userinfo{margin-left: 65%; margin-top: -25px; font-size: 13px;}
+		 a{ color: #000000;}
+		 .order-info{ height: 150px;background-color: #FFFFFF; margin: 0 auto; width: 65%; padding: 30px;}
+		 .fl{float: left; height: 100%; float: 60%; margin-left: 20px;}
+		 .fr{float: right; height: 100%; width: 30%; }
+		 .order-detail{background-color: #FFFFFF; margin: 0 auto; width: 65%; padding-left: 80px; padding-top: 20px; padding-bottom: 20px;}
+		 .order-detail ul li{ list-style: none;}
+		 .content{padding-left: 30px; padding-top: 5px; }
+		 .paytype{margin-top: 20px; padding: 30px;background-color: #FFFFFF;margin: 0 auto; width: 65%;}
+	</style>
+</block>
+
+<block name="area_body">
+	<div class="all">
+		<div class="top">
+			<div style=" margin-left: 22%;">
+				<br>
+				<font size="5">支付订单</font>
+			</div>
+			<div class="userinfo">
+				<a href=""> 用户名：3432423423&nbsp;<i class="am-icon-chevron-down"></i></a>&nbsp;&nbsp;&nbsp;
+				<a href="">我的订单</a>
+			</div>
+		</div>
+		<div class="order-info clearfix">
+			<i class="am-icon-check-square-o" style="font-size: 53px; float: left; color: green;"></i>
+			<div class="fl">
+				
+				<font size="5" class="title">您的订单已提交成功！付款咯～成功付款后，7天发货</font>
+				<p class="order-time"></p>
+				<p class="post-info" id="J_postInfo">
+					收货信息：王玉国 178****3305 &nbsp;&nbsp; 浙江&nbsp;&nbsp;杭州市&nbsp;&nbsp;江干区&nbsp;&nbsp;下沙街道啊啊 </p>
+			</div>
+			<div class="fr">
+				<p class="total">
+					应付总额：<span class="money"><em style="color: orangered; font-size: 25px;">1683.90</em>元</span>
+				</p>
+				<a href="javascript:void(0);" class="show-detail" id="J_showDetail" >订单详情<i class="am-icon-chevron-down"></i></a>
+			</div>
+		</div>
+		<div class="order-detail" style="display: none;" >
+			<ul>
+				<li class="clearfix">
+					<div class="label">订单号：</div>
+					<div class="content">
+						<span class="order-num">
+                            1150807620008184                                
+						</span>
+					</div>
+				</li>
+				<li class="clearfix">
+					<div class="label">收货信息：</div>
+					<div class="content">
+						王玉国 178****3305&nbsp;&nbsp; 浙江&nbsp;&nbsp;杭州市&nbsp;&nbsp;江干区&nbsp;&nbsp;下沙街道啊啊 </div>
+				</li>
+				<li class="clearfix">
+					<div class="label">商品名称：</div>
+					<div class="content">
+						小米平板 16GB 柠黄色</div>
+						
+				</li>
+				<li class="clearfix">
+					<div class="label">配送时间：</div>
+					<div class="content">
+						不限送货时间 </div>
+				</li>
+				<li class="clearfix">
+					<div class="label">发票信息：</div>
+					<div class="content">
+						个人 </div>
+				</li>
+			</ul>
+		</div><br>
+		<div class="paytype">
+			<h2>请选择支付方式</h2>
+			<hr>
+			<h3>支付平台(目前仅支持支付宝)</h3>
+			<div style="height: 70px; width: 160px; ">
+				<a href=""><img height="100%" width="100%" src="__PUBLIC__/Shop/img/alipay.jpg" /></a> 
+			</div>
+		</div><br><br>
+		<font style="margin-left: 45%; ">杭州博也网络科技版权所有</font>
+	</div>
+	
+</block>
+
+<block name="area_footer">
+	<script type="text/javascript">
+		$(function(){
+			$('.order-detail').hide();
+			$('#J_showDetail').click(function(){
+				$('.order-detail').toggle(function(){
+					
+				})
+			})
+		})
+	</script>
+</block>

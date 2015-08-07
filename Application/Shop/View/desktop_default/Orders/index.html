@@ -1,0 +1,110 @@
+<extend name="template/base_index" />
+
+<block name="area_header">
+	<style type="text/css">
+		.all{background-color: #F5F5F5; height: 1100px; }
+		.top{ height: 100px; background-color: #FFFFFF; border-bottom: 2px solid orangered;}
+		.main{ width: 60%; height: 920px; background-color: #FFFFFF; margin: 0 auto; padding: 38px;}
+		.main a{ margin-left: 50px; font-size: 18px;}
+		.userinfo{margin-left: 65%; margin-top: -25px; font-size: 13px;}
+		.dizhi {height: 150px; width: 200px;border: 1px solid #F5F5F5; float: left;}
+		
+		.dizhi i{font-size: 33px; display:flex; justify-content:center; padding-top: 15%;}
+		.count{ height: 200px;  width: 250px; margin-left: 73%; }
+		.count table tr td{padding-top: 22px; width: 99px; }
+		.count table tr td font{color: orangered;}
+		 a{ color: #000000;}
+	</style>
+</block>
+
+<block name="area_body">
+	<div class="all">
+		<div class="top">
+			<div style=" margin-left: 22%;">
+				<br>
+				<font size="5">确认订单</font>
+			</div>
+			<div class="userinfo">
+				<a href=""> 用户名：3432423423&nbsp;<i class="am-icon-chevron-down"></i></a>&nbsp;&nbsp;&nbsp;
+				<a href="">我的订单</a>
+			</div>
+		</div>
+		<br>
+		<br>
+		<div class="main">
+			<font size="4">收货地址</font>
+			<br><br><br>
+			<div class="dizhi">
+				<a href="JavaScript:void(0)"><i class="am-icon-plus-square-o" data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 400, height: 225}"></i></a>
+			</div>
+			
+			<br><br><br><br><br><br><br><br>
+			<font size="4">支付方式</font>
+			<font color="orangered" size="3" style="margin-left: 60px;">目前仅支持支付宝(更多支付方式待增加)</font><hr>
+			<font size="4">配送方式</font>
+			<font color="orangered" size="3" style="margin-left: 60px;">快递配送(免运费或15元)</font><hr>
+			<font size="4">商品发票</font>
+			<font color="orangered" size="3" style="margin-left: 60px;">纸质发票(支持或不支持)</font><hr>
+			<font size="4">商品优惠ID码</font><br>
+			<a href="JavaScript:void(0)">
+				<i class="am-icon-plus-square-o" data-am-modal="{target: '#doc-modal-2', closeViaDimmer: 0, width: 400, height: 225}">
+					
+				</i>
+			</a><hr>
+			<div class="count">
+				<table style="text-align: right; ">
+					<tr>
+						<td>商品件数：</td>
+						<td><font>1件</font></td>
+					</tr>
+					<tr>
+						<td>商品优惠：</td>
+						<td><font>23.20元</font></td>
+					</tr>
+					<tr>
+						<td>商品运费：</td>
+						<td><font>0.00元</font></td>
+					</tr>
+					<tr>
+						<td>商品总计：</td>
+						<td><font>99.82元</font></td>
+					</tr>
+				</table>
+			</div><hr>
+			<button type="button" id="okpay" style="width: 150px; float: right;" class="am-btn am-btn-warning am-round">确认结算</button>
+		</div>
+	</div>
+	<!--添加地址-->
+	<div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-1">
+		<div class="am-modal-dialog">
+			<div class="am-modal-hd">收货地址添加
+				<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+			</div>
+			<div class="am-modal-bd">
+				啊
+			</div>
+		</div>
+	</div>
+	<!--商品优惠id码-->
+	<div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-2">
+		<div class="am-modal-dialog">
+			<div class="am-modal-hd">商品优惠码
+				<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+			</div>
+			<div class="am-modal-bd">
+				
+			</div>
+		</div>
+	</div>
+	<a style="margin-left: 40%;">杭州博也网络科技公司版权所有</a>
+</block>
+
+<block name="area_footer">
+	<script type="text/javascript">
+		$(function(){
+			$('#okpay').click(function(){
+				window.location.href="{:U('Shop/Orders/paytype')}";
+			})
+		})
+	</script>
+</block>
