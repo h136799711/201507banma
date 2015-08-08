@@ -5,7 +5,7 @@
 .brick-item{height: 309px; width: 309px; float: left;}
 .top{  height: 70px; padding: 16px 30px 16px 65px; list-style: none; margin-top: 20px;}
 .board-section{height: 80px; text-align: center;}
-
+*{font-size: 14px !important;}
 
 
 
