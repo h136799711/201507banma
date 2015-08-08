@@ -23,76 +23,10 @@
 		<div class="header-nav clearfix">
 			<div id="J_categoryContainer" class="nav-category nav-category-toggled">
 				<a class="btn-category-list" >全部商品分类</a>
-				<div class="nav-category-section" style="display: block;">
-					<ul class="nav-category-list">
-						<volist name="biggroup" id="vo">
-						<li class="nav-category-item nav-category-item-first">
-							<div class="nav-category-content">
-								<a class="title" >{$vo.name}</a>
-								<div class="links">
-									<volist name="group" id="v">
-										<if condition="$vo['id'] eq $v['parent']">
-											<a href="{:U('Shop/Index/lists',array('id'=>$v['id']))}">{$v.name}</a>
-										</if>
-									</volist>
-									
-								</div>
-							</div>
-						</li>
-						</volist>
-					</ul>
-				</div>
+				
 				
 			</div>
-			<div class="nav-main">
-				<ul class="nav-main-list J_menuNavMain clearfix">
-
-					<li class="nav-main-item">
-						<a ><span class="text">首页</span></a>
-					</li>
-
-					<li class="nav-main-item">
-						<a ><span class="text">小米手机</span><span class="arrow"></span></a>
-						
-					</li>
-
-					<li class="nav-main-item">
-						<a ><span class="text">红米</span><span class="arrow"></span></a>
-						
-					</li>
-
-					<li class="nav-main-item">
-						<a><span class="text">小米平板</span></a>
-					</li>
-
-					<li class="nav-main-item">
-						<a ><span class="text">小米电视</span><span class="arrow"></span></a>
-						
-					</li>
-
-					<li class="nav-main-item">
-						<a ><span class="text">盒子</span><span class="arrow"></span></a>
-						
-					</li>
-
-					<li class="nav-main-item">
-						<a ><span class="text">路由器</span><span class="arrow"></span></a>
-						
-					</li>
-
-					<li class="nav-main-item">
-						<a ><span class="text">合约机</span></a>
-					</li>
-
-					<li class="nav-main-item">
-						<a ><span class="text">服务</span></a>
-					</li>
-
-					<li class="nav-main-item">
-						<a ><span class="text">社区</span></a>
-					</li>
-				</ul>
-			</div>
+			
 		</div>
 		
 	</div>

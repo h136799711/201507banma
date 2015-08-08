@@ -38,7 +38,12 @@ class UserController extends ShopController{
 	public function order(){
 		$this->theme($this->themeType)->display();
 	}
-	
+	/*
+	 * 用户信息
+	 * */
+	public function infoview(){
+		$this->theme($this->themeType)->display();
+	}
 
 }
 
