@@ -22,21 +22,21 @@ class UserController extends ShopController{
 	 * 个人信息
 	 */	
 	public function info(){
-		$this->display();
+		$this->theme($this->themeType)->display();
 	}
 
 	/**
 	 * 个人中心
 	 */
 	public function index(){
-		$this->display();
+		$this->theme($this->themeType)->display();
 	}
 
 	/**
 	 *	订单
 	 */
 	public function order(){
-		$this->display();
+		$this->theme($this->themeType)->display();
 	}
 	
 

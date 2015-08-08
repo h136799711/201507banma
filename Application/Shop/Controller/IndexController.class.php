@@ -36,7 +36,7 @@ class IndexController extends ShopController{
 		$this->assign('group',$result1['info']);
 		$this->assign('new',$result_new['info']['list']);
 //		dump($result_new);
-        $this->display();
+		$this->theme($this->themeType)->display();
     }
 	/*
 	 * 商品分类
@@ -47,7 +47,7 @@ class IndexController extends ShopController{
 		$result=apiCall(ProductApi::QUERY,array($id,$page));
 //		dump($result);
 		$this->assign('lists',$result['info']['list']);
-		$this->display();
+		$this->theme($this->themeType)->display();
 	}
 	/*
 	 * 搜索
@@ -68,7 +68,7 @@ class IndexController extends ShopController{
 	 * */
 	public function register(){
 		if(IS_GET){
-			$this->display();
+			$this->theme($this->themeType)->display();
 		}
 	}
 	/*
@@ -77,7 +77,7 @@ class IndexController extends ShopController{
 	 * */
 	public function login(){
 		if(IS_GET){
-			$this->display();
+			$this->theme($this->themeType)->display();
 		}
 	}
 	
