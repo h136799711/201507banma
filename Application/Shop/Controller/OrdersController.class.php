@@ -35,13 +35,13 @@ class OrdersController extends ShopController {
 	 * 订单确认
 	 * */
 	public function index(){
-		$this->display();
+		$this->theme($this->themeType)->display();
 	}
 	/*
 	 * 支付方式
 	 * */
 	public function paytype(){
-		$this->display();
+		$this->theme($this->themeType)->display();
 	}
 
 }

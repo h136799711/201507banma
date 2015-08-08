@@ -8,12 +8,12 @@
 
 namespace Shop\Controller;
 use Think\Controller;
-class ShopCartController extends Controller {
+class ShopCartController extends ShopController {
 	/*
 	 * 购物车
 	 * */
     public function shopcart(){
-        $this->display();
+       $this->theme($this->themeType)->display();
     }
 	
 	
