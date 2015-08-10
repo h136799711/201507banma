@@ -7,21 +7,12 @@
 // |-----------------------------------------------------------------------------------
 namespace Shop\Controller;
 
-use Admin\Api\DatatreeApi;
+use Common\Api\AccountApi;
+use Uclient\Model\OAuth2TypeModel;
 use Shop\Api\CategoryApi;
-use Shop\Api\BannersApi;
 use Shop\Api\ProductApi;
-use Shop\Model\ProductModel;
-use Weixin\Api\WxuserApi;
-use Ucenter\Api\MemberApi;
-use Ucenter\Api\UcenterMemberApi;
-use Distributor\Api\DistributorInfoApi;
-
 
 class IndexController extends ShopController{
-
-    
-	
 	/*
 	 * 首页
 	 * */
@@ -36,8 +27,18 @@ class IndexController extends ShopController{
 		$this->assign('group',$result1['info']);
 		$this->assign('new',$result_new['info']['list']);
 //		dump($result_new);
+		$user=session('user');
+		$this->assign('user',$user);
+//		dump($user);
 		$this->theme($this->themeType)->display();
     }
+	/*
+	 * 商品详情
+	 * */
+	 public function spxq(){
+	 	$map=array('id'=>I('id',''));
+	 	$this->theme($this->themeType)->display();
+	 }
 	/*
 	 * 商品分类
 	 * */
@@ -69,6 +70,22 @@ class IndexController extends ShopController{
 	public function register(){
 		if(IS_GET){
 			$this->theme($this->themeType)->display();
+		}else{
+			$entity=array(
+				'username'=>I('uname',''),
+				'password'=>I('pwd',''),
+				'mobile'=>I('phone',''),
+				'email'=>I('email',''),
+				'reg_time'=>time(),
+				'from'=>OAuth2TypeModel::SELF,
+				'realname'=>'',
+				'birthday'=>'',
+			);
+			$result=apiCall(AccountApi::REGISTER,array($entity));
+			if($result['status']){
+				$this->success('注册成功!正在跳转登录页面',U('Shop/Index/login'));
+			}
+//			dump($result);
 		}
 	}
 	/*
@@ -77,7 +94,23 @@ class IndexController extends ShopController{
 	 * */
 	public function login(){
 		if(IS_GET){
+//			dump("dsafasdfasd");
 			$this->theme($this->themeType)->display();
+		}else{
+			$username=I('uname','');
+			$password=I('pwd','');
+			$type=1;
+			$from=OAuth2TypeModel::SELF;
+//			dump("jinlaidasfasdf");
+			$result=apiCall(AccountApi::LOGIN,array($username,$password,$type,$from));
+			if($result['status']){
+				$id=$result['info'];
+				$user=apiCall(AccountApi::GET_INFO,array($id));
+				session('user',$user['info']);
+				$this->success('登陆成功!正在跳转登录页面',U('Shop/Index/index'));
+			}else{
+				$this->error($result['info']);
+			}
 		}
 	}
 	

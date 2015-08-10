@@ -15,9 +15,9 @@
 			<div class="am-panel-bd">
 			<div class="am-g">
 				<div class="am-u-md-8 am-u-sm-centered">
-					<form class="am-form">
-							<input type="text" placeholder="用户名"><br>
-							<input type="password" placeholder="密码"><br>
+					<form class="am-form" method="post" action="{:U('Shop/Index/login')}">
+							<input type="text" name="uname" placeholder="用户名"><br>
+							<input type="password" name="pwd" placeholder="密码"><br>
 						<button type="submit" class="am-btn am-btn-primary am-btn-block">登陆</button>
 						<br><font size="2"><a id="disanfang" href="javascript:void(0)">第三方应用登录</a><a style="margin-left: 20px;">忘记密码</a></font>
 						<div class="disanfang"><a style="color: orange;"><span class="am-icon-weibo"> </span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: darkgoldenrod;"><span class="am-icon-qq"></span></a></div>
