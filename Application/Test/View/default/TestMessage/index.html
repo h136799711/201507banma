@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="__CDN__/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function sub(){
+
+          var  data={
+              'key':'8dec018f1a53a91f91bb7a62bb1ba00e',
+              'tpl_id':4960,
+              'tpl_value':encodeURI("#code#="+$("input[name='tpl_value']").val()),
+              'mobile':$("input[name='mobile']").val()
+          };
+          // console.info(data);
+         $.ajax({
+                url:'http://v.juhe.cn/sms/send',
+                data:data,
+                success:function(data){
+                    alert(data.reason);
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <form action="http://v.juhe.cn/sms/send" method="post">
+        <input name="key" value="8dec018f1a53a91f91bb7a62bb1ba00e" /><br />
+        <input name="tpl_id" value="4960" /><br />
+        <input name="tpl_value" value="{$num}" /><br />
+        <input name="mobile" placeholder="手机号"/><br />
+        <input type="button" onclick="sub()" value="点我发送" />
+    </form>
+
+</body>
+</html>
