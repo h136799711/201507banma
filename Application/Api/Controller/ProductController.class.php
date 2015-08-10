@@ -13,16 +13,21 @@ class ProductController extends ApiController{
 
     /**
      * 不分页查询
-     * pname 商品名称
-     *
+     * pname 商品名称(选填)
+     * cate_id商品分类ID(选填)
      */
     public function queryNoPaging(){
         $notes = "应用".$this->client_id."，调用商品查询接口";
         addLog("Product/queryNoPaging",$_GET,$_POST,$notes);
+
         $map=array(
             'name'=>array('like','%'.I('pname','').'%'),
-            'onshelf'=>1   //已上架的产品
+            'onshelf'=>1,   //已上架的产
         );
+        $cate_id=I("cate_id",0);
+        if($cate_id!=0){
+            $map['cate_id']=$cate_id;
+        }
         $result=apiCall(ProductApi::QUERY_NO_PAGING,array($map));
         if($result['status']){
             $this->apiReturnSuc($result['info']);
@@ -33,9 +38,10 @@ class ProductController extends ApiController{
 
     /**
      * 分页查询
-     * pname:名称（模糊查询）
+     * pname:名称（模糊查询）(选填)
      * pageNo:当前页
      * pageSize:显示个数
+     * cate_id商品分类ID(选填)
      */
     public function query(){
         $notes = "应用".$this->client_id."，调用商品分页查询接口";
@@ -44,6 +50,10 @@ class ProductController extends ApiController{
             'name'=>array('like','%'.I('pname','').'%'),   //模糊查询
             'onshelf'=>1   //已上架的产品
         );
+        $cate_id=I("cate_id",0);
+        if($cate_id!=0){
+            $map['cate_id']=$cate_id;
+        }
         $page = array('curpage'=>I('pageNo',0),'size'=>I('pageSize',10)); //分页产品
 
         $result=apiCall(ProductApi::QUERY,array($map,$page));
