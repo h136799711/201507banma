@@ -5,13 +5,7 @@
 	<link  href="__PUBLIC__/Home/Index/css/index.min.css" type="text/css">
     <link rel="stylesheet" href="__PUBLIC__/Home/Index/css/base.css">
 	<style type="text/css">
-		.mini-cart {height: 40px !important;}
-		.hd-show-item{height: 170px; width: 330px; float: left; }
-		.top,.hd-show-item,.xm-star-goods-item,.brick-item{border: 1px solid #000000;}
-		.xm-star-goods-item{ width: 309px; height: 309px; float: left; }
-		.brick-item{height: 309px; width: 309px; float: left;}
-		.top{  height: 70px; padding: 16px 30px 16px 65px; list-style: none; margin-top: 20px;}
-		.board-section{height: 80px; text-align: center;}
+		.box-hd{margin-top: 30px;}
 	</style>
 </block>
 
@@ -74,7 +68,7 @@
 							<div class="xm-star-goods-item">
 								<div class="item-content">
 									<span class="item-thumb">
-                                  <a ><img height="85%" width="100%" src="{$vo.main_img}"></a>
+                                  <a ><img height="60%" width="99%" style="border: 1px solid #000000;" src="{$vo.main_img}"></a>
                                 </span>
 									<span class="item-title"><a></a></span>
 									<span class="item-desc">{$vo.name}</span>
@@ -149,14 +143,15 @@
 								<ul class="board-list">
 									<volist name='new' id='vo'>
 										<li class="top">
+											<a href="{:U('Shop/Index/spxq',array('id'=>$vo['id']))}"><img height="60px" width="80px" src="{$vo.main_img}"></a>
 											<span class="item-info">
 	                                        <span class="item-title"><a >{$vo.name}</a></span>
 											<span class="item-price">{$vo.price}元 <del>{$vo.ori_price}</del></span>
 											</span>
 											<span class="item-thumb">
-	                                        <a href="{:U('Shop/Index/spxq',array('id'=>$rpl['id']))}"><img src="{$vo.main_img}"></a>
+	                                        
 	                                    </span>
-											<span class="item-num">1</span>
+											<span class="item-num"></span>
 										</li>
 									</volist>
 								</ul>

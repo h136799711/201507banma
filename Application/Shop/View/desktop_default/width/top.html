@@ -8,8 +8,14 @@
 				<a href="" >小米网</a><span class="sep">|</span>
 			</div>
 			<div class="topbar-info J_userInfo">
-				<a target="_blank" href="{:U('Shop/Index/login')}">登录</a><span class="sep">|</span>
-				<a target="_blank" href="{:U('Shop/Index/register')}">注册</a>
+				<empty name="user">
+					<a target="_blank" href="{:U('Shop/Index/login')}">登录</a><span class="sep">|</span>
+					<a target="_blank" href="{:U('Shop/Index/register')}">注册</a>
+					<else/>
+					欢迎你！<a>{$user['username']}</a> &nbsp; &nbsp; &nbsp; &nbsp;<a href="{:U('Shop/User/index',array('id'=>$user['id']))}">个人中心</a>
+					&nbsp; &nbsp; &nbsp; &nbsp;<a href="{:U('Shop/User/loginout')}">退出登录</a>
+				</empty>
+				
 			</div>
 		</div>
 	</div>

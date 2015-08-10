@@ -9,7 +9,7 @@
 		.div_main{width:80%;margin-left: 10%;float: left;background: #F5F5F5 }
 		.div_left{width: 20%;margin: 20px;float: left;background:white}
 			.div_left dl{margin:0 auto; width:70%;margin-top:50px;margin-bottom:50px;}
-				.div_left dl dt{font-size: 20px;font-weight: 100;}
+				.div_left dl dt{font-size: 20px;font-weight: 100; color: orangered;}
 				.div_left dl dd{padding-left:25px;font-size: 16px;padding-top: 10px;}
 					.div_left dl dd a:visited{color:#ccc}
 					.div_left dl dd a:hover{color:#FF6700}
@@ -18,7 +18,7 @@
 			.div_right .div_userInfo{width: 90%;margin-left:5%;border-bottom: 1px solid #ccc;padding: 50px;float: left}
 				.div_right .div_userInfo ul{list-style: none;float: left}
 				.div_right .div_userInfo ul.ul_info{margin-left:20%;margin-top:0px;}
-				.div_right .div_userInfo ul.ul_info li{margin-top:10px; }
+				.div_right .div_userInfo ul.ul_info li{margin-top:10px; width: 100%; }
 			.div_right .div_orderInfo{ width: 90% ; margin: 0 auto;}
 				.div_right .div_orderInfo ul{width: 100%;margin-top:20px;float: left;list-style: none}
 				.div_right .div_orderInfo ul li{width: 50%;float: left;padding: 50px;}
@@ -42,15 +42,15 @@
 				<dd><a href="{:U('Shop/User/index')}" class="dd_search">我的个人中心</a></dd>
 				<dd><a href="#">现金账号</a></dd>
 				<dd><a href="#">喜欢的商品</a></dd>
-				<dd><a href="#">收货地址</a></dd>
+				<dd><a href="{:U('Shop/User/address')}">收货地址</a></dd>
 			</dl>
 
 
 			<dl>
 				<dt>订单中心</dt>
 				<dd><a href="{:U('Shop/User/order')}">我的订单</a></dd>
-				<dd><a href="#">团购订单</a></dd>
-				<dd><a href="#">意外订单</a></dd>
+				<!--<dd><a href="#">团购订单</a></dd>
+				<dd><a href="#">意外订单</a></dd>-->
 				<dd><a href="#">详情</a></dd>
 			</dl>
 			<dl>
@@ -66,14 +66,14 @@
 
 				</div>
 				<ul >
-					<li>914081980</li>
+					<li>{$user['username']}</li>
 					<li>早上好～</li>
-					<li><a href="#" class="dd_search">修改个人信息 ></a></li>
+					<li><a href="{:U('Shop/User/info')}" class="dd_search">修改个人信息 ></a></li>
 				</ul>
 				<ul class="ul_info">
 					<li>账户安全：普通</li>
-					<li>绑定手机：178********05</li>
-					<li>绑定邮箱：<button type="button" class="am-btn am-btn-warning" style="width:100px;list-style: none;height: 30px;list-style: 20px;font-size: 12px;margin-left: 150px;">绑定</button></li>
+					<li>绑定手机：{$user['mobile']}<button type="button" class="am-btn am-btn-warning am-round" style="width:100px;list-style: none;height: 30px;list-style: 20px;font-size: 12px;margin-left: 50px;">绑定</button></li>
+					<li>绑定邮箱：{$user['email']}<button type="button" class="am-btn am-btn-warning am-round" style="width:100px;list-style: none;height: 30px;list-style: 20px;font-size: 12px;margin-left: 20px;">绑定</button></li>
 				</ul>
 			</div>
 			<div class="div_orderInfo" style="clear:both">

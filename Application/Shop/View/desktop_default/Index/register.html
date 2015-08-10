@@ -5,6 +5,9 @@
 		body {
 			background-color: #f9f9f9;
 		}
+		.level .li .current {
+  background: #ff5783;
+}
 		.logo {
 			/*border: 1px solid #000000;*/
 			color: orangered;
@@ -18,32 +21,52 @@
 			margin-left: 28%;
 			margin-top: 2%;
 		}
+		
 		.am-panel-hd {
 			height: 80px;
 			padding: 20px;
 			background-color: #FFFFFF !important;
 			text-align: center;
 		}
+		 .level .li span {
+  width: 100%;
+  display: table;
+}
+		.level{margin-bottom: 10px;}
+		.am-form-set div{margin-top: 15px;}
+		 .level .li {margin-top: -5px; background: none repeat scroll 0 0 #eaeaea; color: #fff;display: inline;float: left;height: 18px;line-height: 18px; margin-right: 1px; text-align: center; width: 106px;
+}
 	</style>
 </block>
 
 <block name="area_body">
-	<div class="logo"><img src="__PUBLIC__/Home/Index/img/banma.png" height="80px" width="120px">
+	<div class="logo"><a href="{:U('Shop/Index/login')}"><img src="__PUBLIC__/Home/Index/img/banma.png" height="80px" width="120px"></a>
 	</div>
 	<div class="am-panel am-panel-default">
 		<div class="am-panel-hd"><h2>斑马平台用户注册</h2></div>
 			<div class="am-panel-bd">
 			<div class="am-g">
 				<div class="am-u-md-8 am-u-sm-centered">
-					<form class="am-form">
+					<form class="am-form" id="fm" action="{:U('Shop/Index/register')}" method="post">
 						<fieldset class="am-form-set">
-							<input type="text" placeholder="用户名（字母开头不小于4位）"><br>
-							<input type="password" placeholder="设个密码（不小于6位）"><br>
-							<input type="password" placeholder="重复密码（必须保持一致）"><br>
-							<input type="number" placeholder="手机号码"><br>
-							<input type="email" placeholder="填下邮箱"><br>
+							<div><input type="text" name="uname" id="name" placeholder="用户名（字母开头不小于4位）"><span></span></div>
+							<div><input type="password" name="pwd" id="pwd" placeholder="设个密码（不小于6位）"><span></span></div>
+							<div class="level clearfix">
+									<div class="101 li">
+										<span class="ls1">危险</span>
+									</div>
+									<div class="102 li">
+										<span class="ls2">适中</span>
+									</div>
+									<div class="103 li">
+										<span class="ls3">安全</span>
+									</div>
+							</div>
+							<div><input type="password" name="pwd1" id="pwd1" placeholder="重复密码（必须保持一致）"><span></span></div>
+							<div><input type="number" name="phone" id="phone" placeholder="手机号码"><span></span></div>
+							<div><input type="email" name="email" id="email" placeholder="填下邮箱"><span></span></div>
 						</fieldset>
-						<button type="submit" class="am-btn am-btn-primary am-btn-block">注册个账号</button>
+						<button type="button" id="ok" class="am-btn am-btn-primary am-btn-block">注册个账号</button>
 						<br><font size="2">点击注册即表示同意接受<a href="">斑马协议</a>和<a>隐私策略</a></font>
 					</form>
 				</div>
@@ -54,5 +77,90 @@
 </block>
 
 <block name="area_footer">
+<script type="text/javascript">
+	$(function(){
+		var name = /^[a-zA-Z][a-zA-Z0-9]{3,12}$/;
+		$('#name').blur(function() {
+			if (name.test($('#name').val())) {
+				d = 1;
+				$('#name').parent().find("span").html("<font size='-2' color='green'>正确！</font>");
+			} else {
+				d = 0;
+				$(this).parent().find("span").html("<font size='-2' color='red'>字母开头的数字组合！且不小于4位</font>");
+			}
+		});
+		$('#pwd').keyup(function() {
+			if ($(this).val().length >= 6) {
+				$('.ls1').addClass('current');
+			} else {
+				$('.ls1').removeClass('current');
+			}
+			if ($(this).val().length >= 8 && $(this).val().match(/\D/) != null) {
+				$('.ls2').addClass('current');
+			} else {
+				$('.ls2').removeClass('current');
+			}
+			if ($(this).val().length >= 10 && $(this).val().match(/[`~!@#$%^&*_+<>{}\/'[\]]/im)) {
+				$('.ls3').addClass('current');
+			} else {
+				$('.ls3').removeClass('current');
+			}
+			if ($(this).val().length > 12 || 　$(this).val().length < 6) {
+				a = 0;
+				$(this).parent().find("span").html("<font size='-2' color='red'>密码不超过12位！</font>");
+			} else {
+				a = 1;
+				$(this).parent().find("span").html("<font size='-2' color='green'>密码可用！</font>");
+			}
+		})
+		$('#pwd1').blur(function(){
+//			alert();
+			var pwd=$('#pwd').val();
+			if($(this).val()==pwd){
+				c=1;
+				$(this).parent().find("span").html("<font size='-2' color='green'>正确！</font>");
+			}else{
+				c=0
+				$(this).parent().find("span").html("<font size='-2' color='red'>两次输入的密码不一致！</font>");
+			}
+		})
+		var isMobile = /^(?:13\d|15\d|17\d|18\d)\d{5}(\d{3}|\*{3})$/;
+		$('#phone').keyup(function() {
+			if (!isMobile.test($(this).val())) {
+				b = 0;
+				$(this).parent().find("span").html("<font size='-2' color='red'>手机号码格式不正确！请重新输入！</font>");
+			} else {
+				b = 1; 
+				$(this).parent().find("span").html("<font size='-2' color='green'>正确！</font>");
+			}
+		})
+		var em=/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
+		$('#email').blur(function(){
+			if (!em.test($(this).val())) {
+				e = 0;
+				$(this).parent().find("span").html("<font size='-2' color='red'>邮箱格式不正确！请重新输入！</font>");
+			} else {
+				e = 1; 
+				$(this).parent().find("span").html("<font size='-2' color='green'>正确！</font>");
+			}
+		})
+		$('#ok').click(function(){
+			if(a==1 && b==1 && c==1 && d==1 && e==1){
+				$('#fm').submit();
+			}else {
+				alert('请仔细检查信息是否存在错误!');
+			}
+		})
+	})
+</script>
+<!--				d = 1;
+			$.getJSON("{:U('Home/Index/checkname')}",{name:$("#name").val()},function(json){ 
+				if(json!=1){
+					d = 0;
+					$('#name').parent().find("span").html("<font size='-2' color='red'>用户名已存在</font>");
+				}else{
+					d = 1;
+					$('#name').parent().find("span").html("<font size='-2' color='green'>正确！</font>");
+				}-->
 
 </block>

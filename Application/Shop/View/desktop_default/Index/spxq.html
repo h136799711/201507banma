@@ -8,10 +8,11 @@
 		* {
 			font-family: "微软雅黑" !important;
 		}
-		.daohang{height: 40px;background-color: #FAFAFA; border-bottom: 1px solid #ccc; font-size: 13px; padding: 10px; padding-left: 23%;}
+		.daohang{height: 40px;background-color: #FAFAFA;  font-size: 13px; padding: 10px; padding-left: 23%;}
 		.daohang a{}
 		.detail{font-size: 18px; margin-top: 200px; margin-left: 50px; }
 		.show-a{width: 60%;  margin: 0 auto;}
+		.div_main{}
 	</style>
 </block>
 
@@ -22,12 +23,12 @@
 	</div>
 	
 	<div id="div_main" style="border-top:1px solid #ccc">
-			<h3 class="daohang" ><a href="{:U('Shop/Index/index')}">首页 </a>> <a href="{:U('Shop/Index/flzc')}">福利专场  </a>> {$detail.name}</h3>
+			<h3 class="daohang" ><a href="{:U('Shop/Index/index')}">首页 </a>> <a href="{:U('Shop/Index/flzc')}">商品  </a>> {$detail.name}</h3>
 			<div class="div_info" >
 				<div class="div_spxq_info1">
-					<div style=" padding: 10px;">
+					<div style=" padding: 10px; margin-left: 20%; min-width: 1000px; ">
 						<img width="400" height="450" id="img_main" src="{$detail.main_img}" style="float: left;"/>
-						<div style=" padding: 20px;">
+						<div style=" padding: 20px; min-width: 1000px;">
 							<h1 style="margin-left: 400px;">商品名称</h1><hr>
 							<h1 style="margin-left: 400px;">规格参数</h1><hr>
 							<h1 style="margin-left: 400px; color: orangered;">49元</h1><hr>
