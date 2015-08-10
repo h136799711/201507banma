@@ -140,5 +140,40 @@ class FileController extends AdminController{
         }
 
     }
+
+
+    /**
+     * 图片删除
+     */
+    public function del(){
+        $imgIds=I("imgIds",-1);
+
+
+        if($imgIds!=-1){
+            $map=array(
+                'id'=>array(
+                    'in',$imgIds
+                )
+            );
+            $result=apiCall(UserPictureApi::QUERY_NO_PAGING,array($map));
+
+            /*if($result['status']){
+                $this->success('删除成功');
+            }*/
+            foreach($result['info'] as $v){
+                $result =unlink('.'.$v['path']);
+                if ($result) {
+                    // echo '蚊子赶走了';
+                    $result=apiCall(UserPictureApi::DELETE,array($map));
+                    $this->success('删除成功'.'.'.$v['path']);
+                } else {
+                    $this->success('删除失败');
+                    // echo '无法赶走';
+                }
+                // unlink();
+            }
+
+        }
+    }
 	
 }
