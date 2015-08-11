@@ -36,6 +36,8 @@ class IndexController extends ShopController{
 	 * 商品详情
 	 * */
 	 public function spxq(){
+	 	$user=session('user');
+		$this->assign('user',$user);
 	 	$map=array('id'=>I('id',''));
 	 	$this->theme($this->themeType)->display();
 	 }
@@ -43,6 +45,8 @@ class IndexController extends ShopController{
 	 * 商品分类
 	 * */
 	public function lists(){
+		$user=session('user');
+		$this->assign('user',$user);
 		$id=array('cate_id'=>I('id',''));
 		$page = array('curpage'=>I('post.p',0),'size'=>8);
 		$result=apiCall(ProductApi::QUERY,array($id,$page));
@@ -54,6 +58,8 @@ class IndexController extends ShopController{
 	 * 搜索
 	 * */
 	public function sousuo(){
+		$user=session('user');
+		$this->assign('user',$user);
 		$name=I('name','');
 		$map['name'] = array('like','%'. $name . '%');
 		$page = array('curpage'=>I('post.p',0),'size'=>8);

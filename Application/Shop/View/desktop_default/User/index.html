@@ -37,27 +37,7 @@
 	</div>
 	<div class="div_main">
 		<div class="div_left">
-			<dl>
-				<dt>个人中心</dt>
-				<dd><a href="{:U('Shop/User/index')}" class="dd_search">我的个人中心</a></dd>
-				<dd><a href="#">现金账号</a></dd>
-				<dd><a href="#">喜欢的商品</a></dd>
-				<dd><a href="{:U('Shop/User/address')}">收货地址</a></dd>
-			</dl>
-
-
-			<dl>
-				<dt>订单中心</dt>
-				<dd><a href="{:U('Shop/User/order')}">我的订单</a></dd>
-				<!--<dd><a href="#">团购订单</a></dd>
-				<dd><a href="#">意外订单</a></dd>-->
-				<dd><a href="#">详情</a></dd>
-			</dl>
-			<dl>
-				<dt>用户信息</dt>
-				<dd><a href="{:U('Shop/User/info')}">个人信息</a></dd>
-				
-			</dl>
+			<include file="desktop_default/width/list"/>
 		</div>
 		<div class="div_right">
 			<div class="div_userInfo">
@@ -72,7 +52,7 @@
 				</ul>
 				<ul class="ul_info">
 					<li>账户安全：普通</li>
-					<li>绑定手机：{$user['mobile']}<button type="button" class="am-btn am-btn-warning am-round" style="width:100px;list-style: none;height: 30px;list-style: 20px;font-size: 12px;margin-left: 50px;">绑定</button></li>
+					<li>绑定手机：{$phone}<button type="button" class="am-btn am-btn-warning am-round" style="width:100px;list-style: none;height: 30px;list-style: 20px;font-size: 12px;margin-left: 50px;">绑定</button></li>
 					<li>绑定邮箱：{$user['email']}<button type="button" class="am-btn am-btn-warning am-round" style="width:100px;list-style: none;height: 30px;list-style: 20px;font-size: 12px;margin-left: 20px;">绑定</button></li>
 				</ul>
 			</div>

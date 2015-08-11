@@ -1,6 +1,8 @@
 <extend name="template/base_index2" />
 
 <block name="area_header">
+	
+	
 	<link  href="__PUBLIC__/Home/Index/css/index.min.css" type="text/css">
 	<link rel="stylesheet" href="__PUBLIC__/Home/Index/css/base.css">
 	<style type="text/css">
@@ -8,13 +10,17 @@
 		.am-footer-default{background: #F5F5F5}
 		.div_main{width:80%;margin-left: 10%;float: left;background: #F5F5F5 }
 		.div_left{width: 20%;margin: 20px;float: left;background:white}
-			.div_left dl{margin:0 auto; width:70%;margin-top:50px;margin-bottom:50px;}
-				.div_left dl dt{font-size: 20px;font-weight: 100; color: orangered;}
-				.div_left dl dd{padding-left:25px;font-size: 16px;padding-top: 10px;}
-					.div_left dl dd a:visited{color:#ccc}
-					.div_left dl dd a:hover{color:#FF6700}
-					.div_left dl dd a.dd_search{color:#FF6700}
+		.div_left dl{margin:0 auto; width:70%;margin-top:50px;margin-bottom:50px;}
+		.div_left dl dt{font-size: 20px;font-weight: 100; color: orangered;}
+		.div_left dl dd{padding-left:25px;font-size: 16px;padding-top: 10px;}
+		.div_left dl dd a:visited{color:#ccc}
+		.div_left dl dd a:hover{color:#FF6700}
+		.div_left dl dd a.dd_search{color:#FF6700}
 		.div_right{width: 70%;margin: 20px;border: 1px solid #ccc;float: left;padding: 20px;background:white}
+		.dizhi { margin-left: 10px; margin-top: 10px; height: 170px; width: 200px;border: 1px solid #F5F5F5; float: left; padding: 20px;}
+		.dizhi i{font-size: 33px; display:flex; justify-content:center; padding-top: 25%;}
+		.am-modal-bd{padding: 20px;}
+		.am-modal-bd table tr td{padding-top: 20px;}
 	</style>
 </block>
 
@@ -25,36 +31,220 @@
 	</div>
 	<div class="div_main">
 		<div class="div_left">
-			<dl>
-				<dt>个人中心</dt>
-				<dd><a href="{:U('Shop/User/index')}" >我的个人中心</a></dd>
-				<dd><a href="#">现金账号</a></dd>
-				<dd><a href="#">喜欢的商品</a></dd>
-				<dd><a href="#" class="dd_search">收货地址</a></dd>
-			</dl>
-
-
-			<dl>
-				<dt>订单中心</dt>
-				<dd><a href="{:U('Shop/User/order')}">我的订单</a></dd>
-				<!--<dd><a href="#">团购订单</a></dd>
-				<dd><a href="#">意外订单</a></dd>-->
-				<dd><a href="#">详情</a></dd>
-			</dl>
-			<dl>
-				<dt>用户信息</dt>
-				<dd><a href="{:U('Shop/User/info')}">个人信息</a></dd>
-				
-			</dl>
+			<include file="desktop_default/width/list"/>
 		</div>
 		<div class="div_right">
 			<font size="5">收货地址</font><br><br>
 			<h2>用户中心>>用户收货地址</h2><hr>
+			<div class="dizhi">
+				<a href="JavaScript:void(0)"><i id="divcount" class="am-icon-plus-square-o" data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 500, height: 355}"></i></a>
+			</div >
+			<volist name="address" id="vo">
+				<div class="dizhi">
+					联系人：{$vo['contactname']}<br>手机：{$vo['mobile']}<br>地址：{$vo['province']} {$vo['city']} {$vo['area']} {$vo['detailinfo']}<br><br><br>
+					<a href="{:U('Shop/User/address',array('id'=>$vo['id']))}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="{:U('Shop/User/deladdress',array('id'=>$vo['id']))}" onclick="return confirm('确认删除吗？');">删除</a>
+				</div>
+				<input type="button" style="display: none;" id="show"  data-am-modal="{target: '#doc-modal-2', closeViaDimmer: 0, width: 500, height: 355}"/>
+			</volist>
+			<!--添加地址-->
+			<div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-1">
+				<div class="am-modal-dialog">
+					<div class="am-modal-hd" style="color: orangered;">收货地址添加
+						<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+					</div>
+					<div class="am-modal-bd">
+						<form id="fm" action="{:U('Shop/User/address')}" method="post">
+						<table>
+							<tr>
+								<td>收货人：</td>
+								<td><input type="text" name="uname" id="uname" value="" /></td>
+							</tr>
+							<tr>
+								<td>联系电话：</td>
+								<td><input type="text" name="phone" id="phone" value="" /><br><span></span></td>
+							</tr>
+							<tr>
+								<td>所在地区：</td>
+								<td><select id="loc_province" style="width:120px;">
+										<volist name="pro" id="vo">
+											<option value="{$vo['provinceid']}">{$vo['province']}</option>
+										</volist>
+									</select>
+									<input type="hidden" name="sheng" class="sheng" />
+									<input type="hidden" name="shi" class="shi" />
+									<input type="hidden" name="qu" class="qi" />
+									<select id="loc_city" style="width:120px; margin-left: 10px">
+									</select>
+									<select id="loc_town" style="width:120px;margin-left: 10px">
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td >详细地址：</td>
+								<td>
+									<textarea name="address" cols="50" rows="3" style=" border-color: #ccc; border-radius:3px;"></textarea>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<button type="submit" id="ok" style="width: 100px; font-size: 15px;" class="am-btn-warning">保存</button>
+								</td>
+							</tr>
+						</table>
+						</form>
+					</div>
+				</div>
+			</div>
+			<!--修改地址-->
+			<div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-2">
+				<div class="am-modal-dialog">
+					<div class="am-modal-hd" style="color: orangered;">收货地址修改
+						<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+					</div>
+					<div class="am-modal-bd">
+						<form id="fm" action="{:U('Shop/User/editadd')}" method="post">
+						<table>
+							<tr>
+								<td>收货人：</td>
+								<td><input type="text" name="uname" id="uname" value="{$add['contactname']}" />
+									<input type="hidden" name="id" value="{$add['id']}">
+								</td>
+							</tr>
+							<tr>
+								<td>联系电话：</td>
+								<td><input type="text" name="phone" id="phone" value="{$add['mobile']}" /><br><span></span></td>
+							</tr>
+							<tr>
+								<td>所在地区：</td>
+								<td>
+									
+									<select id="loc_province1" style="width:120px;">
+										<volist name="pro" id="vo">
+											<option value="{$vo['provinceid']}">{$vo['province']}</option>
+										</volist>
+									</select>
+									
+									<input type="hidden" name="sheng" class="sheng" />
+									<input type="hidden" name="shi" class="shi" />
+									<input type="hidden" name="qu" class="qi" />
+									<select id="loc_city1" style="width:120px; margin-left: 10px">
+									</select>
+									<select id="loc_town1" style="width:120px;margin-left: 10px">
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td >详细地址：</td>
+								<td>
+									<textarea name="address" cols="50" rows="3" style=" border-color: #ccc; border-radius:3px;">{$add['detailinfo']}</textarea>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<button type="submit" id="ok" style="width: 100px; font-size: 15px;" class="am-btn-warning">确认修改</button>
+								</td>
+							</tr>
+						</table>
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	
 </block>
 
 <block name="area_footer">
-
+<script type="text/javascript">
+	$(function(){
+//		$('#divcount').click()
+		
+		if('{$add}'!=null &&'{$add}'!=''){
+			$('#show').click();
+		}
+		$('#loc_province').change(function(){
+//			alert($('#loc_province option:selected').val());
+			$.getJSON("{:U('Shop/User/getcity')}",{sno:$('#loc_province option:selected').val()},function(json){ 
+				$('#loc_city').empty();
+				for (var a=0;a<json.length;a++) {
+					$('#loc_city').append("<option value='"+json[a].cityid+"'>"+json[a].city+"</option>");
+				}
+			}); 
+			var sheng=$('#loc_province option:selected').val();
+			$('.sheng').val(sheng);
+		})
+		$('#loc_city').change(function(){
+			$.getJSON("{:U('Shop/User/getarea')}",{cno:$('#loc_city option:selected').val()},function(json){ 
+				$('#loc_town').empty();
+				for (var a=0;a<json.length;a++) {
+					
+					$('#loc_town').append("<option value='"+json[a].areaid+"'>"+json[a].area+"</option>");
+				}
+			}); 
+			var shi=$('#loc_city option:selected').val();
+			$('.shi').val(shi);
+		})
+		$('#loc_town').change(function() {
+				//$('input[@name=location_id]').val($(this).val());
+		var qu=$('#loc_town option:selected').val();
+							//var qu=$('#loc_town').select2('data').text
+							//alert(qu);
+		$('.qi').val(qu);
+		
+		})
+		var b=0;
+		var isMobile = /^(?:13\d|15\d|17\d|18\d)\d{5}(\d{3}|\*{3})$/;
+		$('#phone').blur(function() {
+			if (!isMobile.test($(this).val())) {
+				b = 0;
+			} else {
+				b = 1; 
+			}
+		})
+		$('#fm').submit(function(){
+			if(b==0){
+				alert('请填写正确的用户信息！');
+				return false;
+			}else{
+				return true;
+			}
+		})
+		
+		//
+		$('#loc_province1').change(function(){
+//			alert($('#loc_province option:selected').val());
+			$.getJSON("{:U('Shop/User/getcity')}",{sno:$('#loc_province1 option:selected').val()},function(json){ 
+				$('#loc_city1').empty();
+				for (var a=0;a<json.length;a++) {
+					
+					$('#loc_city1').append("<option value='"+json[a].cityid+"'>"+json[a].city+"</option>");
+				}
+			}); 
+			var sheng=$('#loc_province1 option:selected').val();
+			$('.sheng').val(sheng);
+		})
+		$('#loc_city1').change(function(){
+			$.getJSON("{:U('Shop/User/getarea')}",{cno:$('#loc_city1 option:selected').val()},function(json){ 
+				$('#loc_town1').empty();
+				for (var a=0;a<json.length;a++) {
+					
+					$('#loc_town1').append("<option value='"+json[a].areaid+"'>"+json[a].area+"</option>");
+				}
+			}); 
+			var shi=$('#loc_city1 option:selected').val();
+			$('.shi').val(shi);
+		})
+		$('#loc_town1').change(function() {
+				//$('input[@name=location_id]').val($(this).val());
+		var qu=$('#loc_town1 option:selected').val();
+							//var qu=$('#loc_town').select2('data').text
+							//alert(qu);
+		$('.qi').val(qu);
+		
+		})
+		
+				
+	})
+</script>
 </block>

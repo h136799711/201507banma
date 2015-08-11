@@ -76,18 +76,18 @@
 		</div>
 		<div class="tabs">
 			<div class="headimg">
-				<img class="c" src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/1000/h/1000/q/80" width="100" height="100" />
+				<img class="c" src="__IMG__/photo.jpg" width="100" height="100" />
 				<br>
-				<a href="" style="margin-left: 25px;">更换头像</a>
+				<a href="#" style="margin-left: 25px;">更换头像</a>
 			</div>
 			<div class="tabs-right">
 				<font size="3">基本资料</font>
 				<a href="javascript:void(0)"  data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 400, height: 325}"> <font size="2" color="#0055AA" style="float: right;"><i class="am-icon-pencil"></i>编辑</font></a>
-				<hr> 姓名：XXX
+				<hr> 姓名：{$user['username']}
 				<hr> 生日：1992-11-15
 				<hr> 性别：男
-				<hr> 手机：137****9865 <button type="" data-am-modal="{target: '#doc-modal-2', closeViaDimmer: 0, width: 400, height: 260}" class="am-btn-warning">更换验证手机</button>
-				<hr> 邮箱：137****9@qq.com <button type="" data-am-modal="{target: '#doc-modal-3', closeViaDimmer: 0, width: 400, height: 260}" class="am-btn-warning">更换验证邮箱</button>
+				<hr> 手机：{$phone} <button type="" data-am-modal="{target: '#doc-modal-2', closeViaDimmer: 0, width: 400, height: 260}" class="am-btn-warning">更换验证手机</button>
+				<hr> 邮箱：{$user['email']} <button type="" data-am-modal="{target: '#doc-modal-3', closeViaDimmer: 0, width: 400, height: 260}" class="am-btn-warning">更换验证邮箱</button>
 				<hr>
 			</div>
 		</div>
@@ -128,7 +128,7 @@
 			</div>
 			<div class="am-modal-bd">
 				<div style="text-align: center;">
-				原手机：137****3305<button type="submit" class="am-btn-warning">获取验证码</button><br><br>
+				原手机：{$phone}<button type="submit" class="am-btn-warning">获取验证码</button><br><br>
 				验证码：<input type="text" /><br><br>
 				新手机：<input type="tel" /><br><br>
 				<button type="submit" class="am-btn-primary">保存</button>
@@ -144,7 +144,7 @@
 			</div>
 			<div class="am-modal-bd">
 				<div style="text-align: center;">
-				原邮箱：137****3@qq.com<button type="submit" class="am-btn-warning">获取验证码</button><br><br>
+				原邮箱：{$user['email']}<button type="submit" class="am-btn-warning">获取验证码</button><br><br>
 				验证码：<input type="text" /><br><br>
 				新邮箱：<input type="tel" /><br><br>
 				<button type="submit" class="am-btn-primary">保存</button>

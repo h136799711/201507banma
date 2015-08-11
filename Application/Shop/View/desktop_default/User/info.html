@@ -57,16 +57,16 @@
 			<!--<font>绑定授权</font>
 			<font>斑马服务</font>-->
 		</div>
-		<div class="headimg"><div class="userinfo">用户名XXXX<br>2132345453</div><img class="am-circle" src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/1000/h/1000/q/80" width="100" height="100"/></div>
+		<div class="headimg"><div class="userinfo">用户名:{$user['username']}<br>ID码</div><img class="am-circle" src="__IMG__/photo.jpg" width="100" height="100"/></div>
 		<div class="tabs">
 			<font size="4">安全等级</font>
 			<font size="3" color="red">50分(存在风险)</font><hr>
 			<font color="orangered" style="float: left;" size="7"><i class="am-icon-unlock-alt"></i></font>
 			<div class="mm">账号密码<br><span style="padding-left: 0; font-size: 12px; color: #8C8C8C" >用于保护账号安全和登录安全</span></div><hr>
 			<font color="orangered" style="float: left;" size="7"><i class="am-icon-envelope-o"></i></font>
-			<div class="mm">认证邮箱<font color="orangered">(未设置)</font><br><span style="padding-left: 0; font-size: 12px; color: #8C8C8C" >用于验证用户信息,建议立即设置</span></div><hr>
+			<div class="mm">认证邮箱<empty name="user"><font color="orangered">(未设置)</font><else/>({$user['email']})</empty><br><span style="padding-left: 0; font-size: 12px; color: #8C8C8C" >用于验证用户信息,建议立即设置</span></div><hr>
 			<font color="orangered" style="float: left;" size="7"><i class="am-icon-mobile-phone"></i></font>
-			<div class="mm">认证手机(178****3305)<br><span style="padding-left: 0; font-size: 12px; color: #8C8C8C" >用户登录账户和重置密码等操作</span></div><hr>
+			<div class="mm">认证手机<empty name="phone"><font color="orangered">(未设置)</font><else/>({$phone})</empty><br><span style="padding-left: 0; font-size: 12px; color: #8C8C8C" >用户登录账户和重置密码等操作</span></div><hr>
 				<h2 style="color: #008200;">以上信息建议立即认证,以便很好的保障您的账号安全</h2>
 		</div>
 
