@@ -17,39 +17,39 @@ class AreaApi extends Api{
     /**
      * 查询，不分页
      */
-    const QUERY_NO_PAGING = "Tool/City/queryNoPaging";
+    const QUERY_NO_PAGING = "Tool/Area/queryNoPaging";
     /**
      * 添加
      */
-    const ADD = "Tool/City/add";
+    const ADD = "Tool/Area/add";
     /**
      * 保存
      */
-    const SAVE = "Tool/City/save";
+    const SAVE = "Tool/Area/save";
     /**
      * 保存根据ID主键
      */
-    const SAVE_BY_ID = "Tool/City/saveByID";
+    const SAVE_BY_ID = "Tool/Area/saveByID";
 
     /**
      * 删除
      */
-    const DELETE = "Tool/City/delete";
+    const DELETE = "Tool/Area/delete";
 
     /**
      * 查询
      */
-    const QUERY = "Tool/City/query";
+    const QUERY = "Tool/Area/query";
 
     /**
      * 查询一条数据
      */
-    const GET_INFO = "Tool/City/getInfo";
+    const GET_INFO = "Tool/Area/getInfo";
 
     /**
      * GET_LIST_BY_CITY_ID
      */
-    const GET_LIST_BY_CITY_ID = "Tool/City/getListByCityID";
+    const GET_LIST_BY_CITY_ID = "Tool/Area/getListByCityID";
 
 	protected function _init(){
 		$this->model = new AreaModel();

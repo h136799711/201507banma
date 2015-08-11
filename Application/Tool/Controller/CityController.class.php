@@ -38,13 +38,25 @@ class CityController extends Controller{
 	public function getArea(){
 		
 		$cityid = I('post.cityid','');
-		
-		$result = apiCall(AreaApi::GET_LIST_BY_CITY_ID,array($cityid));
+		$map=array(
+			'father'=>$cityid,
+		);
+		$result=apiCall(AreaApi::QUERY_NO_PAGING,array($map));
+		//$result = apiCall(AreaApi::GET_LIST_BY_CITY_ID,array($cityid));
+		dump($cityid);
+		dump($result);
 		if($result['status']){
 			$this->success($result['info']);
 		}else{
 			$this->error($result['info']);
 		}
+	}
+
+	public function testArea(){
+		$map=array(
+			'father'=>'330100',
+		);
+		dump(apiCall(AreaApi::QUERY_NO_PAGING,array($map)));
 	}
 	
 }

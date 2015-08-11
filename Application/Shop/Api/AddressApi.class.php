@@ -32,6 +32,8 @@ class AddressApi extends Api{
      * 查询
      */
     const QUERY = "Shop/Address/query";
+
+    const QUERY_NO_PAGING="Shop/Address/queryNoPaging";
     /**
      * 查询一条数据
      */
