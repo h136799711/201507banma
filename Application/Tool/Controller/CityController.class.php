@@ -58,5 +58,7 @@ class CityController extends Controller{
 		);
 		dump(apiCall(AreaApi::QUERY_NO_PAGING,array($map)));
 	}
+
+
 	
 }
