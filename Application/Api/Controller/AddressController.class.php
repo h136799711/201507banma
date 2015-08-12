@@ -22,11 +22,37 @@ class AddressController extends ApiController{
         $notes = "应用".$this->client_id."，调用Address添加接口";
         addLog("Address/add",$_GET,$_POST,$notes);
 
+        $province=$this->_post('province','');
+        $city=$this->_post('city','');
+        $area=$this->_post('area','');
+        $detailinfo=$this->_post('detailinfo','');
+        $contactname=$this->_post('contactname','');
+        $mobile=$this->_post('mobile','');
+
+        if($province==""){
+            $this->apiReturnErr("省份不能为空");
+        }
+        if($city==""){
+            $this->apiReturnErr("城市不能为空");
+        }
+        if($area==""){
+            $this->apiReturnErr("区不能为空");
+        }
+        if($detailinfo==""){
+            $this->apiReturnErr("详细地址不能为空");
+        }
+        if($contactname==""){
+            $this->apiReturnErr("联系人不能为空");
+        }
+
+        if($mobile==""){
+            $this->apiReturnErr("联系电话不能为空");
+        }
 
         $map=array(
             'uid'=>I("post.uid",0),
             'country'=>I("post.country",''),
-            'city'=>I("post.city",''),
+            'city'=>I("",''),
             'province'=>I("post.province",''),
             'detailinfo'=>I("post.detailinfo",''),
             'area'=>I('post.area',''),

@@ -1,6 +1,7 @@
 <?php
 namespace Test\Controller;
 
+use Shop\Api\AddressApi;
 use Think\Controller\RestController;
 use Api\Service\OAuth2ClientService;
 /**
@@ -42,5 +43,15 @@ class TestAddressApiController extends RestController{
      */
     public function testQueryNoPaging(){
         $this->display();
+    }
+
+    /**
+     * 测试查询详细地址
+     */
+    public function testQueryDetail(){
+        $map=array(
+            'uid'=>13
+        );
+        dump(apiCall(AddressApi::QUERY_WITH_CITY_WITH_AREA,array($map)));
     }
 }

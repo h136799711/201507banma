@@ -8,6 +8,7 @@
 namespace Api\Controller;
 
 use Common\Api\AccountApi;
+use Ucenter\Api\UcenterMemberApi;
 use Uclient\Model\OAuth2TypeModel;
 
 class UserController extends ApiController{
@@ -46,13 +47,11 @@ class UserController extends ApiController{
 
         $type = $this->_post("type",1);
 
-        $from = $this->_post("from",0);
-
         $notes = "应用".$this->client_id.":[用户".$username."],调用登录接口,密码：".$password;
 
         addLog("User/login",$_GET,$_POST,$notes);
 
-        $result = apiCall(AccountApi::LOGIN,array($username,$password,$type,$from));
+        $result = apiCall(AccountApi::LOGIN,array($username,$password,$type));
 
         if($result['status']){
             $uid = $result['info'];
@@ -86,12 +85,17 @@ class UserController extends ApiController{
 
             $username = $this->_post("username");
             $password = $this->_post("password");
+            //检测用户名是否使用
+            if($this->isExistsMethod($username)){
+                $this->apiReturnErr("该用户名已存在！");
+            }
+
             $from = OAuth2TypeModel::SELF;
 
-            $mobile=$this->_post("mobile");
-            $realname=$this->_post("realname");
-            $email=$this->_post("email");
-            $idnumber=$this->_post("idnumber");
+            $mobile=$this->_post("mobile","");
+            $realname=$this->_post("realname","");
+            $email=$this->_post("email","");
+            $idnumber=$this->_post("idnumber","");
             $birthday=$this->_post("birthday",0);
             if($birthday!=0){
                 $birthday=strtotime($birthday);
@@ -125,32 +129,36 @@ class UserController extends ApiController{
      */
     public function update(){
 
-        $notes = "用户信息更新接口";
+        $notes = "应用".$this->client_id."，调用用户更新接口";
 
         addLog("User/update",$_GET,$_POST,$notes);
 
         if(IS_POST){
+            //$password = $this->_post("password");
 
-            $sex = $this->_post('sex',0);
-            $nickname= $this->_post('nickname','');
-            $realname = $this->_post("realname",'');
-            $birthday = $this->_post('birthday',date("Y-m-d",time()));
-            $mobile = $this->_post('mobile','');
-            $email = $this->_post('email','');
-            $qq = $this->_post('qq','');
-            $idnumber = $this->_post('idnumber','');
+            $mobile=$this->_post("mobile","");
+            $realname=$this->_post("realname","");
+            $email=$this->_post("email","");
+            $idnumber=$this->_post("idnumber","");
+            $birthday=strtotime($this->_post("birthday",0));
+            $nickname=$this->_post("nickname","");
+            $sex=$this->_post("sex",0);
+            $qq=$this->_post("qq","");
+            $head=$this->_post("head","");
+
 
 
             $uid = $this->_post('uid',0);
             $entity = array(
                 'nickname'=>$nickname,
-                'sex'=>$sex,
-                'realname'=>$realname,
-                'birthday'=>$birthday,
                 'mobile'=>$mobile,
+                'realname'=>$realname,
                 'email'=>$email,
-                'qq'=>$qq,
-                'idnumber'=>$idnumber
+                'idnumber'=>$idnumber,
+                'birthday'=>$birthday,
+                'sex'=>$sex,
+                'qq'=> $qq,
+                'head'=>$head
             );
             $result = apiCall(AccountApi::UPDATE,array($uid,$entity));
 
@@ -158,6 +166,38 @@ class UserController extends ApiController{
                 $this->apiReturnSuc("操作成功！");
             }else{
                 $this->apiReturnErr($result['info']);
+            }
+        }
+    }
+
+    /**
+     * 检测用户名是否存在
+     */
+    public function isExists(){
+        $notes = "应用".$this->client_id."，调用用户名检测接口";
+        addLog("User/isExists",$_GET,$_POST,$notes);
+
+        $username=I('username',"");
+       if($this->isExistsMethod($username)){
+           $this->apiReturnErr("该用户名已存在！！！");
+       }else{
+           $this->apiReturnSuc("可以使用的用户名");
+
+       }
+    }
+
+
+    private function isExistsMethod($username){
+        $map=array(
+            'username'=>$username,
+        );
+        $result=apiCall(UcenterMemberApi::QUERY_NO_PAGING,array($map));
+        if($result['status']){
+            if($result['info']!=null){
+                return true;
+            }else{
+
+                return false;
             }
         }
     }

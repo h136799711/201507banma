@@ -17,13 +17,16 @@ interface IAccount
 {
 
 
-    function login($username, $password,$type,$from);
+    function login($username, $password,$type);
 
     function register($entity);
 
     function getInfo($id);
 
-    function update($uid,$password,$entity);
+    function update($uid,$entity);
+
+
+    function updatePwd($uid,$oldPwd,$newPwd);
 
 }
 
@@ -49,13 +52,54 @@ class AccountApi implements IAccount
 
     const UPDATE="Common/Account/update";
 
+    /**
+     * @param $uid 用户ID
+     * @param $oldPwd 老密码
+     * @param $newPwd 新密码
+     */
+    public function updatePwd($uid,$oldPwd,$newPwd){
+        //根据用户ID查询用户
+
+    }
 
 
     /**
-     * 用户更新
+     * 用户更新,不包括修改密码
      */
-    public function update($uid,$password,$data){
-        return apiCall(UserApi::UPDATE,array($uid, $password, $data));
+    public function update($uid,$data){
+        $trans = M();
+        $trans->startTrans();
+        $map=array(
+          'email'=>$data['email'],
+          'mobile'=>$data['mobile'],
+        );
+        $result= apiCall(UserApi::SAVE_BY_ID,array($uid,$map));
+        if($result['status']){
+            $m=array(
+              'uid'=>$uid
+            );
+            $map=array(
+                'nickname'=>$data['nickname'],
+                'realname'=>$data['realname'],
+                'idnumber'=>$data['idnumber'],
+                'birthday'=>$data['birthday'],
+                'sex'=>$data['sex'],
+                'qq'=> $data['qq'],
+                'head'=>$data['head']
+            );
+            $result= apiCall(MemberApi::SAVE,array($m,$map));
+            //$trans->commit();
+            if($result['status']){
+                $trans->commit();
+                return array('status' => true, 'info' => $result['info']);
+            }else{
+                $trans->rollback();
+                return array('status' => false, 'info' => $result['info']);
+            }
+        }else{
+            $trans->rollback();
+            return array('status' => false, 'info' => $result['info']);
+        }
     }
 
     /**
@@ -94,10 +138,10 @@ class AccountApi implements IAccount
     }
 
 
-    public function login($username, $password,$type, $from)
+    public function login($username, $password,$type)
     {
         // TODO: Implement login() method.
-        $result=apiCall(UserApi::LOGIN,array($username, $password,$type, $from));
+        $result=apiCall(UserApi::LOGIN,array($username, $password,$type));
         return $result;
     }
 
@@ -108,20 +152,19 @@ class AccountApi implements IAccount
      */
     public function register($entity)
     {
-
-
         if (!isset($entity['username']) || !isset($entity['password']) || !isset($entity['from'])) {
             return array('status' => false, 'info' => "账户信息缺失!");
         }
-
         $username = $entity['username'];
         $password = $entity['password'];
         $email = $entity['email'];
         $mobile = $entity['mobile'];
         $from = $entity['from'];
         $realname=$entity['realname'];
+        //$head=$entity['head'];
+        //$nickname=$entity['nickname'];
         $birthday=$entity['birthday'];
-
+        //$sex=$entity['sex'];
         $trans = M();
         $trans->startTrans();
         $error = "";
@@ -130,15 +173,15 @@ class AccountApi implements IAccount
         $uid = 0;
         if ($result['status']) {
             $uid = $result['info'];
-
             $member = array(
                 'uid' => $uid,
                 'realname' => $realname,
-              //  'nickname' => $wxuser['nickname'],
+                //'nickname' => $nickname,
                 'idnumber' => '',
-             //   'sex' =>  $wxuser['sex'],
+                //'sex' =>  $sex,
                 'birthday' => $birthday,
                 'qq' => '',
+                //'head'=>$head,
                 'score' => 0,
                 'login' => 0,
             );

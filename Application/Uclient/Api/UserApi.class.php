@@ -64,7 +64,56 @@ class UserApi extends Api
     /**
      * 更新数据
      */
-    const UPDATE="Uclient/User/updateInfo";
+    const UPDATE="Uclient/User/update";
+
+
+    const SAVE_BY_ID="Uclient/User/saveByID";
+
+
+    public function saveByID($ID, $entity) {
+        unset($entity['id']);
+
+        return $this -> save(array('id' => $ID), $entity);
+    }
+
+    /**
+     * 保存
+     * @return status|boolean , info 错误信息或更新条数
+     */
+    public function save($map, $entity) {
+
+        $result = $this -> model -> create($entity, 2);
+        if($result === false){
+            $error = $this -> model -> getError();
+            return $this -> apiReturnErr($error);
+        }
+
+        $result = $this -> model -> where($map) -> save();
+        if ($result === false) {
+            $error = $this -> model -> getDbError();
+            return $this -> apiReturnErr($error);
+        } else {
+            return $this -> apiReturnSuc($result);
+        }
+    }
+
+    /**
+     * 返回错误结构
+     * @return array('status'=>boolean,'info'=>Object)
+     */
+    protected function apiReturnErr($info) {
+        return array('status' => false, 'info' => $info);
+    }
+
+    /**
+     * 返回成功结构
+     * @return array('status'=>boolean,'info'=>Object)
+     */
+    protected function apiReturnSuc($info) {
+        return array('status' => true, 'info' => $info);
+    }
+
+
 
     /**
      * 构造方法，实例化操作模型
@@ -170,10 +219,10 @@ class UserApi extends Api
      * @return integer           登录成功-用户ID，登录失败-错误编号
      */
     public
-    function login($username, $password, $type = 1,$from)
+    function login($username, $password, $type = 1)
     {
-
-        $result = $this->model->login($username, $password, $type,$from);
+       //dump($this->model);
+        $result = $this->model->login($username, $password, $type);
         if ($result > 0) {
             return array('status' => true, 'info' => $result);
         } else {
@@ -182,7 +231,7 @@ class UserApi extends Api
                     $result = "参数错误";
                     break;
                 case -1:
-                    $result = "用户不存在或被禁用或来源错误";
+                    $result = "用户不存在或被禁用";
                     break;
                 case -2:
                     $result = "密码错误";
