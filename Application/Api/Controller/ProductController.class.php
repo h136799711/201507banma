@@ -45,7 +45,7 @@ class ProductController extends ApiController{
      */
     public function query(){
         $notes = "应用".$this->client_id."，调用商品分页查询接口";
-        addLog("Product/queryNoPaging",$_GET,$_POST,$notes);
+        addLog("Product/query",$_GET,$_POST,$notes);
         $map=array(
             'name'=>array('like','%'.I('pname','').'%'),   //模糊查询
             'onshelf'=>1   //已上架的产品

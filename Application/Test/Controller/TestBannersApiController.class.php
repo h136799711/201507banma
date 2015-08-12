@@ -30,9 +30,16 @@ class TestBannersApiController extends RestController{
         }
 
         /**
-         * 测试分页
+         * 测试不分页
          */
         public function testQueryNoPaging(){
+            $this->display();
+        }
+
+        /**
+         * 测试分页
+         */
+        public function testQuery(){
             $this->display();
         }
 

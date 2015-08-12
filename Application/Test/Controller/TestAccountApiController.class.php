@@ -43,14 +43,14 @@ class TestAccountApiController extends RestController {
 
 
     /**
-     * ²âÊÔµÇÂ¼
+     * ï¿½ï¿½ï¿½Ôµï¿½Â¼
      */
     public function testLogin(){
         $this->display();
     }
 
     /**
-     * ²âÊÔ×¢²á
+     * ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½
      */
     public function testRegister(){
         $this->display();
@@ -58,9 +58,14 @@ class TestAccountApiController extends RestController {
 
 
     /**
-     * ²âÊÔ¸üĞÂ
+     * ï¿½ï¿½ï¿½Ô¸ï¿½ï¿½ï¿½
      */
     public function testUpdate(){
+        $this->display();
+    }
+
+
+    public function testIsExists(){
         $this->display();
     }
 

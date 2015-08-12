@@ -37,4 +37,11 @@ class TestCategoryApiController extends RestController{
         $this->display();
     }
 
+    /**
+     * 测试分页查询类目参数parentId
+     */
+    public function testQuery(){
+        $this->display();
+    }
+
 }
