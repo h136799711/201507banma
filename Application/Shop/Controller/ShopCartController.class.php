@@ -13,6 +13,8 @@ class ShopCartController extends ShopController {
 	 * 购物车
 	 * */
     public function shopcart(){
+    	$user=session('user');
+		$this->assign('user',$user);
        $this->theme($this->themeType)->display();
     }
 	

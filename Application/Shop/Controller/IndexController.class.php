@@ -32,6 +32,9 @@ class IndexController extends ShopController{
 //		dump($user);
 		$this->theme($this->themeType)->display();
     }
+	public function aa(){
+		$this->theme($this->themeType)->display();
+	}
 	/*
 	 * 商品详情
 	 * */

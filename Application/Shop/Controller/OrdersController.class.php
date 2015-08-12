@@ -30,18 +30,40 @@ class OrdersController extends ShopController {
 	protected function _initialize() {
 		parent::_initialize();
 	}
-	
+
 	/*
 	 * 订单确认
 	 * */
-	public function index(){
-		$this->theme($this->themeType)->display();
+	public function index() {
+		$user=session('user');
+		if($user==null){
+			$this->error('请先登录',U('Shop/Index/login'));
+		}else{
+			$this->assign('user',$user);
+			$id = I('id', 0);
+			$user = session('user');
+			$uid = array('uid' => $user['id']);
+			$map = array('id' => $id);
+			$pro = apiCall(ProvinceApi::QUERY_NO_PAGING, array());
+			//			dump($pro);
+			$this -> assign('pro', $pro['info']);
+			$result = apiCall(AddressApi::QUERY, array($map));
+			$this -> assign('add', $result['info']['list'][0]);
+			$result = apiCall(AddressApi::QUERY, array($uid));
+			//			dump($result);
+			$this -> assign('address', $result['info']['list']);
+			$this -> theme($this -> themeType) -> display();
+		}
+		
 	}
+
 	/*
 	 * 支付方式
 	 * */
-	public function paytype(){
-		$this->theme($this->themeType)->display();
+	public function paytype() {
+		$user=session('user');
+		$this->assign('user',$user);
+		$this -> theme($this -> themeType) -> display();
 	}
 
 }

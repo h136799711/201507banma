@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="__PUBLIC__/Home/Index/css/base.css">
 	<style type="text/css">
 		.box-hd{margin-top: 30px;}
+		.am-next{margin-left: 30% !important; width: 30px; height: 30px;}
+		.xm-star-goods-item{text-align: center; padding: 20px;}
 	</style>
 </block>
 
@@ -14,33 +16,18 @@
 	<include file="desktop_default/width/top"/>
 	<div class="site-header container">
 		<include file="desktop_default/width/search"/>
-		<div class="header-nav clearfix">
-			<div id="J_categoryContainer" class="nav-category nav-category-toggled">
-				<a class="btn-category-list" >全部商品分类</a>
-				
-				
-			</div>
+		<div style=" height: 500px; position: relative; width: 100%; padding: 2px;  margin-left: -27%; margin-top: 10%;">
 			
-		</div>
-		
-	</div>
-	<!-- .site-header END -->
-	<!-- Main Content START -->
-	<div class="container">
-		<div class="row">
-			<div class="col col-16 offset4">
-				<div class="home-slider">
-					<div id="J_homeSlider" class="xm-slider" >
-						<div class="xm-slider-container" style=" position: relative; width: 992px; height: 420px;">
-							<div class="xm-slider-control" style="position: relative; left: 0px; width: 992px; height: 420px;">
-								<div class="am-slider am-slider-default" data-am-flexslider id="demo-slider-0" style="height: 400px;">
-								  <ul class="am-slides" style="height: 400px;">
-								    <li><img style="height: 400px;" src="http://s.amazeui.org/media/i/demos/bing-1.jpg" /></li>
-								    <li><img style="height: 400px;" src="http://s.amazeui.org/media/i/demos/bing-2.jpg" /></li>
-								    <li><img style="height: 400px;" src="http://s.amazeui.org/media/i/demos/bing-1.jpg" /></li>
-								    <li><img style="height: 400px;" src="http://s.amazeui.org/media/i/demos/bing-2.jpg" /></li>
-								    <li><img style="height: 400px;" src="http://s.amazeui.org/media/i/demos/bing-1.jpg" /></li>
-								    <li><img style="height: 400px;" src="http://s.amazeui.org/media/i/demos/bing-2.jpg" /></li>
+			<div class="col col-16 offset4" style=" width: 154%; margin: 0 auto;">
+				<div class="home-slider" style="">
+					<div id="J_homeSlider" class="xm-slider" style="" >
+						<div class="xm-slider-container" style=" width: 100%; height: 500px;">
+							<div class="xm-slider-control" style=" left: 0px; width: 100%; height: 500px;">
+								<div class="am-slider am-slider-default" data-am-flexslider id="demo-slider-0" style="height: 500px;">
+								  <ul class="am-slides" style="height: 500px;">
+								    <li><img style="height: 500px; " src="__IMG__/1.jpg" /></li>
+								    <li><img style="height: 500px;" src="__IMG__/2.jpg" /></li>
+								    <li><img style="height: 500px;" src="__IMG__/3.jpg" /></li>
 								  </ul>
 								</div>
 							</div>
@@ -51,33 +38,24 @@
 				</div>
 				
 			</div>
+		
 		</div>
+		
+	</div>
+	<!-- .site-header END -->
+	<!-- Main Content START -->
+	<div class="container">
+		
 
 		<div class="home-star-goods">
 			<div class="xm-plain-box J_starGoodsCarousel">
 				<div class="box-hd">
 					<h3 class="title">热销商品<a ><font color="#808080" size="2">热销的商品个个都是精品</font></a></h3>
 					<div class="more">
-						
 					</div>
 				</div>
 				<div class="box-bd">
-					<div class="xm-star-goods-list-wrap J_carouselWrap" style="height: 308px;">
-						<div class="xm-star-goods-list clearfix J_carouselList" style="width: 2480px; margin-left: 0px;">
-							<volist name='new' id='vo'>
-							<div class="xm-star-goods-item">
-								<div class="item-content">
-									<span class="item-thumb">
-                                  <a ><img height="60%" width="99%" style="border: 1px solid #000000;" src="{$vo.main_img}"></a>
-                                </span>
-									<span class="item-title"><a></a></span>
-									<span class="item-desc">{$vo.name}</span>
-								</div>
-							</div>
-							</volist>
-							
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -94,21 +72,7 @@
 					</div>
 				</div>
 				<div class="box-bd">
-					<div class="xm-star-goods-list-wrap J_carouselWrap" style="height: 308px;">
-						<div class="xm-star-goods-list clearfix J_carouselList" style="width: 2480px; margin-left: 0px;">
-							<volist name='new' id='vo'>
-							<div class="xm-star-goods-item">
-								<div class="item-content">
-									<span class="item-thumb">
-                                  <a ><img  src="{$vo.main_img}"></a>
-                                </span>
-									<span class="item-title"><a></a></span>
-									<span class="item-desc">{$vo.name}</span>
-								</div>
-							</div>
-							</volist>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -128,7 +92,7 @@
 							<div class="xm-star-goods-item">
 								<div class="item-content">
 									<span class="item-thumb">
-                                  <a ><img height="85%" width="100%" src="{$vo.main_img}"></a>
+                                  <a ><img height="250px" width="220px" src="{$vo.main_img}"></a>
                                 </span>
 									<span class="item-title"><a></a></span>
 									<span class="item-desc">{$vo.name}</span>
@@ -172,7 +136,7 @@
 					<li>
 						<a>
 							<i class="iconfont"></i>
-							<strong>1小时快修服务</strong>
+							<strong>急速发货</strong>
 						</a>
 					</li>
 					<li>
@@ -206,7 +170,6 @@
 			
 		</div>
 	</div>
-	<h4 style="text-align: center;">杭州博也网络科技版权所有<br>{__RUNTIME__}</h4>
 
 	
 </block>

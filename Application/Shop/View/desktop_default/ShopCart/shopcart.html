@@ -19,15 +19,17 @@
 	<div class="site-topbar">
 		<div class="container">
 			<div class="topbar-nav">
-				<a href="" >小米网</a><span class="sep">|</span>
-				<a href="" >小米网</a><span class="sep">|</span>
-				<a href="" >小米网</a><span class="sep">|</span>
-				<a href="" >小米网</a><span class="sep">|</span>
-				<a href="" >小米网</a><span class="sep">|</span>
+				<a href="{:U('Shop/Index/index')}" >斑马首页</a><span class="sep">|</span>
 			</div>
 			<div class="topbar-info J_userInfo">
-				<a target="_blank" href="{:U('Home/Index/login')}">登录</a><span class="sep">|</span>
-				<a target="_blank" href="{:U('Home/Index/register')}">注册</a>
+				<empty name="user">
+					<a target="_blank" href="{:U('Shop/Index/login')}">登录</a><span class="sep">|</span>
+					<a target="_blank" href="{:U('Shop/Index/register')}">注册</a>
+					<else/>
+					欢迎你！<a>{$user['username']}</a> &nbsp; &nbsp; &nbsp; &nbsp;<a href="{:U('Shop/User/index',array('id'=>$user['id']))}">个人中心</a>
+					&nbsp; &nbsp; &nbsp; &nbsp;<a href="{:U('Shop/User/loginout')}">退出登录</a>
+				</empty>
+				
 			</div>
 		</div>
 	</div>
@@ -68,39 +70,94 @@
 						<img height="100" width="120" src="">
 						<font size="4">商品名称</font>
 					</td>
-					<td>49.5</td>
+					<td><span class="danjia">49.5</span></td>
 					<td><div class="change-goods-num"> 
 						<a href="javascript:void(0)" class="J_minus"> 
-							<i class="iconfont"></i> 
-						</a> <input tyep="text" name="" value="1" data-num="1" data-buylimit="10" autocomplete="off" class="goods-num J_goodsNum"> 
-							<a href="javascript:void(0)" class="J_plus"> <i class="iconfont">
+							<i class="iconfont reducecount" ></i> 
+						</a> <input type="number" name="count" value="1"  class="goods-num J_goodsNum count"> 
+							<a href="javascript:void(0)" class="J_plus"> <i class="iconfont addcount">
 							</i> </a> 
 					</div>
 					</td>
-					<td><font color="orangered">49.5</font></td>
+					<td><font class="xiaoji" color="orangered">49.5</font></td>
 					<td><a href="javascript:void(0)"><i class="am-icon-times"></i></a></td>
 				</tr>
 				<tr>
 					<td colspan="5"><hr></td>
 				</tr>
-				
+				<tr>
+					<td>
+						<img height="100" width="120" src="">
+						<font size="4">商品名称</font>
+					</td>
+					<td><span class="danjia">49.5</span></td>
+					<td><div class="change-goods-num"> 
+						<a href="javascript:void(0)" class="J_minus"> 
+							<i class="iconfont reducecount" ></i> </a>
+							<input type="number" name="count" value="1" class="goods-num J_goodsNum count"> 
+							 <a href="javascript:void(0)" class="J_plus"> <i class="iconfont addcount" >
+							</i>  </a>
+					</div>
+					</td>
+					<td><font class="xiaoji" color="orangered">49.5</font></td>
+					<td><a href="javascript:void(0)"><i class="am-icon-times"></i></a></td>
+				</tr>
+				<tr>
+					<td colspan="5"><hr></td>
+				</tr>
 			</table>
 			<div style="width: 300px;  margin-left: 70%; padding: 10px;">
-				<h2>商品总价：<font color="orangered" style="margin-left: 60px;">49.5</font>元</h2>
-				<!--<input type="text"  style="height: 40px; width: 280px;" placeholder="请输入邀请人用户ID码"/>-->
-				<h2>商品总计：<font color="orangered" style="margin-left: 60px;" size="6">49.5</font>元</h2>
+				<h2>商品总价：<font color="orangered" class="zongjia" style="margin-left: 60px;">49.5</font>元</h2>
+				<h2>商品总计：<font color="orangered" class="zongji" style="margin-left: 60px;" size="6">49.5</font>元</h2>
 				<font style="float: right;">
-				<button type="button" class="am-btn am-btn-default am-round">继续购物</button>
-				<button type="button" class="am-btn am-btn-warning am-round">去结账</button></font>
+				<button type="button" id="jixu" style="width: 120px;" class="am-btn am-btn-default am-round">继续购物</button>
+				<button type="button" id="gopay" style="width: 120px;" class="am-btn am-btn-warning am-round">去结账</button></font>
 			</div>
 		</div>
-		<!--<empty name='lists'>
-			<img src="__PUBLIC__/Shop/img/gouwuche.png">
-		<else/>-->
-		<!--</empty>-->
 	</div>
 </block>
 
 <block name="area_footer">
-
+	<script type="text/javascript">
+		$(function(){
+			$('#jixu').click(function(){
+				window.location.href="{:U('Shop/Index/index')}";
+			})
+			$('#gopay').click(function(){
+				window.location.href="{:U('Shop/Orders/index')}";
+			})
+			$('.J_plus').click(function(){
+				var countInput=$(this).parent().find("input[name='count']");
+				//alert(countInput.size());
+				var count=countInput.val();
+				var zong=Number(countInput.val())+1;
+				if(count==10){
+					alert('最大了！');
+				}else{
+					countInput.val(parseInt(countInput.val())+1);
+					var danjia=$('.danjia').text();
+					var zongjia=Number(danjia)*Number(zong);
+//					alert(danjia)
+//					alert(zong)
+					$(this).parent().find('.xiaoji').text(zongjia);
+				}
+				
+			})
+			$('.J_minus').click(function(){
+				var countInput=$(this).parent().find("input[name='count']");
+				//alert(countInput.size());
+				var count=countInput.val();
+				var zong=Number(countInput.val())-1;
+//				alert(zong)
+				if(count==1){
+					alert('最小了！');
+				}else{
+					countInput.val(parseInt(countInput.val())-1);
+					var danjia=$('.danjia').text();
+					var zongjia=Number(danjia)*Number(zong);
+					$(this).parent().find('.xiaoji').text(zongjia);
+				}
+			})
+		})
+	</script>
 </block>
