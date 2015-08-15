@@ -13,9 +13,11 @@ class ShopCartController extends ShopController {
 	 * 购物车
 	 * */
     public function shopcart(){
+    	$pros=cookie('shopcat');
+		dump($pros);
     	$user=session('user');
 		$this->assign('user',$user);
-       $this->theme($this->themeType)->display();
+//     $this->theme($this->themeType)->display();
     }
 	
 	

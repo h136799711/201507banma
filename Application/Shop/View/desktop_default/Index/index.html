@@ -1,82 +1,143 @@
 <extend name="template/base_index2" />
 
 <block name="area_header">
-	
-	<link  href="__PUBLIC__/Home/Index/css/index.min.css" type="text/css">
-    <link rel="stylesheet" href="__PUBLIC__/Home/Index/css/base.css">
+	<link rel="stylesheet" href="__PUBLIC__/Shop/css/style.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Shop/css/settings.css" media="screen" />
+	<link rel="stylesheet" href="__PUBLIC__/Home/Index/css/base.css">
 	<style type="text/css">
-		.box-hd{margin-top: 30px;}
-		.am-next{margin-left: 30% !important; width: 30px; height: 30px;}
-		.xm-star-goods-item{text-align: center; padding: 20px;}
+		body {
+			background-color: #F5F5F5;
+		}
+		.current_page_item {
+			z-index: 9999;
+		}
+		.columns {
+			background-color: #FFFFFF;
+			height: 100px;
+			width: 100%;
+			font-size: 22px;
+		}
+		.hr {} .main_menu {
+			margin-left: 100px;
+		}
+		.twelve {
+			min-width: 1300px;
+		}
+		.box-bd {
+			height: 300px;
+			background-color: #FFFFFF;
+			margin-top: 15px;
+			padding: 10px;
+		}
+		.titles {
+			height: 100px;
+			float: left;
+			width: 180px;
+			padding: 10px;
+			font-size: 17px;
+			margin-top: 100px;
+			margin-left: 32%;
+			text-align: center;
+		}
 	</style>
 </block>
 
 <block name="area_body">
-	
-	<include file="desktop_default/width/top"/>
-	<div class="site-header container">
-		<include file="desktop_default/width/search"/>
-		<div style=" height: 500px; position: relative; width: 100%; padding: 2px;  margin-left: -27%; margin-top: 10%;">
-			
-			<div class="col col-16 offset4" style=" width: 154%; margin: 0 auto;">
-				<div class="home-slider" style="">
-					<div id="J_homeSlider" class="xm-slider" style="" >
-						<div class="xm-slider-container" style=" width: 100%; height: 500px;">
-							<div class="xm-slider-control" style=" left: 0px; width: 100%; height: 500px;">
-								<div class="am-slider am-slider-default" data-am-flexslider id="demo-slider-0" style="height: 500px;">
-								  <ul class="am-slides" style="height: 500px;">
-								    <li><img style="height: 500px; " src="__IMG__/1.jpg" /></li>
-								    <li><img style="height: 500px;" src="__IMG__/2.jpg" /></li>
-								    <li><img style="height: 500px;" src="__IMG__/3.jpg" /></li>
-								  </ul>
-								</div>
-							</div>
-						</div>
 
-						
-					</div>
-				</div>
-				
+	<header class="header">
+		<include file="desktop_default/width/top" />
+		<div class="twelve columns">
+			<div class="site-logo" style="float: left; margin-left: 20%;">
+				<a><img height="50px" width="70px" style=" margin-left: 50px;margin-top: 20px; " src="__PUBLIC__/Home/Index/img/banma.png"></a>
 			</div>
-		
+			<nav class="main_menu" style="float: left; margin-left: 60px;">
+				<ul>
+					<li class="current_page_item">
+						<a href="index.html">首页</a>
+
+					</li>
+					<volist name="biggroup" id="vo">
+						<li class="current_page_item">
+							<a href="index.html">{$vo['name']}</a>
+							<ul>
+								<volist name="group" id="v">
+									<if condition="$vo['id'] eq $v['parent']">
+										<li><a href="{:U('Shop/Index/lists',array('id'=>$v['id']))}">{$v['name']}</a></li>
+									</if>
+								</volist>
+							</ul>
+						</li>
+					</volist>
+				</ul>
+			</nav>
 		</div>
-		
+		<div class="clearfix"></div>
+
+	</header>
+	<div class="hr" style="border-bottom: 2px solid orangered; width: 100%;"></div>
+	<div class="fullwidthbanner-container top-shadow">
+		<div class="fullwidthbanner">
+			<ul>
+				<li data-transition="boxfade" data-slotamount="2" data-masterspeed="300">
+					<img src="__IMG__/Slider-1.jpg" alt="">
+				</li>
+				<li data-transition="boxfade" data-slotamount="3" data-masterspeed="300">
+					<img src="__IMG__/Slider-2.jpg" alt="">
+				</li>
+				<li data-transition="boxfade" data-slotamount="4" data-masterspeed="300">
+					<img src="__IMG__/Slider-3.jpg" alt="">
+				</li>
+				<li data-transition="boxfade" data-slotamount="5" data-masterspeed="300">
+					<img src="__IMG__/Slider-4.jpg" alt="">
+				</li>
+			</ul>
+		</div>
 	</div>
-	<!-- .site-header END -->
-	<!-- Main Content START -->
 	<div class="container">
-		
 
 		<div class="home-star-goods">
 			<div class="xm-plain-box J_starGoodsCarousel">
 				<div class="box-hd">
 					<h3 class="title">热销商品<a ><font color="#808080" size="2">热销的商品个个都是精品</font></a></h3>
 					<div class="more">
-					</div>
-				</div>
-				<div class="box-bd">
-					
-				</div>
-			</div>
-		</div>
-		<!-- .home-star-goods END -->
 
-		<div class="home-star-goods">
-			<div class="xm-plain-box J_starGoodsCarousel">
-				<div class="box-hd">
-					<h3 class="title">新货上架</h3>
-					<div class="more">
-						<div class="xm-recommend-page clearfix">
-							
-						</div>
 					</div>
 				</div>
 				<div class="box-bd">
-					
+					<div class="titles">
+						距离活动结束还有
+						<br>
+						<br>
+						<!--<hr style="border: 0.5px solid #000000; margin-top: 10px;">-->
+						<font color="red" style="">1天19小时</font>
+
+					</div>
+					<img class="am-round" style="float: right; height: 280px; width: 40%;" src="__IMG__/a1.jpg">
+				</div>
+				<div class="box-bd">
+					<div class="titles">
+						距离活动结束还有
+						<br>
+						<br>
+						<!--<hr style="border: 0.5px solid #000000; margin-top: 10px;">-->
+						<font color="red" style="">1天19小时</font>
+
+					</div>
+					<img class="am-round" style="float: right; height: 280px; width: 40%;" src="__IMG__/a2.jpg">
+				</div>
+				<div class="box-bd">
+					<div class="titles">
+						距离活动结束还有
+						<br>
+						<br>
+						<!--<hr style="border: 0.5px solid #000000; margin-top: 10px;">-->
+						<font color="red" style="">1天19小时</font>
+
+					</div>
+					<img class="am-round" style="float: right; height: 280px; width: 40%;" src="__IMG__/a3.jpg">
 				</div>
 			</div>
 		</div>
-		<!-- .home-new-goods END -->
 
 		<div class="home-hot-goods">
 			<div class="xm-plain-box">
@@ -89,22 +150,23 @@
 							<div class="brick-list">
 
 								<volist name='new' id='vo'>
-							<div class="xm-star-goods-item">
-								<div class="item-content">
-									<span class="item-thumb">
-                                  <a ><img height="250px" width="220px" src="{$vo.main_img}"></a>
+									<div class="xm-star-goods-item">
+										<div class="item-content" style="text-align: center;">
+											<span class="item-thumb">
+                                  <a href="{:U('Shop/Index/spxq',array('id'=>$vo['id']))}"><img height="220px" width="220px" src="{$vo.main_img}"></a>
                                 </span>
-									<span class="item-title"><a></a></span>
-									<span class="item-desc">{$vo.name}</span>
-								</div>
-							</div>
-							</volist>
+											<span class="item-title"><a></a></span>
+											<br><span class="item-desc">{$vo.name}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<br><span class="item-price" style="color: red;">{$vo.price}元&nbsp;&nbsp;&nbsp; <del>{$vo.ori_price}</del></span>
+										</div>
+									</div>
+								</volist>
 							</div>
 						</div>
 						<div class="col col-5">
 							<div class="board-section">
-								<h3><span>HOT</span>热销商品排行</h3>
-								<ul class="board-list">
+								<!--<h3><span>HOT</span>热销商品排行</h3>-->
+								<!--<ul class="board-list">
 									<volist name='new' id='vo'>
 										<li class="top">
 											<a href="{:U('Shop/Index/spxq',array('id'=>$vo['id']))}"><img height="60px" width="80px" src="{$vo.main_img}"></a>
@@ -118,62 +180,58 @@
 											<span class="item-num"></span>
 										</li>
 									</volist>
-								</ul>
+								</ul>-->
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		
-		
-	</div>
-	
-	<div class="site-footer">
-		<div class="container">
-			<div class="footer-service">
-				<ul class="list-service clearfix">
-					<li>
-						<a>
-							<i class="iconfont"></i>
-							<strong>急速发货</strong>
-						</a>
-					</li>
-					<li>
-						<a >
-							<i class="iconfont"></i>
-							<strong>7天无理由退货</strong>
-						</a>
-					</li>
-					<li>
-						<a >
-							<i class="iconfont"></i>
-							<strong>15天免费换货</strong>
-						</a>
-					</li>
-					<li>
-						<a >
-							<i class="iconfont"></i>
-							<strong>满150元包邮</strong>
-						</a>
-					</li>
-					<li>
-						<a rel="nofollow" >
-							<i class="iconfont"></i>
-							<strong>520余家售后网点</strong>
-						</a>
-					</li>
 
-				</ul>
-			</div>
-			
-			
-		</div>
 	</div>
-
-	
 </block>
 
 <block name="area_footer">
+	<script type="text/javascript">
+		$(window).scroll(function() {
+			$('.columns').css('position', 'fixed');
+			$('.columns').css('z-index', '9999');
+			$('.columns').css('margin-top', '-40px');
+			$('.hr').css('position', 'fixed');
+			$('.hr').css('z-index', '9990');
+			$('.hr').css('margin-top', '60px');
+			if ($(document).scrollTop() <= 50) {
+				$('.columns').css('position', 'relative');
+				$('.columns').css('z-index', '9999');
+				$('.columns').css('margin-top', '0');
+				$('.hr').css('position', 'relative');
+				$('.hr').css('z-index', '0');
+				$('.hr').css('margin-top', '0');
+			}
+		})
+	</script>
 
+	<script src="__JS__/custom.js" type="text/javascript"></script>
+
+	<script src="__JS__/jquery.meanmenu.js"></script>
+	<script>
+		jQuery(document).ready(function() {
+			jQuery('header nav').meanmenu();
+		});
+	</script>
+
+	<script src="__JS__/jquery.themepunch.plugins.min.js"></script>
+	<script src="__JS__/jquery.themepunch.revolution.min.js"></script>
+	<script src="__JS__/revolution-slider-options.js"></script>
+
+	<script src="__JS__/jquery.prettyPhoto.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("a[data-gal^='prettyPhoto']").prettyPhoto();
+		});
+	</script>
+
+	<script src="__JS__/tooltip.js"></script>
+
+	<script type="text/javascript" src="__JS__/jquery.flexisel.js"></script>
 </block>

@@ -52,8 +52,10 @@ class IndexController extends ShopController{
 	  * 加入购物车
 	  * */
 	public function savecookie(){
-		$id=I('id',0);
-		cookie('shopcat',$id,24*3600);
+		$ck=cookie('shopcat');
+		$hz=count($ck)+1;
+		$id+$hz=I('id',0);
+		cookie('shopcat',array($id+$hz),24*3600);
 		if(cookie('shopcat')!=null){
 			$this->ajaxReturn(1,'json');
 		}else{
