@@ -12,7 +12,9 @@
 		.daohang a{}
 		.detail{font-size: 18px; margin-top: 200px; margin-left: 50px; }
 		.show-a{width: 60%;  margin: 0 auto;}
-		.div_main{}
+		.inf h1{display:inline;}
+		.inf span{margin-left: 20px;}
+		.am-btn{font-size: 17px;}
 	</style>
 </block>
 
@@ -27,13 +29,14 @@
 			<div class="div_info" >
 				<div class="div_spxq_info1">
 					<div style=" padding: 10px; margin-left: 20%; min-width: 1000px; ">
-						<img width="400" height="450" id="img_main" src="{$detail.main_img}" style="float: left;"/>
-						<div style=" padding: 20px; min-width: 1000px;">
-							<h1 style="margin-left: 400px;">商品名称</h1><hr>
-							<h1 style="margin-left: 400px;">规格参数</h1><hr>
-							<h1 style="margin-left: 400px; color: orangered;">49元</h1><hr>
-							<a style="margin-left: 80px; width: 200px; " class="am-btn am-btn-warning" href="#"><i class="am-icon-shopping-cart"></i>加入购物车</a>
-							<button type="button" style=" margin-left: 20px; width: 200px;" class="am-btn am-btn-success">立即购买</button><hr>
+						<img width="400" height="450" id="img_main" src="{$product.main_img}" style="float: left;"/>
+						<div class="inf" style=" padding: 20px; min-width: 1000px;">
+							<input type="hidden" name="pid" id="pid" value="{$product.id}" />
+							<h1 style="margin-left: 40px;">商品名称</h1><span>{$product.name}</span><hr>
+							<h1 style="margin-left: 40px;">规格参数</h1><span>{$product.properties}</span><hr>
+							<h1 style="margin-left: 40px; color: orangered;">{$product.price}</h1><del>{$product.ori_price}</del><hr>
+							<a id="gocat" style="margin-left: 80px; width: 200px font-size: 17px !important; " class="am-btn am-btn-warning" href="javascript:void(0)"><i class="am-icon-shopping-cart"></i>加入购物车</a>
+							<button type="button" style=" font-size: 17px; margin-left: 20px; width: 200px;" class="am-btn am-btn-success">立即购买</button><hr>
 							<font size="3" style="margin-left: 120px;"><i class="am-icon-comment-o"></i>评论：<font color="orangered">243</font></font>
 							<span style="margin-left: 50px;">|</span>
 							<font size="3" style="margin-left: 60px;"><i class="am-icon-thumbs-o-up"></i>满意度：<font color="orangered">99.3%</font></font>
@@ -56,6 +59,10 @@
 	</div>
 	<div style="margin-top: 100px; ">
 			<hr>
+			<h1 style="margin-top: -43px; text-align: center; margin-left: 47%; position: relative; background-color: #FFFFFF; width: 180px;"  >商&nbsp;&nbsp;品&nbsp;&nbsp;规&nbsp;&nbsp;格</h1>
+	</div>	
+	<div style="margin-top: 100px; ">
+			<hr>
 			<h1 style="margin-top: -43px; text-align: center; margin-left: 47%; position: relative; background-color: #FFFFFF; width: 180px;"  >晒&nbsp;&nbsp;货&nbsp;&nbsp;分&nbsp;&nbsp;享</h1>
 	</div>				
 				
@@ -66,7 +73,16 @@
 <block name="area_footer">
 	<script type="text/javascript">
 		$(function(){
-			
+			$('#gocat').click(function(){
+				var pid=$('#pid').val();
+				$.getJSON("{:U('Shop/Index/savecookie')}",{id:pid},function(json){ 
+					if(json==1){
+						alert('成功添加到购物车');
+					}else{
+						alert('添加失败，请重试');
+					}
+				})
+			})
 			
 		})
 	</script>

@@ -42,8 +42,25 @@ class IndexController extends ShopController{
 	 	$user=session('user');
 		$this->assign('user',$user);
 	 	$map=array('id'=>I('id',''));
+		$result=apiCall(ProductApi::QUERY_NO_PAGING,array($map));
+//		dump($result);
+		$this->assign('product',$result['info'][0]);
 	 	$this->theme($this->themeType)->display();
 	 }
+	 
+	 /*
+	  * 加入购物车
+	  * */
+	public function savecookie(){
+		$id=I('id',0);
+		cookie('shopcat',$id,24*3600);
+		if(cookie('shopcat')!=null){
+			$this->ajaxReturn(1,'json');
+		}else{
+			$this->ajaxReturn(0,'json');
+		}
+		
+	}
 	/*
 	 * 商品分类
 	 * */
