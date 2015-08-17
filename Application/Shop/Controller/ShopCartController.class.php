@@ -8,16 +8,21 @@
 
 namespace Shop\Controller;
 use Think\Controller;
+use Shop\Api\ProductApi;
 class ShopCartController extends ShopController {
 	/*
 	 * 购物车
 	 * */
     public function shopcart(){
-    	$pros=cookie('shopcat');
-		dump($pros);
+    	$pros=cookie('shopcats');
+		for($i=0;$i<count($pros);$i++){
+			$map=array('id'=>$pros[$i]);
+			$results[]=apiCall(ProductApi::QUERY_NO_PAGING,array($map));
+		}
+		$this->assign('products',$results);
     	$user=session('user');
 		$this->assign('user',$user);
-//     $this->theme($this->themeType)->display();
+       $this->theme($this->themeType)->display();
     }
 	
 	

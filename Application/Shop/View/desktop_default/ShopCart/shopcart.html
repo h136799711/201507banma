@@ -65,12 +65,13 @@
 					<td class="lft" >小计</td>
 					<td class="lft" >操作</td>
 				</tr>
-				<tr>
+				<volist name="products" id="v">
+				<tr class="items">
 					<td>
-						<img height="100" width="120" src="">
-						<font size="4">商品名称</font>
+						<img height="100" width="120" src="{$v['info'][0]['main_img']}">
+						<font size="4">{$v['info'][0]['name']}</font>
 					</td>
-					<td><span class="danjia">49.5</span></td>
+					<td><span name="danjia" class="danjia">{$v['info'][0]['price']}</span></td>
 					<td><div class="change-goods-num"> 
 						<a href="javascript:void(0)" class="J_minus"> 
 							<i class="iconfont reducecount" ></i> 
@@ -79,36 +80,17 @@
 							</i> </a> 
 					</div>
 					</td>
-					<td><font class="xiaoji" color="orangered">49.5</font></td>
+					<td><font class="xiaoji" name="xiaoji" color="orangered">{$v['info'][0]['price']}</font></td>
 					<td><a href="javascript:void(0)"><i class="am-icon-times"></i></a></td>
 				</tr>
 				<tr>
 					<td colspan="5"><hr></td>
 				</tr>
-				<tr>
-					<td>
-						<img height="100" width="120" src="">
-						<font size="4">商品名称</font>
-					</td>
-					<td><span class="danjia">49.5</span></td>
-					<td><div class="change-goods-num"> 
-						<a href="javascript:void(0)" class="J_minus"> 
-							<i class="iconfont reducecount" ></i> </a>
-							<input type="number" name="count" value="1" class="goods-num J_goodsNum count"> 
-							 <a href="javascript:void(0)" class="J_plus"> <i class="iconfont addcount" >
-							</i>  </a>
-					</div>
-					</td>
-					<td><font class="xiaoji" color="orangered">49.5</font></td>
-					<td><a href="javascript:void(0)"><i class="am-icon-times"></i></a></td>
-				</tr>
-				<tr>
-					<td colspan="5"><hr></td>
-				</tr>
+				</volist>
 			</table>
-			<div style="width: 300px;  margin-left: 70%; padding: 10px;">
-				<h2>商品总价：<font color="orangered" class="zongjia" style="margin-left: 60px;">49.5</font>元</h2>
-				<h2>商品总计：<font color="orangered" class="zongji" style="margin-left: 60px;" size="6">49.5</font>元</h2>
+			<div id="ddmoney" style="width: 300px;  margin-left: 70%; padding: 10px;">
+				<h2>商品总价：<font color="orangered" name="zongjia" class="zongjia" style="margin-left: 60px;"></font>元</h2>
+				<h2>商品总计：<font color="orangered" name="zongji" class="zongji" style="margin-left: 60px;" size="6"></font>元</h2>
 				<font style="float: right;">
 				<button type="button" id="jixu" style="width: 120px;" class="am-btn am-btn-default am-round">继续购物</button>
 				<button type="button" id="gopay" style="width: 120px;" class="am-btn am-btn-warning am-round">去结账</button></font>
@@ -120,6 +102,13 @@
 <block name="area_footer">
 	<script type="text/javascript">
 		$(function(){
+			var zmon=0;
+			$('.items').each(function(index){
+				var money=$(this).find("font[name='xiaoji']").text();
+				zmon=zmon+Number(money);
+				$('#ddmoney').find("font[class='zongjia']").text(zmon);
+				$('#ddmoney').find("font[class='zongji']").text(zmon);
+			})
 			$('#jixu').click(function(){
 				window.location.href="{:U('Shop/Index/index')}";
 			})
@@ -128,36 +117,47 @@
 			})
 			$('.J_plus').click(function(){
 				var countInput=$(this).parent().find("input[name='count']");
-				//alert(countInput.size());
 				var count=countInput.val();
 				var zong=Number(countInput.val())+1;
 				if(count==10){
 					alert('最大了！');
 				}else{
 					countInput.val(parseInt(countInput.val())+1);
-					var danjia=$('.danjia').text();
+					var danjia=$(this).parent().parent().parent().find("span[name='danjia']").text();
 					var zongjia=Number(danjia)*Number(zong);
-//					alert(danjia)
-//					alert(zong)
-					$(this).parent().find('.xiaoji').text(zongjia);
+					$(this).parent().parent().parent().find("font[name='xiaoji']").text(zongjia);
+					zmon=0;
+					$('.items').each(function(index){
+						var money=$(this).find("font[name='xiaoji']").text();
+						zmon=zmon+Number(money);
+						$('#ddmoney').find("font[class='zongjia']").text(zmon);
+					})
+					$('#ddmoney').find("font[class='zongjia']").text(zmon);
+					$('#ddmoney').find("font[class='zongji']").text(zmon);
 				}
-				
 			})
 			$('.J_minus').click(function(){
 				var countInput=$(this).parent().find("input[name='count']");
-				//alert(countInput.size());
 				var count=countInput.val();
 				var zong=Number(countInput.val())-1;
-//				alert(zong)
 				if(count==1){
 					alert('最小了！');
 				}else{
 					countInput.val(parseInt(countInput.val())-1);
-					var danjia=$('.danjia').text();
+					var danjia=$(this).parent().parent().parent().find("span[name='danjia']").text();
 					var zongjia=Number(danjia)*Number(zong);
-					$(this).parent().find('.xiaoji').text(zongjia);
+					$(this).parent().parent().parent().find("font[name='xiaoji']").text(zongjia);
+					zmon=0;
+					$('.items').each(function(index){
+						var money=$(this).find("font[name='xiaoji']").text();
+						zmon=zmon+Number(money);
+						$('#ddmoney').find("font[class='zongjia']").text(zmon);
+					})
+					$('#ddmoney').find("font[class='zongjia']").text(zmon);
+					$('#ddmoney').find("font[class='zongji']").text(zmon);
 				}
 			})
+			
 		})
 	</script>
 </block>

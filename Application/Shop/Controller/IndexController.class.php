@@ -20,6 +20,7 @@ class IndexController extends ShopController{
     	$map=array('parent'=>0);
     	$result=apiCall(CategoryApi::QUERY_NO_PAGING,array($map));
 		$result1=apiCall(CategoryApi::QUERY_NO_PAGING,array($map1));
+		$ss=array('onshelf'=>1);
 		$orders = " createtime desc ";
 		$page = array('curpage'=>I('post.p',0),'size'=>4);
 		$result_new=apiCall(ProductApi::QUERY,array($ss,$page,$orders));
@@ -43,7 +44,39 @@ class IndexController extends ShopController{
 		$this->assign('user',$user);
 	 	$map=array('id'=>I('id',''));
 		$result=apiCall(ProductApi::QUERY_NO_PAGING,array($map));
-//		dump($result);
+		$imgs=$result['info'][0]['img'];
+		$detail=explode(',',$imgs); //分割字符串成数组
+		array_pop($detail);//删除最后一个空元素
+//		dump($detail['img']);
+//		foreach($skuList as $key=> $skus){
+//			$skuIds=explode(';',$skus['sku_id']);
+//			array_pop($skuIds);
+//			foreach($skuIds as $sku){
+//				
+//				$skuId=explode(':',$sku);
+//				$map=array();
+//				$map['id']=$skuId[0];
+//				$result1 = apiCall('Admin/Sku/queryNoPaging',array($map));
+//				$skuInfo[$result1['info'][0]['id']]['name']=$result1['info'][0]['name'];
+//				
+//				$map=array();
+//				$map['id']=$skuId[1];
+//				$result2 = apiCall('Admin/Skuvalue/queryNoPaging',array($map));
+//				
+//				$skus['sku']=$skus['sku'].';'.$result1['info'][0]['name'].':'.$result2['info'][0]['name'];
+//				$skuInfo[$result1['info'][0]['id']]['key']=$result1['info'][0]['id'];
+//				if(!in_array($result2['info'][0]['name'], $skuInfo[$result1['info'][0]['id']]['value'])){
+//					
+//					$skuInfo[$result1['info'][0]['id']]['value'][$result2['info'][0]['id']]=array(
+//						'key'=>$result2['info'][0]['id'],
+//						'value'=>$result2['info'][0]['name'],
+//					);
+//				}
+//				
+//			}
+//			$skuList[$key]=$skus;
+//		}
+		$this->assign('detailimg',$detail);
 		$this->assign('product',$result['info'][0]);
 	 	$this->theme($this->themeType)->display();
 	 }
@@ -52,11 +85,11 @@ class IndexController extends ShopController{
 	  * 加入购物车
 	  * */
 	public function savecookie(){
-		$ck=cookie('shopcat');
-		$hz=count($ck)+1;
-		$id+$hz=I('id',0);
-		cookie('shopcat',array($id+$hz),24*3600);
-		if(cookie('shopcat')!=null){
+		$ck=cookie('shopcats');
+		$id=I('id',0);
+		$ck[]=$id;
+		cookie('shopcats',$ck,24*3600);
+		if($ck!=null){
 			$this->ajaxReturn(1,'json');
 		}else{
 			$this->ajaxReturn(0,'json');
@@ -69,7 +102,7 @@ class IndexController extends ShopController{
 	public function lists(){
 		$user=session('user');
 		$this->assign('user',$user);
-		$id=array('cate_id'=>I('id',''));
+		$id=array('cate_id'=>I('id',''),'onshelf'=>1);
 		$page = array('curpage'=>I('post.p',0),'size'=>8);
 		$result=apiCall(ProductApi::QUERY,array($id,$page));
 //		dump($result);
@@ -83,7 +116,7 @@ class IndexController extends ShopController{
 		$user=session('user');
 		$this->assign('user',$user);
 		$name=I('name','');
-		$map['name'] = array('like','%'. $name . '%');
+		$map['name'] = array('like','%'. $name . '%','onshelf'=>1);
 		$page = array('curpage'=>I('post.p',0),'size'=>8);
 		$result=apiCall(ProductApi::QUERY,array($map,$page));
 //		dump($result);
