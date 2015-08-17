@@ -5,7 +5,7 @@
 		.all{background-color: #F5F5F5; height: 1100px; }
 		.top{ height: 100px; background-color: #FFFFFF; border-bottom: 2px solid orangered;}
 		.main{ width: 60%; height: 920px; background-color: #FFFFFF; margin: 0 auto; padding: 38px;}
-		.main a{ margin-left: 50px; font-size: 18px;}
+		.main a{ margin-left: 50px; font-size: 18px;color: #000000;}
 		.userinfo{margin-left: 65%; margin-top: -25px; font-size: 13px;}
 		.dizhi {margin-left: 10px; margin-top: 10px; height: 170px; width: 200px;border: 1px solid #F5F5F5; float: left; padding: 20px;}
 		
@@ -14,6 +14,8 @@
 		.count table tr td{padding-top: 22px; width: 99px; }
 		.count table tr td font{color: orangered;}
 		 a{ color: #000000;}
+		 a:hover{color: #000000;}
+		 a:checked{color: #000000;}
 	</style>
 </block>
 
@@ -34,14 +36,13 @@
 		<div class="main">
 			<font size="4">收货地址</font>
 			<br><br><br>
-			<!--<div class="dizhi">
-				<a href="JavaScript:void(0)"><i class="am-icon-plus-square-o" data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 400, height: 225}"></i></a>
-			</div>--> 
 			<volist name="address" id="vo">
-				<div class="dizhi">
-					联系人：{$vo['contactname']}<br>手机：{$vo['mobile']}<br>地址：{$vo['province']} {$vo['city']} {$vo['area']} {$vo['detailinfo']}<br><br><br>
-					
+				<a class="checkaddress" href="javascript:void(0)" style="font-size: 13px;">
+				<div class="dizhi" name="dizhi">
+					联系人：<font name="username">{$vo['contactname']}</font><br>手机：<font name="userphone">{$vo['mobile']}</font><br>地址：<font name="address">{$vo['province']} {$vo['city']} {$vo['area']} {$vo['detailinfo']}</font><br>
+					<i class=""></i>
 				</div>
+				</a>
 				<input type="button" style="display: none;" id="show"  data-am-modal="{target: '#doc-modal-2', closeViaDimmer: 0, width: 500, height: 355}"/>
 			</volist>
 			<br><br><br><br><br><br><br><br>
@@ -57,6 +58,10 @@
 					
 				</i>
 			</a><hr>
+			<form action="{:U('Shop/Orders/addorder')}" method="post">
+				<input type="hidden" name="username" id="username" value="" />
+				<input type="hidden" name="userphone" id="userphone" value="" />
+				<input type="hidden" name="address" id="address" value="" />
 			<div class="count">
 				<table style="text-align: right; ">
 					<tr>
@@ -77,7 +82,8 @@
 					</tr>
 				</table>
 			</div><hr>
-			<button type="button" id="okpay" style="width: 150px; float: right;" class="am-btn am-btn-warning am-round">确认结算</button>
+			<button type="submit" id="okpay" style="width: 150px; float: right;" class="am-btn am-btn-warning am-round">确认结算</button>
+			</form>
 		</div>
 	</div>
 	
@@ -98,6 +104,22 @@
 <block name="area_footer">
 	<script type="text/javascript">
 		$(function(){
+			$('.checkaddress').click(function(){
+				var cs=$(this).find("div[name='dizhi']").find("i").attr('class');
+				if(cs!=''){
+					$('#username').val('');
+					$('#userphone').val('');
+					$('#address').val('');
+					$(this).find("div[name='dizhi']").find("i").removeClass('am-icon-check-square-o');
+				}else{
+					$('#username').val($(this).find("div[name='dizhi']").find("font[name='username']").text());
+					$('#userphone').val($(this).find("div[name='dizhi']").find("font[name='userphone']").text());
+					$('#address').val($(this).find("div[name='dizhi']").find("font[name='address']").text());
+					$('.dizhi').find("i").removeClass('am-icon-check-square-o');
+					$(this).find("div[name='dizhi']").find("i").addClass('am-icon-check-square-o');
+				}
+				
+			})
 			$('#okpay').click(function(){
 				window.location.href="{:U('Shop/Orders/paytype')}";
 			})
